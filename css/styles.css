@@ -9,6 +9,8 @@
     box-sizing: border-box;
     padding: 0;
     margin: 0;
+
+    /*    border: 1px dotted red;*/
 }
 
 html {
@@ -21,10 +23,146 @@ body {
     background: var(--page-color);
 }
 
+a {
+    color: var(--text-color);
+    text-decoration: none;
+}
+
+button {
+    background: transparent;
+    border: 0;
+    max-height: 1rem;
+    cursor: pointer;
+}
+
+p {
+    max-width: 60ch;
+}
+
+h1 {
+    font-size: 1.5rem;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+figure {
+    padding: 0 0.5rem;
+}
+
+figcaption {
+    padding: 0.5rem 0;
+}
+
+p,
+.header,
+.nav,
+.sidebar-footer,
+.main-header,
+.footer {
+    padding: 0.5rem;
+}
+
+.page {
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dotted var(--icon-color);
+}
+
+.icon {
+    width: auto;
+    height: 1rem;
+    fill: var(--icon-color);
+}
+
+.menu-button {
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 0;
+    /*    display: none;*/
+}
+
+.menu-cross {
+    display: none;
+}
+
+.mode {}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    /*    align-items: center;*/
+}
+
+.sidebar {
+    max-width: initial;
+    display: flex;
+    flex-direction: column;
+    /*    align-items: center;*/
+}
+
+.nav {
+    /*    text-align: center;*/
+}
+
+.menu {
+    list-style: none;
+}
+
+.sidebar-footer {
+    align-self: center;
+}
+
+.footer {
+    border-top: 1px dotted var(--icon-color);
+}
+
+.footer {
+    margin-top: 1rem;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
         --page-color: black;
         --text-color: white;
         --icon-color: white;
+    }
+}
+
+@media only screen and (orientation: landscape) {
+    .page {
+        width: 80%;
+        margin: auto;
+    }
+
+    .menu-button,
+    .menu-cross {
+        display: none;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .sidebar {
+        align-items: flex-start;
+    }
+
+    .nav {
+        text-align: left;
+    }
+
+    .sidebar-footer {
+        align-self: flex-start;
     }
 }
