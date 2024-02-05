@@ -1,5 +1,6 @@
 :root {
     color-scheme: light;
+
     --page-color: white;
     --text-color: #333;
     --icon-color: black;
@@ -26,6 +27,7 @@ figure,
     padding: var(--padding);
 }
 
+.toggle-menu,
 .menu-button,
 .sidebar-footer,
 .top-scroll {
@@ -52,10 +54,6 @@ h1 {
 
 p {
     max-width: 66ch;
-}
-
-small {
-    font-size: 0.75rem;
 }
 
 a {
@@ -90,16 +88,16 @@ figcaption {}
 
 .header {
     background: var(--page-color);
+    border-bottom: 1px dotted var(--icon-color);
 
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    border-bottom: 1px dotted var(--icon-color);
-
     position: fixed;
     top: 0;
     width: 100%;
+    z-index: 1000;
 }
 
 .icon {
@@ -115,7 +113,10 @@ figcaption {}
 }
 
 .menu-cross {
-    display: none;
+    visibility: hidden;
+
+    position: absolute;
+    transform: translate(-0.5rem, -0.5rem);
 }
 
 .mode {}
@@ -124,24 +125,49 @@ figcaption {}
     display: flex;
     flex-direction: column;
 
-    margin-top: calc(1rem + 2 * var(--padding) + 1px);
+    margin-top: calc(0.5rem + 2 * var(--padding) + 1px);
 }
 
 .sidebar {
-    max-width: initial;
-    display: flex;
+    background: var(--page-color);
+
+    width: 100%;
+    height: calc(100vh - calc(0.5rem + 2 * var(--padding) + 1px));
+
+    position: fixed;
+    z-index: 100;
+    overflow: hidden;
+
+    display: none;
     flex-direction: column;
     align-items: center;
 
-    /*    display: none;*/
+    margin-top: 0;
+}
+
+.toggle-sidebar .sidebar {
+    display: flex;
+}
+
+.toggle-menu-button .menu-button {
+    display: none;
+}
+
+.toggle-menu-cross .menu-cross {
+    visibility: visible;
 }
 
 .nav {
+    display: flex;
+    flex: 1;
+
     text-align: center;
 }
 
 .menu {
     list-style: none;
+
+    margin: auto;
 }
 
 .menu a {
@@ -158,7 +184,12 @@ figcaption {}
     cursor: default;
 }
 
-.sidebar-footer {}
+.sidebar-footer {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.main {}
 
 .top-scroll {
     text-align: center;
@@ -166,10 +197,15 @@ figcaption {}
 }
 
 .footer {
+    font-size: 0.75rem;
     text-align: center;
 }
 
 /* Rewrited rules */
+
+.header {
+    padding: calc(var(--padding) * 0.75) var(--padding);
+}
 
 .logo:hover {
     fill: var(--icon-color);
@@ -217,12 +253,24 @@ figcaption {}
     }
 
     .sidebar {
+        width: initial;
+
+        position: static;
+        overflow: inherit;
+
+        display: flex;
         align-items: flex-start;
 
         margin-top: calc(2rem + var(--padding));
     }
 
     .nav {
+        flex: 0;
+
         text-align: left;
+    }
+
+    .menu {
+        margin: 0;
     }
 }

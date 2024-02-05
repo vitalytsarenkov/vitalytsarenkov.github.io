@@ -16,12 +16,14 @@
             <svg class="icon logo" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="5" width="7" viewBox="0 0 7 5">
                 <path d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
             </svg>
-            <button class="menu-button">MENU</button>
-            <button class="menu-cross">
-                <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
-                    <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                </svg>
-            </button>
+            <div class="toggle-menu">
+                <button class="menu-button">MENU</button>
+                <button class="menu-cross">
+                    <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
+                        <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
+                    </svg>
+                </button>
+            </div>
             <button class="mode">
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
                     <path d="m0 0h10v10h-10zm9 1h-8v8z" />
@@ -29,7 +31,7 @@
             </button>
         </header>
         <div class="container">
-            <aside class="sidebar">
+            <aside class="sidebar" id="sidebar">
                 <nav class="nav">
                     <menu class="menu">
                         <li class="current-page">about</li>
@@ -93,11 +95,14 @@
                     </a>
                 </div>
                 <footer class="footer">
-                    <small>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</small>
+                    <span>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</span>
                 </footer>
             </main>
         </div>
     </div>
+
+    <script src="./js/scripts.js"></script>
+
 </body>
 
 </html>
