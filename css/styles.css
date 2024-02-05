@@ -6,7 +6,7 @@
     --hover-color: blue;
     --current-page-color: gray;
 
-    --padding: 0.75rem;
+    --padding: 1rem;
 }
 
 * {
@@ -24,6 +24,12 @@ figure,
 .main-header,
 .footer {
     padding: var(--padding);
+}
+
+.menu-button,
+.sidebar-footer,
+.top-scroll {
+    line-height: 0;
 }
 
 /* Element rules */
@@ -103,13 +109,9 @@ figcaption {}
     fill: var(--icon-color);
 }
 
-.icon:hover {
-    fill: var(--hover-color);
-}
-
 .menu-button {
     font-size: 1rem;
-    color: var(--text-color);
+    color: var(--icon-color);
 }
 
 .menu-cross {
@@ -121,7 +123,6 @@ figcaption {}
 .container {
     display: flex;
     flex-direction: column;
-    /*    align-items: center;*/
 
     margin-top: calc(1rem + 2 * var(--padding) + 1px);
 }
@@ -168,12 +169,6 @@ figcaption {}
     text-align: center;
 }
 
-.menu-button,
-.sidebar-footer,
-.top-scroll {
-    line-height: 0;
-}
-
 /* Rewrited rules */
 
 .logo:hover {
@@ -197,7 +192,7 @@ figcaption {}
 
 @media only screen and (orientation: landscape) {
     .page {
-        max-width: 960px;
+        max-width: 1000px;
         margin: auto;
     }
 
@@ -211,10 +206,8 @@ figcaption {}
     }
 
     .container {
-        display: flex;
         flex-direction: row;
-        align-items: flex-start;
-        gap: 1rem;
+        justify-content: space-between;
 
         margin-top: 0;
     }
