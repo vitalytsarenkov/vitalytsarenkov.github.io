@@ -1,7 +1,25 @@
-const toggleMenu = document.querySelector(".toggle-menu");
+const body = document.querySelector("body");
+const menuToggle = document.querySelector(".menu-toggle");
+const menuCross = document.querySelector(".menu-cross");
 
-toggleMenu.addEventListener("click", () => {
-    document.body.classList.toggle("toggle-sidebar");
-    document.body.classList.toggle("toggle-menu-button");
-    document.body.classList.toggle("toggle-menu-cross");
+let menuCrossState = getComputedStyle(menuCross);
+
+menuToggle.addEventListener("click", () => {
+    body.classList.toggle("toggle-menu");
+    if (
+        menuCrossState.getPropertyValue("visibility") == "visible") {
+        body.style.setProperty("overflow", "hidden");
+    } else {
+        body.style.setProperty("overflow", "auto");
+    }
 });
+
+window.onresize = function () {
+    if (
+        menuCrossState.getPropertyValue("display") == "block" &&
+        menuCrossState.getPropertyValue("visibility") == "visible") {
+        body.style.setProperty("overflow", "hidden");
+    } else {
+        body.style.setProperty("overflow", "auto");
+    }
+};

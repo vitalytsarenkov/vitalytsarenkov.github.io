@@ -5,7 +5,7 @@
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
-    --current-page-color: gray;
+    --current-page-color: blue;
 
     --padding: 1rem;
 }
@@ -27,7 +27,7 @@ figure,
     padding: var(--padding);
 }
 
-.toggle-menu,
+.menu-toggle,
 .menu-button,
 .sidebar-footer,
 .top-scroll {
@@ -132,7 +132,7 @@ figcaption {}
     background: var(--page-color);
 
     width: 100%;
-    height: calc(100vh - calc(0.5rem + 2 * var(--padding) + 1px));
+    height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
 
     position: fixed;
     z-index: 100;
@@ -145,15 +145,15 @@ figcaption {}
     margin-top: 0;
 }
 
-.toggle-sidebar .sidebar {
+.toggle-menu .sidebar {
     display: flex;
 }
 
-.toggle-menu-button .menu-button {
+.toggle-menu .menu-button {
     display: none;
 }
 
-.toggle-menu-cross .menu-cross {
+.toggle-menu .menu-cross {
     visibility: visible;
 }
 
@@ -197,7 +197,6 @@ figcaption {}
 }
 
 .footer {
-    font-size: 0.75rem;
     text-align: center;
 }
 
@@ -215,6 +214,10 @@ figcaption {}
     padding-bottom: 0;
 }
 
+.footer span {
+    font-size: 0.75rem;
+}
+
 /* Media queries */
 
 @media (prefers-color-scheme: dark) {
@@ -223,6 +226,7 @@ figcaption {}
         --text-color: #ccc;
         --icon-color: white;
         --hover-color: yellow;
+        --current-page-color: yellow;
     }
 }
 
