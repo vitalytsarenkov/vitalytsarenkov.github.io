@@ -59,7 +59,6 @@ p {
 a {
     color: var(--text-color);
     text-decoration: none;
-    border-width: 0;
     display: inline-block;
 }
 
@@ -216,6 +215,28 @@ figcaption {}
 
 .footer span {
     font-size: 0.75rem;
+}
+
+/* Animations */
+
+.top-scroll a {
+    padding: 0.5rem;
+}
+
+.top-scroll svg {
+    animation: 1.5s ease-in-out 0s infinite alternate up-and-down;
+}
+
+@keyframes up-and-down {
+    from {
+        transform: translateY(-0.5rem);
+        fill: var(--hover-color);
+    }
+
+    to {
+        transform: translateY(0.5rem);
+        fill: var(--icon-color);
+    }
 }
 
 /* Media queries */
