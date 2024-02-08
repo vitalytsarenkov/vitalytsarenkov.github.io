@@ -8,7 +8,7 @@
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
-    --current-page-color: blue;
+    --current-page-color: grey;
 }
 
 [data-theme="dark"] {
@@ -16,7 +16,7 @@
     --text-color: #ccc;
     --icon-color: white;
     --hover-color: yellow;
-    --current-page-color: yellow;
+    --current-page-color: grey;
 }
 
 * {
@@ -88,6 +88,10 @@ figure {}
 
 figcaption {}
 
+address a {
+    color: var(--hover-color);
+}
+
 /* Class rules */
 
 .page {
@@ -140,7 +144,7 @@ figcaption {}
     background-color: var(--page-color);
 
     width: 100%;
-    height: calc(100lvh - calc(0.5rem + 2 * var(--padding) + 1px));
+    height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
 
     position: fixed;
     z-index: 100;
@@ -185,7 +189,9 @@ figcaption {}
     gap: 0.5rem;
 }
 
-.main {}
+.main {
+    flex: 1;
+}
 
 .top-scroll {
     text-align: center;
@@ -261,7 +267,7 @@ figcaption {}
         --text-color: #ccc;
         --icon-color: white;
         --hover-color: yellow;
-        --current-page-color: yellow;
+        --current-page-color: grey;
     }
 
     [data-theme="light"] {
@@ -269,7 +275,7 @@ figcaption {}
         --text-color: #333;
         --icon-color: black;
         --hover-color: blue;
-        --current-page-color: blue;
+        --current-page-color: grey;
     }
 }
 
@@ -292,7 +298,6 @@ figcaption {}
 
     .container {
         flex-direction: row;
-        justify-content: space-between;
 
         margin-top: 0;
     }

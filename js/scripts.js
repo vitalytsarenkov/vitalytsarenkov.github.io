@@ -31,8 +31,20 @@ window.onresize = function () {
 
 const modeToggle = body.querySelector(".mode-toggle");
 
+function setAriaLabel() {
+    if (currentMode == "dark") {
+        modeToggle.setAttribute("aria-label", "Change to light mode");
+    } else {
+        modeToggle.setAttribute("aria-label", "Change to dark mode");
+    }
+};
+
+setAriaLabel();
+
 modeToggle.addEventListener("mousedown", (event) => {
     const newMode = currentMode === "dark" ? "light" : "dark";
+    const newAriaLabel = newMode === "dark" ? "Change to light mode" : "Change to dark mode";
+    modeToggle.setAttribute("aria-label", newAriaLabel);
     html.setAttribute("data-theme", newMode);
     localStorage.setItem("mode", newMode);
     currentMode = newMode;
