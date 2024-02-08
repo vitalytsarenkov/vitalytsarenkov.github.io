@@ -1,6 +1,9 @@
 :root {
     --padding: 1rem;
+    --transition-time: 0.5s;
+}
 
+[data-theme="light"] {
     --page-color: white;
     --text-color: #333;
     --icon-color: black;
@@ -8,7 +11,7 @@
     --current-page-color: blue;
 }
 
-:root .dark-mode {
+[data-theme="dark"] {
     --page-color: black;
     --text-color: #ccc;
     --icon-color: white;
@@ -51,7 +54,7 @@ body {
     font-family: Verdana, sans-serif;
 
     color: var(--text-color);
-    background: var(--page-color);
+    background-color: var(--page-color);
 }
 
 h1 {
@@ -69,7 +72,7 @@ a {
 }
 
 button {
-    background: transparent;
+    background-color: transparent;
     border: 0;
 
     max-height: 1rem;
@@ -92,7 +95,7 @@ figcaption {}
 }
 
 .header {
-    background: var(--page-color);
+    background-color: var(--page-color);
     border-bottom: 1px dotted var(--icon-color);
 
     display: flex;
@@ -134,10 +137,10 @@ figcaption {}
 }
 
 .sidebar {
-    background: var(--page-color);
+    background-color: var(--page-color);
 
     width: 100%;
-    height: calc(100svh - calc(0.5rem + 2 * var(--padding) + 1px));
+    height: calc(100lvh - calc(0.5rem + 2 * var(--padding) + 1px));
 
     position: fixed;
     z-index: 100;
@@ -148,18 +151,6 @@ figcaption {}
     align-items: center;
 
     margin-top: 0;
-}
-
-.toggle-menu .sidebar {
-    display: flex;
-}
-
-.toggle-menu .menu-button {
-    display: none;
-}
-
-.toggle-menu .menu-cross {
-    visibility: visible;
 }
 
 .nav {
@@ -205,14 +196,32 @@ figcaption {}
     text-align: center;
 }
 
+/* Togglers */
+
+.toggle-menu .menu-button {
+    display: none;
+}
+
+.toggle-menu .menu-cross {
+    visibility: visible;
+}
+
+.toggle-menu .sidebar {
+    display: flex;
+}
+
+.hide-scroll {
+    overflow: hidden;
+}
+
+.toggle-mode * {
+    transition: all var(--transition-time);
+}
+
 /* Rewrited rules */
 
 .header {
     padding: calc(var(--padding) * 0.75) var(--padding);
-}
-
-.logo:hover {
-    fill: var(--icon-color);
 }
 
 .main-header {
@@ -247,7 +256,7 @@ figcaption {}
 /* Media queries */
 
 @media (prefers-color-scheme: dark) {
-    :root {
+    [data-theme="dark"] {
         --page-color: black;
         --text-color: #ccc;
         --icon-color: white;
@@ -255,7 +264,7 @@ figcaption {}
         --current-page-color: yellow;
     }
 
-    :root .light-mode {
+    [data-theme="light"] {
         --page-color: white;
         --text-color: #333;
         --icon-color: black;
@@ -271,6 +280,8 @@ figcaption {}
     }
 
     .header {
+        background-color: transparent;
+
         position: static;
     }
 
@@ -291,6 +302,8 @@ figcaption {}
     }
 
     .sidebar {
+        background-color: transparent;
+
         width: initial;
 
         position: static;

@@ -1,10 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
+
+    <script>
+        function calculateMode({
+            localStorageMode,
+            systemDarkMode
+        }) {
+            if (localStorageMode !== null) {
+                return localStorageMode;
+            }
+
+            if (systemDarkMode.matches) {
+                return "dark";
+            }
+
+            return "light";
+        }
+
+        const localStorageMode = localStorage.getItem("mode");
+        const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+
+        let currentMode = calculateMode({
+            localStorageMode,
+            systemDarkMode
+        });
+
+        document.querySelector("html").setAttribute("data-theme", currentMode);
+
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--    <meta name="color-scheme" content="#000000" media="(prefers-color-scheme: dark)">-->
     <meta name="color-scheme" content="light dark">
     <link rel="stylesheet" href="./css/styles.css">
     <link rel="icon" type="image/svg+xml" href="./favicon.svg">

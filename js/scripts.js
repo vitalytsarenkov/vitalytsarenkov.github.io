@@ -1,3 +1,4 @@
+const html = document.querySelector("html");
 const body = document.querySelector("body");
 
 // Hide scrolling
@@ -11,9 +12,9 @@ function hideScroll() {
     if (
         menuCrossState.getPropertyValue("display") == "block" &&
         menuCrossState.getPropertyValue("visibility") == "visible") {
-        body.style.setProperty("overflow", "hidden");
+        body.classList.add("hide-scroll");
     } else {
-        body.style.setProperty("overflow", "auto");
+        body.classList.remove("hide-scroll");
     }
 };
 
@@ -29,25 +30,18 @@ window.onresize = function () {
 // Toggle dark and light modes
 
 const modeToggle = body.querySelector(".mode-toggle");
-const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-const currentMode = localStorage.getItem("mode");
-if (currentMode == "dark") {
-    body.classList.toggle("dark-mode");
-} else if (currentMode == "light") {
-    body.classList.toggle("light-mode");
-}
 
-modeToggle.addEventListener("click", () => {
-    if (prefersDarkMode.matches) {
-        body.classList.toggle("light-mode");
-        var mode = body.classList.contains("light-mode") ?
-            "light" :
-            "dark";
-    } else {
-        body.classList.toggle("dark-mode");
-        var mode = body.classList.contains("dark-mode") ?
-            "dark" :
-            "light";
-    }
-    localStorage.setItem("mode", mode);
+modeToggle.addEventListener("mousedown", (event) => {
+    const newMode = currentMode === "dark" ? "light" : "dark";
+    html.setAttribute("data-theme", newMode);
+    localStorage.setItem("mode", newMode);
+    currentMode = newMode;
+    html.classList.add("toggle-mode");
 });
+
+modeToggle.addEventListener("mouseup", handler, false);
+modeToggle.addEventListener("mousemove", handler, false);
+
+function handler(event) {
+    html.classList.remove("toggle-mode");
+}
