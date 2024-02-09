@@ -31,8 +31,7 @@ figure,
 .header,
 .nav,
 .sidebar-footer,
-.main-header,
-.footer {
+.main-header {
     padding: var(--padding);
 }
 
@@ -41,6 +40,12 @@ figure,
 .sidebar-footer,
 .top-scroll {
     line-height: 0;
+}
+
+.sidebar,
+.main {
+    width: 100%;
+    height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
 }
 
 /* Element rules */
@@ -143,29 +148,24 @@ address a {
 .sidebar {
     background-color: var(--page-color);
 
-    width: 100%;
-    height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
-
     position: fixed;
     z-index: 100;
-    overflow: hidden;
 
     display: none;
     flex-direction: column;
     align-items: center;
-
-    margin-top: 0;
 }
 
 .nav {
     display: flex;
-    flex: 1;
 
-    text-align: center;
+    flex: 1;
 }
 
 .menu {
     list-style: none;
+
+    text-align: center;
 
     margin: auto;
 }
@@ -190,16 +190,25 @@ address a {
 }
 
 .main {
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+
     flex: 1;
 }
 
 .top-scroll {
-    text-align: center;
     padding: 2rem;
+
+    align-self: center;
 }
 
 .footer {
-    text-align: center;
+    align-self: center;
 }
 
 /* Togglers */
@@ -220,6 +229,8 @@ address a {
     overflow: hidden;
 }
 
+/* Transitions */
+
 .toggle-mode * {
     transition: all var(--transition-time);
 }
@@ -236,7 +247,6 @@ address a {
 
 .footer p {
     font-size: 0.75rem;
-    display: inline;
 }
 
 /* Animations */
@@ -262,14 +272,6 @@ address a {
 /* Media queries */
 
 @media (prefers-color-scheme: dark) {
-    [data-theme="dark"] {
-        --page-color: black;
-        --text-color: #ccc;
-        --icon-color: white;
-        --hover-color: yellow;
-        --current-page-color: grey;
-    }
-
     [data-theme="light"] {
         --page-color: white;
         --text-color: #333;
@@ -277,11 +279,21 @@ address a {
         --hover-color: blue;
         --current-page-color: grey;
     }
+
+    [data-theme="dark"] {
+        --page-color: black;
+        --text-color: #ccc;
+        --icon-color: white;
+        --hover-color: yellow;
+        --current-page-color: grey;
+    }
 }
 
 @media only screen and (orientation: landscape) {
     .page {
-        max-width: 1000px;
+        /*        max-width: 1000px;*/
+        max-width: calc(100% - (100vw - 1000px));
+
         margin: auto;
     }
 
@@ -312,21 +324,18 @@ address a {
         width: initial;
 
         position: static;
-        overflow: inherit;
 
         display: flex;
         align-items: flex-start;
 
-        margin-top: calc(2rem + var(--padding));
+        padding-top: calc(2rem + var(--padding));
     }
 
     .nav {
         flex: 0;
-
-        text-align: left;
     }
 
     .menu {
-        margin: 0;
+        text-align: left;
     }
 }
