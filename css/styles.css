@@ -45,7 +45,7 @@ figure,
 .sidebar,
 .main {
     width: 100%;
-    height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
+    min-height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
 }
 
 /* Element rules */
@@ -71,7 +71,7 @@ p {
 }
 
 a {
-    color: var(--text-color);
+    color: var(--icon-color);
     text-decoration: none;
     display: inline-block;
 }
@@ -171,7 +171,6 @@ address a {
 }
 
 .menu a {
-    color: var(--icon-color);
     display: block;
 }
 
@@ -272,6 +271,7 @@ address a {
 /* Media queries */
 
 @media (prefers-color-scheme: dark) {
+
     [data-theme="light"] {
         --page-color: white;
         --text-color: #333;
@@ -290,6 +290,7 @@ address a {
 }
 
 @media only screen and (orientation: landscape) {
+
     .page {
         /*        max-width: 1000px;*/
         max-width: calc(100% - (100vw - 1000px));
