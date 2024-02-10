@@ -35,17 +35,10 @@ figure,
     padding: var(--padding);
 }
 
-.menu-toggle,
-.menu-button,
-.sidebar-footer,
-.top-scroll {
-    line-height: 0;
-}
-
 .sidebar,
 .main {
     width: 100%;
-    min-height: calc(100dvh - calc(0.5rem + 2 * var(--padding) + 1px));
+    min-height: calc(100vh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));
 }
 
 /* Element rules */
@@ -73,6 +66,7 @@ p {
 a {
     color: var(--icon-color);
     text-decoration: none;
+
     display: inline-block;
 }
 
@@ -124,9 +118,19 @@ address a {
     fill: var(--icon-color);
 }
 
+.a-icon {
+    line-height: 0;
+}
+
+.menu-toggle {
+    line-height: 0;
+}
+
 .menu-button {
     font-size: 1rem;
     color: var(--icon-color);
+
+    line-height: 1rem;
 }
 
 .menu-cross {
@@ -142,7 +146,7 @@ address a {
     display: flex;
     flex-direction: column;
 
-    margin-top: calc(0.5rem + 2 * var(--padding) + 1px);
+    padding-top: calc(1rem + 2 * var(--padding) * 0.75 + 1px);
 }
 
 .sidebar {
@@ -183,10 +187,7 @@ address a {
     cursor: default;
 }
 
-.sidebar-footer {
-    display: flex;
-    gap: 0.5rem;
-}
+.sidebar-footer {}
 
 .main {
     display: flex;
@@ -226,6 +227,8 @@ address a {
 
 .hide-scroll {
     overflow: hidden;
+
+    position: absolute;
 }
 
 /* Transitions */
@@ -291,9 +294,13 @@ address a {
 
 @media only screen and (orientation: landscape) {
 
+    html {
+        scrollbar-gutter: stable;
+    }
+
     .page {
         /*        max-width: 1000px;*/
-        max-width: calc(100% - (100vw - 1000px));
+        max-width: calc(1000px + 100% - 100vw);
 
         margin: auto;
     }
@@ -312,7 +319,7 @@ address a {
     .container {
         flex-direction: row;
 
-        margin-top: 0;
+        padding-top: 0;
     }
 
     h1 {
@@ -333,10 +340,14 @@ address a {
     }
 
     .nav {
+        display: block;
+
         flex: 0;
     }
 
     .menu {
         text-align: left;
+
+        margin: 0;
     }
 }
