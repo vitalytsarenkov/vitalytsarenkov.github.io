@@ -3,10 +3,16 @@ const body = document.querySelector("body");
 
 // Toggle menu
 
-const menuToggle = body.querySelector(".menu-toggle");
+const menuButton = body.querySelector(".menu-button");
+const menuCross = body.querySelector(".menu-cross");
 const sidebar = body.querySelector(".sidebar");
 
+let menuButtonState = getComputedStyle(menuButton);
+let menuCrossState = getComputedStyle(menuCross);
 let sidebarState = getComputedStyle(sidebar);
+
+const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
+const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
 function hideScroll() {
     if (sidebarState.getPropertyValue("display") == "flex" &&
@@ -17,9 +23,38 @@ function hideScroll() {
     }
 };
 
-menuToggle.addEventListener("click", () => {
-    body.classList.toggle("toggle-menu");
-    hideScroll();
+menuButton.addEventListener("click", () => {
+    body.classList.toggle("unclicable");
+    body.classList.add("hide-scroll");
+    menuButton.classList.toggle("fade-menu-button");
+    menuCross.classList.toggle("toggle-menu-cross");
+    sidebar.classList.toggle("toggle-sidebar");
+
+    setTimeout(() => {
+        body.classList.toggle("fade-cross-sidebar");
+    }, "100");
+
+    setTimeout(() => {
+        body.classList.toggle("unclicable");
+        menuButton.classList.toggle("toggle-menu-button");
+    }, menuTransitionMs);
+});
+
+menuCross.addEventListener("click", () => {
+    body.classList.toggle("unclicable");
+    body.classList.remove("hide-scroll");
+    menuButton.classList.toggle("toggle-menu-button");
+    body.classList.toggle("fade-cross-sidebar");
+
+    setTimeout(() => {
+        menuButton.classList.toggle("fade-menu-button");
+    }, "100");
+
+    setTimeout(() => {
+        body.classList.toggle("unclicable");
+        menuCross.classList.toggle("toggle-menu-cross");
+        sidebar.classList.toggle("toggle-sidebar");
+    }, menuTransitionMs);
 });
 
 window.onresize = function () {
@@ -29,6 +64,9 @@ window.onresize = function () {
 // Toggle dark and light modes
 
 const modeToggle = body.querySelector(".mode-toggle");
+
+const modeTransition = getComputedStyle(html).getPropertyValue("--mode-transition");
+const modeTransitionMs = parseFloat(modeTransition) * 1000;
 
 function setAriaLabel() {
     if (currentMode == "dark") {
@@ -50,8 +88,11 @@ modeToggle.addEventListener("click", () => {
     localStorage.setItem("mode", newMode);
     currentMode = newMode;
 
+    body.classList.toggle("unclicable");
     html.classList.add("toggle-mode");
+
     setTimeout(() => {
+        body.classList.toggle("unclicable");
         html.classList.remove("toggle-mode");
-    }, "100");
+    }, modeTransitionMs);
 });

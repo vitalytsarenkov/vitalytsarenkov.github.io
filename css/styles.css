@@ -1,5 +1,8 @@
 :root {
     --padding: 1rem;
+
+    --menu-transition: 0.5s;
+    --mode-transition: 0.5s;
 }
 
 [data-theme="light"] {
@@ -37,12 +40,26 @@ figure,
     padding: var(--padding);
 }
 
+.menu-button,
+.menu-cross {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+}
+
+.menu-cross,
+.sidebar {
+    opacity: 0;
+}
+
 .sidebar,
 .main {
     width: 100%;
     min-height: calc(100dvh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));
 
-    -webkit-min-logical-height: calc(100vh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));
+    /*    -webkit-min-logical-height: calc(100vh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));*/
 }
 
 /* Element rules */
@@ -135,13 +152,13 @@ address a {
     color: var(--icon-color);
 
     line-height: 1rem;
+
+    opacity: 1;
 }
 
 .menu-cross {
     display: none;
 }
-
-.mode-toggle {}
 
 .container {
     display: flex;
@@ -212,35 +229,59 @@ address a {
     align-self: center;
 }
 
-/* Togglers */
+/* Toggle menu */
 
-.toggle-menu .menu-button {
+.toggle-menu-button {
     display: none;
 }
 
-.toggle-menu .menu-cross {
+.toggle-menu-cross {
     display: block;
 }
 
-.toggle-menu .sidebar {
+.toggle-sidebar {
     display: flex;
 }
 
 .hide-scroll {
     overflow: hidden;
-    /*    margin: 0px !important*/
+    margin: 0px !important
 }
 
-/* Transitions */
+.menu-button,
+.menu-cross,
+.sidebar {
+    transition: opacity var(--menu-transition);
+}
+
+.unclicable {
+    pointer-events: none;
+}
+
+.fade-menu-button {
+    opacity: 0;
+}
+
+.fade-cross-sidebar .menu-cross,
+.fade-cross-sidebar .sidebar {
+    opacity: 1;
+}
+
+/* Toggle dark and light modes */
 
 .toggle-mode * {
-    transition: all 0.5s;
+    transition: all var(--mode-transition);
 }
 
 /* Rewrited rules */
 
 .header {
     padding: calc(var(--padding) * 0.75) var(--padding);
+}
+
+.x {
+    width: 1rem;
+    height: auto;
 }
 
 .main-header {
@@ -336,6 +377,8 @@ address a {
         align-items: flex-start;
 
         padding-top: calc(2rem + var(--padding));
+
+        opacity: 1;
     }
 
     .nav {
