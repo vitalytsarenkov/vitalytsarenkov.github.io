@@ -32,7 +32,7 @@
 }
 
 p,
-figure,
+img,
 .header,
 .nav,
 .sidebar-footer,
@@ -106,7 +106,9 @@ img {
 
 figure {}
 
-figcaption {}
+figcaption {
+    padding: 0 var(--padding);
+}
 
 address a {
     color: var(--hover-color);
@@ -245,7 +247,6 @@ address a {
 
 .hide-scroll {
     overflow: hidden;
-    margin: 0px !important
 }
 
 .menu-button,
@@ -269,8 +270,26 @@ address a {
 
 /* Toggle dark and light modes */
 
-.toggle-mode * {
-    transition: all var(--mode-transition);
+.toggle-mode body,
+.toggle-mode .sidebar {
+    transition: background-color var(--mode-transition);
+}
+
+.toggle-mode h1,
+.toggle-mode p,
+.toggle-mode figcaption,
+.toggle-mode a,
+.toggle-mode .menu-button {
+    transition: color var(--mode-transition);
+}
+
+.toggle-mode .header {
+    transition-property: background-color, border;
+    transition-duration: var(--mode-transition);
+}
+
+.toggle-mode .icon {
+    transition: fill var(--mode-transition);
 }
 
 /* Rewrited rules */

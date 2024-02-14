@@ -26,6 +26,7 @@ function hideScroll() {
 menuButton.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.add("hide-scroll");
+    html.classList.add("hide-scroll");
     menuButton.classList.toggle("fade-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
@@ -43,6 +44,7 @@ menuButton.addEventListener("click", () => {
 menuCross.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.remove("hide-scroll");
+    html.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     body.classList.toggle("fade-cross-sidebar");
 
@@ -89,10 +91,10 @@ modeToggle.addEventListener("click", () => {
     currentMode = newMode;
 
     body.classList.toggle("unclicable");
-    html.classList.add("toggle-mode");
+    html.classList.toggle("toggle-mode");
 
     setTimeout(() => {
         body.classList.toggle("unclicable");
-        html.classList.remove("toggle-mode");
+        html.classList.toggle("toggle-mode");
     }, modeTransitionMs);
 });
