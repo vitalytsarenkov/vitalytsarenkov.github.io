@@ -39,7 +39,8 @@
     <title>Vitaly Tsarenkov — Visual artist</title>
 </head>
 
-<body>
+<body class="page-transition">
+
     <div class="page">
         <header class="header">
             <svg class="icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="5" width="7" viewBox="0 0 7 5">
@@ -129,6 +130,13 @@
             </main>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.body.classList.remove("page-transition");
+        });
+
+    </script>
 
     <script src="./js/scripts.js"></script>
 

@@ -18,8 +18,10 @@ function hideScroll() {
     if (sidebarState.getPropertyValue("display") == "flex" &&
         sidebarState.getPropertyValue("position") == "fixed") {
         body.classList.add("hide-scroll");
+        html.classList.add("hide-scroll");
     } else {
         body.classList.remove("hide-scroll");
+        html.classList.remove("hide-scroll");
     }
 };
 

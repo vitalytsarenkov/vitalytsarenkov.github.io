@@ -1,8 +1,9 @@
 :root {
     --padding: 1rem;
 
-    --menu-transition: 0.5s;
+    --menu-transition: 0.25s;
     --mode-transition: 0.5s;
+    --page-transition: 1s;
 }
 
 [data-theme="light"] {
@@ -74,6 +75,8 @@ body {
 
     color: var(--text-color);
     background-color: var(--page-color);
+
+    transition: opacity var(--page-transition);
 }
 
 h1 {
@@ -247,6 +250,7 @@ address a {
 
 .hide-scroll {
     overflow: hidden;
+    margin: 0px !important;
 }
 
 .menu-button,
@@ -275,6 +279,15 @@ address a {
     transition: background-color var(--mode-transition);
 }
 
+.toggle-mode .header {
+    transition-property: background-color, border;
+    transition-duration: var(--mode-transition);
+}
+
+.toggle-mode .icon {
+    transition: fill var(--mode-transition);
+}
+
 .toggle-mode h1,
 .toggle-mode p,
 .toggle-mode figcaption,
@@ -283,13 +296,10 @@ address a {
     transition: color var(--mode-transition);
 }
 
-.toggle-mode .header {
-    transition-property: background-color, border;
-    transition-duration: var(--mode-transition);
-}
+/* Page transition */
 
-.toggle-mode .icon {
-    transition: fill var(--mode-transition);
+.page-transition {
+    opacity: 0;
 }
 
 /* Rewrited rules */
