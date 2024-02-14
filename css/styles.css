@@ -75,8 +75,6 @@ body {
 
     color: var(--text-color);
     background-color: var(--page-color);
-
-    transition: opacity var(--page-transition);
 }
 
 h1 {
@@ -170,6 +168,8 @@ address a {
     flex-direction: column;
 
     padding-top: calc(1rem + 2 * var(--padding) * 0.75 + 1px);
+
+    transition: opacity var(--page-transition);
 }
 
 .sidebar {
@@ -250,7 +250,6 @@ address a {
 
 .hide-scroll {
     overflow: hidden;
-    margin: 0px !important;
 }
 
 .menu-button,

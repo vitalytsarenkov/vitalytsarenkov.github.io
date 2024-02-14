@@ -39,8 +39,7 @@
     <title>Vitaly Tsarenkov — Visual artist</title>
 </head>
 
-<body class="page-transition">
-
+<body>
     <div class="page">
         <header class="header">
             <svg class="icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="5" width="7" viewBox="0 0 7 5">
@@ -60,7 +59,7 @@
                 </svg>
             </button>
         </header>
-        <div class="container">
+        <div class="container page-transition">
             <aside class="sidebar">
                 <nav class="nav">
                     <menu class="menu">
@@ -133,7 +132,8 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            document.body.classList.remove("page-transition");
+            const container = document.body.querySelector(".container");
+            container.classList.remove("page-transition");
         });
 
     </script>

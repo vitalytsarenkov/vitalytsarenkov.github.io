@@ -18,17 +18,14 @@ function hideScroll() {
     if (sidebarState.getPropertyValue("display") == "flex" &&
         sidebarState.getPropertyValue("position") == "fixed") {
         body.classList.add("hide-scroll");
-        html.classList.add("hide-scroll");
     } else {
         body.classList.remove("hide-scroll");
-        html.classList.remove("hide-scroll");
     }
 };
 
 menuButton.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.add("hide-scroll");
-    html.classList.add("hide-scroll");
     menuButton.classList.toggle("fade-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
@@ -46,7 +43,6 @@ menuButton.addEventListener("click", () => {
 menuCross.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.remove("hide-scroll");
-    html.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     body.classList.toggle("fade-cross-sidebar");
 
