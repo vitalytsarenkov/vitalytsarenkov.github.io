@@ -7,8 +7,6 @@ const menuButton = body.querySelector(".menu-button");
 const menuCross = body.querySelector(".menu-cross");
 const sidebar = body.querySelector(".sidebar");
 
-let menuButtonState = getComputedStyle(menuButton);
-let menuCrossState = getComputedStyle(menuCross);
 let sidebarState = getComputedStyle(sidebar);
 
 const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
@@ -26,17 +24,16 @@ function hideScroll() {
 menuButton.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.add("hide-scroll");
-    menuButton.classList.toggle("fade-menu-button");
+    menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
 
     setTimeout(() => {
-        body.classList.toggle("fade-cross-sidebar");
+        sidebar.classList.toggle("fade-sidebar");
     }, "100");
 
     setTimeout(() => {
         body.classList.toggle("unclicable");
-        menuButton.classList.toggle("toggle-menu-button");
     }, menuTransitionMs);
 });
 
@@ -44,15 +41,11 @@ menuCross.addEventListener("click", () => {
     body.classList.toggle("unclicable");
     body.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
-    body.classList.toggle("fade-cross-sidebar");
-
-    setTimeout(() => {
-        menuButton.classList.toggle("fade-menu-button");
-    }, "100");
+    menuCross.classList.toggle("toggle-menu-cross");
+    sidebar.classList.toggle("fade-sidebar");
 
     setTimeout(() => {
         body.classList.toggle("unclicable");
-        menuCross.classList.toggle("toggle-menu-cross");
         sidebar.classList.toggle("toggle-sidebar");
     }, menuTransitionMs);
 });
