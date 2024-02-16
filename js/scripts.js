@@ -3,14 +3,8 @@ const body = document.querySelector("body");
 
 // Rotation change reload
 
-let images = Array.from(document.images);
-
 screen.orientation.addEventListener("change", (event) => {
-    setTimeout(() => {
-        images.forEach((image) => {
-            image.outerHTML = image.outerHTML;
-        });
-    }, "100");
+    window.location.reload();
 });
 
 // Toggle menu
