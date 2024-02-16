@@ -11,12 +11,14 @@ screen.orientation.addEventListener("change", (event) => {
     images.forEach((image) => {
         image.style.setProperty("display", "none");
     });
-});
 
-images.forEach((image) => {
-    if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
-        image.style.setProperty("display", "block");
-    }
+    setTimeout(() => {
+        images.forEach((image) => {
+            if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
+                image.style.setProperty("display", "block");
+            }
+        });
+    }, "100");
 });
 
 // Toggle menu
