@@ -3,8 +3,23 @@ const body = document.querySelector("body");
 
 // Rotation change reload
 
+let images = Array.from(document.images);
+let angle = screen.orientation.angle;
+//const angles = [0, 90, 180, 270];
+
 screen.orientation.addEventListener("change", (event) => {
-    window.location.reload();
+
+    images.forEach((element) => {
+        element.style.setProperty("display", "none");
+    });
+
+    images.forEach((element) => {
+        if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
+            element.style.setProperty("display", "block");
+        }
+    });
+
+    alert(screen.orientation.type + " " + screen.orientation.angle);
 });
 
 // Toggle menu
