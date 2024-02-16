@@ -3,9 +3,9 @@ const body = document.querySelector("body");
 
 // Rotation change reload
 
-//screen.orientation.addEventListener("change", (event) => {
-//    window.location.reload();
-//});
+screen.orientation.addEventListener("change", (event) => {
+    window.location.reload();
+});
 
 // Toggle menu
 
