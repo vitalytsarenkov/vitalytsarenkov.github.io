@@ -8,18 +8,15 @@ let angle = screen.orientation.angle;
 //const angles = [0, 90, 180, 270];
 
 screen.orientation.addEventListener("change", (event) => {
-
-    images.forEach((element) => {
-        element.style.setProperty("display", "none");
+    images.forEach((image) => {
+        image.style.setProperty("display", "none");
     });
+});
 
-    images.forEach((element) => {
-        if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
-            element.style.setProperty("display", "block");
-        }
-    });
-
-    alert(screen.orientation.type + " " + screen.orientation.angle);
+images.forEach((image) => {
+    if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
+        image.style.setProperty("display", "block");
+    }
 });
 
 // Toggle menu
