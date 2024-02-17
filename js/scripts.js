@@ -3,16 +3,16 @@ const body = document.querySelector("body");
 
 // Rotation change reload
 
-let images = Array.from(document.images);
-let angle = screen.orientation.angle;
-
-screen.orientation.addEventListener("change", (event) => {
-    images.forEach((image) => {
-        if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
-            image.outerHTML = image.outerHTML;
-        }
-    });
-});
+//let images = Array.from(document.images);
+//let angle = screen.orientation.angle;
+//
+//screen.orientation.addEventListener("change", (event) => {
+//    images.forEach((image) => {
+//        if (angle == 0 || angle == 90 || angle == 180 || angle == 270) {
+//            image.outerHTML = image.outerHTML;
+//        }
+//    });
+//});
 
 // Toggle menu
 
