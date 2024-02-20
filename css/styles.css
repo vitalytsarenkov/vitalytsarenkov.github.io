@@ -32,6 +32,11 @@
     /*    border: 1px dotted red;*/
 }
 
+body,
+button {
+    font-family: Verdana, sans-serif;
+}
+
 p,
 hr,
 img,
@@ -68,8 +73,6 @@ html {
 }
 
 body {
-    font-family: Verdana, sans-serif;
-
     color: var(--text-color);
     background-color: var(--page-color);
 }
@@ -90,6 +93,7 @@ a {
 }
 
 button {
+    color: var(--icon-color);
     background-color: transparent;
     border: 0;
 
@@ -105,7 +109,6 @@ img {
 figure {}
 
 figcaption {
-    padding-top: 0;
     padding-left: var(--padding);
 }
 
@@ -236,7 +239,6 @@ hr {
 }
 
 .carousel figcaption {
-    padding-top: var(--padding);
     padding-left: 0;
 
     flex: 1;
@@ -259,21 +261,34 @@ hr {
 
 .carousel-content li {
     flex: 0;
-
-    opacity: 0;
 }
 
 .carousel-content li.shown {
     flex: 1;
-
-    opacity: 1;
-
-    transition: opacity 0.5s;
 }
 
 .carousel-navigation {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+}
+
+.carousel-navigation,
+.carousel-navigation button {
+    font-size: 0.75rem;
+}
+
+.carousel-navigation button:active {
+    color: var(--icon-color);
+}
+
+.carousel-navigation span {
+    padding: 0 0.5rem;
+}
+
+.left,
+.right {
+    display: flex;
     align-items: center;
 }
 
@@ -284,9 +299,7 @@ hr {
 .slide-number p.shown {
     display: block;
 
-    padding: 0.5rem 0;
-
-    font-size: 0.75rem;
+    /*    padding: 0.5rem 0;*/
 }
 
 .top-scroll {
@@ -360,13 +373,6 @@ hr {
 .header {
     padding: calc(var(--padding) * 0.75) var(--padding);
 }
-
-/*
-.x {
-    width: 1rem;
-    height: auto;
-}
-*/
 
 .main-header {
     padding-bottom: 0;
@@ -485,7 +491,6 @@ hr {
     }
 
     .carousel figcaption {
-        padding-top: 0;
         padding-left: var(--padding);
     }
 }

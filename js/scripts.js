@@ -130,7 +130,15 @@ for (let i = 0; i < carousels.length; i++) {
             navigate(-1);
         });
 
+        left.addEventListener("touchmove", () => {
+            navigate(-1);
+        });
+
         right.addEventListener("click", () => {
+            navigate(1);
+        });
+
+        right.addEventListener("touchmove", () => {
             navigate(1);
         });
 
