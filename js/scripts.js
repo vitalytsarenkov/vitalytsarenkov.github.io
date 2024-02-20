@@ -89,3 +89,53 @@ modeToggle.addEventListener("click", () => {
         html.classList.toggle("toggle-mode");
     }, modeTransitionMs);
 });
+
+// Carousel
+
+const carousels = body.querySelectorAll(".carousel");
+
+for (let i = 0; i < carousels.length; i++) {
+
+    const carousel = function () {
+
+        const images = carousels[i].querySelectorAll(".carousel-content li");
+        const slides = carousels[i].querySelectorAll(".slide-number p");
+        const left = carousels[i].querySelector(".left");
+        const right = carousels[i].querySelector(".right");
+
+        let counter = 0;
+        let amount = images.length;
+        let currentImage = images[0];
+        let currentSlide = slides[0];
+
+        function navigate(direction) {
+            currentImage.classList.remove("shown");
+            currentSlide.classList.remove("shown");
+            counter = counter + direction;
+            if (direction === -1 &&
+                counter < 0) {
+                counter = amount - 1;
+            }
+            if (direction === 1 &&
+                !images[counter]) {
+                counter = 0;
+            }
+            currentImage = images[counter];
+            currentSlide = slides[counter];
+            currentImage.classList.add("shown");
+            currentSlide.classList.add("shown");
+        }
+
+        left.addEventListener("click", () => {
+            navigate(-1);
+        });
+
+        right.addEventListener("click", () => {
+            navigate(1);
+        });
+
+        navigate(0);
+    };
+
+    carousel();
+};

@@ -33,11 +33,13 @@
 }
 
 p,
+hr,
 img,
 .header,
 .nav,
 .sidebar-footer,
-.main-header {
+.main-header,
+.carousel {
     padding: var(--padding);
 }
 
@@ -103,11 +105,16 @@ img {
 figure {}
 
 figcaption {
-    padding: 0 var(--padding);
+    padding-top: 0;
+    padding-left: var(--padding);
 }
 
 address a {
     color: var(--hover-color);
+}
+
+hr {
+    border: 0;
 }
 
 /* Class rules */
@@ -223,6 +230,65 @@ address a {
     flex: 1;
 }
 
+.carousel {
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel figcaption {
+    padding-top: var(--padding);
+    padding-left: 0;
+
+    flex: 1;
+}
+
+.carousel-box {
+    flex: 1;
+}
+
+.carousel-content {
+    list-style: none;
+    line-height: 0;
+
+    display: flex;
+}
+
+.carousel-content img {
+    padding: 0;
+}
+
+.carousel-content li {
+    flex: 0;
+
+    opacity: 0;
+}
+
+.carousel-content li.shown {
+    flex: 1;
+
+    opacity: 1;
+
+    transition: opacity 0.5s;
+}
+
+.carousel-navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.slide-number p {
+    display: none;
+}
+
+.slide-number p.shown {
+    display: block;
+
+    padding: 0.5rem 0;
+
+    font-size: 0.75rem;
+}
+
 .top-scroll {
     padding: 2rem;
 
@@ -295,10 +361,12 @@ address a {
     padding: calc(var(--padding) * 0.75) var(--padding);
 }
 
+/*
 .x {
     width: 1rem;
     height: auto;
 }
+*/
 
 .main-header {
     padding-bottom: 0;
@@ -410,5 +478,14 @@ address a {
         text-align: left;
 
         margin: 0;
+    }
+
+    .carousel {
+        flex-direction: row;
+    }
+
+    .carousel figcaption {
+        padding-top: 0;
+        padding-left: var(--padding);
     }
 }
