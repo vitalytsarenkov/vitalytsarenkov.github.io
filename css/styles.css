@@ -4,6 +4,7 @@
     --menu-transition: 0.25s;
     --mode-transition: 0.5s;
     --page-transition: 1s;
+    --modal-transition: 0.25s;
 }
 
 [data-theme="light"] {
@@ -32,19 +33,14 @@
     /*    border: 1px dotted red;*/
 }
 
-body,
-button {
-    font-family: Verdana, sans-serif;
-}
-
 p,
-hr,
 img,
 .header,
 .nav,
 .sidebar-footer,
 .main-header,
-.carousel {
+.carousel,
+.modal {
     padding: var(--padding);
 }
 
@@ -73,6 +69,8 @@ html {
 }
 
 body {
+    font-family: Verdana, sans-serif;
+
     color: var(--text-color);
     background-color: var(--page-color);
 }
@@ -104,6 +102,8 @@ button {
 img {
     max-width: 100%;
     height: auto;
+
+    pointer-events: none;
 }
 
 figure {}
@@ -118,6 +118,8 @@ address a {
 
 hr {
     border: 0;
+
+    padding: calc(var(--padding) / 2);
 }
 
 /* Class rules */
@@ -273,23 +275,16 @@ hr {
     align-items: center;
 }
 
-.carousel-navigation,
-.carousel-navigation button {
-    font-size: 0.75rem;
+.left {
+    padding-right: 1rem;
 }
 
-.carousel-navigation button:active {
-    color: var(--icon-color);
-}
-
-.carousel-navigation span {
-    padding: 0 0.5rem;
-}
-
-.left,
 .right {
-    display: flex;
-    align-items: center;
+    padding-left: 1rem;
+}
+
+.slide-number {
+    font-size: 0.75rem;
 }
 
 .slide-number p {
@@ -298,8 +293,6 @@ hr {
 
 .slide-number p.shown {
     display: block;
-
-    /*    padding: 0.5rem 0;*/
 }
 
 .top-scroll {
@@ -430,6 +423,11 @@ hr {
         /*        scrollbar-gutter: stable;*/
     }
 
+    img {
+        cursor: pointer;
+        pointer-events: auto;
+    }
+
     .page {
         max-width: 1000px;
         /*        max-width: calc(1015px - (100vw - 100%));*/
@@ -492,5 +490,42 @@ hr {
 
     .carousel figcaption {
         padding-left: var(--padding);
+    }
+
+    /* Modal images */
+
+    .modal {
+        background-color: var(--page-color);
+
+        width: 100vw;
+        height: 100vh;
+
+        display: none;
+
+        position: fixed;
+        top: 0;
+
+        z-index: 10000;
+
+        overflow: auto;
+
+        opacity: 0;
+        transition: opacity var(--modal-transition);
+    }
+
+    .modal-content {
+        max-width: 100%;
+
+        padding: 0;
+
+        margin: auto;
+    }
+
+    .modal-shown {
+        display: flex;
+    }
+
+    .fade-modal {
+        opacity: 1;
     }
 }

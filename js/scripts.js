@@ -130,15 +130,7 @@ for (let i = 0; i < carousels.length; i++) {
             navigate(-1);
         });
 
-        left.addEventListener("touchmove", () => {
-            navigate(-1);
-        });
-
         right.addEventListener("click", () => {
-            navigate(1);
-        });
-
-        right.addEventListener("touchmove", () => {
             navigate(1);
         });
 
@@ -146,4 +138,46 @@ for (let i = 0; i < carousels.length; i++) {
     };
 
     carousel();
+};
+
+// Modal images
+
+const images = document.images;
+const modal = body.querySelector(".modal");
+const modalContent = body.querySelector(".modal-content");
+
+let modalState = getComputedStyle(modal);
+
+const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
+const modalTransitionMs = parseFloat(modalTransition) * 1000;
+
+for (let i = 0; i < images.length; i++) {
+
+    const imageClick = function () {
+
+        images[i].addEventListener("click", () => {
+            modalContent.src = images[i].src;
+
+            if (modalState.getPropertyValue("display") == "none") {
+                modal.classList.toggle("modal-shown");
+
+                setTimeout(() => {
+                    modal.classList.toggle("fade-modal");
+                }, "100");
+
+                setTimeout(() => {
+                    html.classList.toggle("hide-scroll");
+                }, modalTransitionMs + 50);
+
+            } else {
+                html.classList.toggle("hide-scroll");
+                modal.classList.toggle("fade-modal");
+
+                setTimeout(() => {
+                    modal.classList.toggle("modal-shown");
+                }, modalTransitionMs);
+            }
+        });
+    }
+    imageClick();
 };
