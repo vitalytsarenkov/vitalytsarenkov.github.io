@@ -15,9 +15,9 @@ const menuTransitionMs = parseFloat(menuTransition) * 1000;
 function hideScroll(state) {
     if (state.getPropertyValue("display") == "flex" &&
         state.getPropertyValue("position") == "fixed") {
-        html.classList.add("hide-scroll");
+        body.classList.add("hide-scroll");
     } else {
-        html.classList.remove("hide-scroll");
+        body.classList.remove("hide-scroll");
     }
 };
 
@@ -187,7 +187,3 @@ for (let i = 0; i < images.length; i++) {
     }
     imageClick();
 };
-
-//window.onresize = function () {
-//    hideScroll(modalState);
-//};
