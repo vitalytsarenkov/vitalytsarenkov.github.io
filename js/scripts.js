@@ -12,17 +12,17 @@ let sidebarState = getComputedStyle(sidebar);
 const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
 const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
-function hideScroll() {
-    if (sidebarState.getPropertyValue("display") == "flex" &&
-        sidebarState.getPropertyValue("position") == "fixed") {
-        body.classList.add("hide-scroll");
+function hideScroll(state) {
+    if (state.getPropertyValue("display") == "flex" &&
+        state.getPropertyValue("position") == "fixed") {
+        html.classList.add("hide-scroll");
     } else {
-        body.classList.remove("hide-scroll");
+        html.classList.remove("hide-scroll");
     }
 };
 
 menuButton.addEventListener("click", () => {
-    body.classList.toggle("unclicable");
+    body.classList.add("unclicable");
     body.classList.add("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
@@ -33,25 +33,25 @@ menuButton.addEventListener("click", () => {
     }, "100");
 
     setTimeout(() => {
-        body.classList.toggle("unclicable");
+        body.classList.remove("unclicable");
     }, menuTransitionMs);
 });
 
 menuCross.addEventListener("click", () => {
-    body.classList.toggle("unclicable");
+    body.classList.add("unclicable");
     body.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("fade-sidebar");
 
     setTimeout(() => {
-        body.classList.toggle("unclicable");
+        body.classList.remove("unclicable");
         sidebar.classList.toggle("toggle-sidebar");
     }, menuTransitionMs);
 });
 
 window.onresize = function () {
-    hideScroll();
+    hideScroll(sidebarState);
 };
 
 // Toggle dark and light modes
@@ -81,11 +81,11 @@ modeToggle.addEventListener("click", () => {
     localStorage.setItem("mode", newMode);
     currentMode = newMode;
 
-    body.classList.toggle("unclicable");
+    body.classList.add("unclicable");
     html.classList.toggle("toggle-mode");
 
     setTimeout(() => {
-        body.classList.toggle("unclicable");
+        body.classList.remove("unclicable");
         html.classList.toggle("toggle-mode");
     }, modeTransitionMs);
 });
@@ -156,6 +156,7 @@ for (let i = 0; i < images.length; i++) {
     const imageClick = function () {
 
         images[i].addEventListener("click", () => {
+            body.classList.add("unclicable");
             modalContent.src = images[i].src;
 
             if (modalState.getPropertyValue("display") == "none") {
@@ -163,17 +164,22 @@ for (let i = 0; i < images.length; i++) {
 
                 setTimeout(() => {
                     modal.classList.toggle("fade-modal");
+                    modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
+                    modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
                 }, "100");
 
                 setTimeout(() => {
-                    html.classList.toggle("hide-scroll");
+                    body.classList.remove("unclicable");
+                    html.classList.add("hide-scroll");
                 }, modalTransitionMs + 50);
 
             } else {
-                html.classList.toggle("hide-scroll");
+                html.classList.remove("hide-scroll");
                 modal.classList.toggle("fade-modal");
 
                 setTimeout(() => {
+                    body.classList.remove("unclicable");
+                    modalContent.src = "";
                     modal.classList.toggle("modal-shown");
                 }, modalTransitionMs);
             }
@@ -181,3 +187,7 @@ for (let i = 0; i < images.length; i++) {
     }
     imageClick();
 };
+
+//window.onresize = function () {
+//    hideScroll(modalState);
+//};
