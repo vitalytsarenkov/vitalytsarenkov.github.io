@@ -101,7 +101,6 @@ button {
     background-color: transparent;
     border: 0;
 
-    max-height: 1rem;
     cursor: pointer;
 }
 
@@ -167,6 +166,8 @@ hr {
 
 .menu-cross {
     display: none;
+
+    height: 1rem;
 }
 
 .container {
@@ -337,21 +338,14 @@ hr {
     flex-direction: column;
 }
 
-.carousel figcaption {
-    padding-left: 0;
-
-    flex: 1;
-}
-
 .carousel-box {
     flex: 1;
 }
 
-.carousel-content {
-    list-style: none;
-    line-height: 0;
+.carousel figcaption {
+    padding-left: 0;
 
-    display: flex;
+    flex: 1;
 }
 
 .carousel-content img {
@@ -359,11 +353,11 @@ hr {
 }
 
 .carousel-content li {
-    flex: 0;
+    display: none;
 }
 
 .carousel-content li.shown {
-    flex: 1;
+    display: block;
 }
 
 .carousel-navigation {
@@ -372,14 +366,32 @@ hr {
     align-items: center;
 }
 
-.slide-number p {
+.carousel-position li {
     display: none;
 }
 
-.slide-number p.shown {
+.carousel-position li.shown {
     display: block;
 
+    padding: 1rem 0.5rem;
+
     font-size: 0.75rem;
+}
+
+.carousel-content,
+.carousel-position {
+    list-style: none;
+}
+
+.carousel-content,
+.left,
+.right {
+    line-height: 0;
+}
+
+.left,
+.right {
+    padding: 0.5rem;
 }
 
 /* Page transition */

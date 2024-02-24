@@ -99,18 +99,18 @@ for (let i = 0; i < carousels.length; i++) {
     const carousel = function () {
 
         const images = carousels[i].querySelectorAll(".carousel-content li");
-        const slides = carousels[i].querySelectorAll(".slide-number p");
+        const positions = carousels[i].querySelectorAll(".carousel-position li");
         const left = carousels[i].querySelector(".left");
         const right = carousels[i].querySelector(".right");
 
         let counter = 0;
         let amount = images.length;
         let currentImage = images[0];
-        let currentSlide = slides[0];
+        let currentPosition = positions[0];
 
         function navigate(direction) {
             currentImage.classList.remove("shown");
-            currentSlide.classList.remove("shown");
+            currentPosition.classList.remove("shown");
             counter = counter + direction;
             if (direction === -1 &&
                 counter < 0) {
@@ -121,9 +121,9 @@ for (let i = 0; i < carousels.length; i++) {
                 counter = 0;
             }
             currentImage = images[counter];
-            currentSlide = slides[counter];
+            currentPosition = positions[counter];
             currentImage.classList.add("shown");
-            currentSlide.classList.add("shown");
+            currentPosition.classList.add("shown");
         }
 
         left.addEventListener("click", () => {
@@ -162,10 +162,11 @@ for (let i = 0; i < images.length; i++) {
             if (modalState.getPropertyValue("display") == "none") {
                 modal.classList.toggle("modal-shown");
 
+                modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
+                modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
+
                 setTimeout(() => {
                     modal.classList.toggle("fade-modal");
-                    modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
-                    modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
                 }, "100");
 
                 setTimeout(() => {
