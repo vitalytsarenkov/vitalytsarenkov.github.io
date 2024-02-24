@@ -352,30 +352,21 @@ hr {
     padding: 0;
 }
 
-.carousel-content li {
-    display: none;
-}
-
-.carousel-content li.shown {
-    display: block;
-}
-
 .carousel-navigation {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.carousel-position li {
-    display: none;
+.left,
+.right {
+    padding: 0.5rem;
 }
 
-.carousel-position li.shown {
-    display: block;
+.carousel-position p {
+    font-size: 0.75rem;
 
     padding: 1rem 0.5rem;
-
-    font-size: 0.75rem;
 }
 
 .carousel-content,
@@ -389,9 +380,14 @@ hr {
     line-height: 0;
 }
 
-.left,
-.right {
-    padding: 0.5rem;
+.carousel-content li,
+.carousel-position li {
+    display: none;
+}
+
+.carousel-content li.shown,
+.carousel-position li.shown {
+    display: block;
 }
 
 /* Page transition */
