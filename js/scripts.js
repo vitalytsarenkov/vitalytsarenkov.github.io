@@ -151,22 +151,20 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
-const maxImageWidth = 3000;
-modalContent.width = maxImageWidth;
-
 function imageClick(image) {
     image.addEventListener("click", () => {
         body.classList.add("unclicable");
         modalContent.src = image.src;
 
-        modalContent.addEventListener("load", function () {
-            centerImage();
-        });
-
         if (modalState.getPropertyValue("display") == "none") {
             modal.classList.toggle("modal-shown");
 
-            modalContent.width = modalContent.width / window.devicePixelRatio;
+            modalContent.addEventListener("load", function () {
+                modalContent.width = modalContent.width / window.devicePixelRatio;
+                centerImage();
+            }, {
+                once: true
+            });
 
             setTimeout(() => {
                 modal.classList.toggle("fade-modal");
@@ -190,7 +188,7 @@ function closeModal() {
     setTimeout(() => {
         body.classList.remove("unclicable");
         modalContent.removeAttribute("src");
-        modalContent.width = maxImageWidth;
+        modalContent.removeAttribute("width");
         modal.classList.toggle("modal-shown");
     }, modalTransitionMs);
 }
