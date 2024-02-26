@@ -151,6 +151,9 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
+const maxImageWidth = 3000;
+modalContent.width = maxImageWidth;
+
 function imageClick(image) {
     image.addEventListener("click", () => {
         body.classList.add("unclicable");
@@ -187,7 +190,7 @@ function closeModal() {
     setTimeout(() => {
         body.classList.remove("unclicable");
         modalContent.removeAttribute("src");
-        modalContent.removeAttribute("width");
+        modalContent.width = maxImageWidth;
         modal.classList.toggle("modal-shown");
     }, modalTransitionMs);
 }
