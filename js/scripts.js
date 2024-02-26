@@ -151,40 +151,55 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
-for (let i = 0; i < images.length; i++) {
+function imageClick(image) {
+    image.addEventListener("click", () => {
+        body.classList.add("unclicable");
+        modalContent.src = image.src;
 
-    const imageClick = function () {
-
-        images[i].addEventListener("click", () => {
-            body.classList.add("unclicable");
-            modalContent.src = images[i].src;
-
-            if (modalState.getPropertyValue("display") == "none") {
-                modal.classList.toggle("modal-shown");
-
-                modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
-                modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
-
-                setTimeout(() => {
-                    modal.classList.toggle("fade-modal");
-                }, "100");
-
-                setTimeout(() => {
-                    body.classList.remove("unclicable");
-                    html.classList.add("hide-scroll");
-                }, modalTransitionMs + 50);
-
-            } else {
-                html.classList.remove("hide-scroll");
-                modal.classList.toggle("fade-modal");
-
-                setTimeout(() => {
-                    body.classList.remove("unclicable");
-                    modalContent.src = "";
-                    modal.classList.toggle("modal-shown");
-                }, modalTransitionMs);
-            }
+        modalContent.addEventListener("load", function () {
+            centerImage();
         });
+
+        if (modalState.getPropertyValue("display") == "none") {
+            modal.classList.toggle("modal-shown");
+
+            setTimeout(() => {
+                modal.classList.toggle("fade-modal");
+            }, "100");
+
+            setTimeout(() => {
+                body.classList.remove("unclicable");
+                html.classList.add("hide-scroll");
+            }, modalTransitionMs + 50);
+
+        } else {
+            closeModal();
+        }
+    });
+}
+
+function closeModal() {
+    html.classList.remove("hide-scroll");
+    modal.classList.toggle("fade-modal");
+
+    setTimeout(() => {
+        body.classList.remove("unclicable");
+        modalContent.src = "";
+        modal.classList.toggle("modal-shown");
+    }, modalTransitionMs);
+}
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
+        closeModal();
     }
-    imageClick();
+});
+
+function centerImage() {
+    modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
+    modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
+}
+
+for (let i = 0; i < images.length; i++) {
+    imageClick(images[i]);
 };
