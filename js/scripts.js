@@ -163,6 +163,8 @@ function imageClick(image) {
         if (modalState.getPropertyValue("display") == "none") {
             modal.classList.toggle("modal-shown");
 
+            modalContent.width = modalContent.width / window.devicePixelRatio;
+
             setTimeout(() => {
                 modal.classList.toggle("fade-modal");
             }, "100");
@@ -184,7 +186,8 @@ function closeModal() {
 
     setTimeout(() => {
         body.classList.remove("unclicable");
-        modalContent.src = "";
+        modalContent.removeAttribute("src");
+        modalContent.removeAttribute("width");
         modal.classList.toggle("modal-shown");
     }, modalTransitionMs);
 }
