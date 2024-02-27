@@ -236,7 +236,7 @@ function panModal() {
         panOn = false;
     };
 
-    modal.addEventListener("pointerdown", panStart);
+    modalContent.addEventListener("pointerdown", panStart);
     addEventListener("pointermove", panMove);
     addEventListener("pointerup", panEnd);
 };
