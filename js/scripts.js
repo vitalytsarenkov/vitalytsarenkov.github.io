@@ -144,6 +144,7 @@ for (let i = 0; i < carousels.length; i++) {
 
 const images = document.images;
 const modal = body.querySelector(".modal");
+const modalCross = body.querySelector(".modal-cross");
 const modalContent = body.querySelector(".modal-content");
 
 let modalState = getComputedStyle(modal);
@@ -151,16 +152,15 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
-function imageClick(image) {
+function openModal(image) {
     image.addEventListener("click", () => {
-        body.classList.add("unclicable");
-        modalContent.src = image.src;
-
         if (modalState.getPropertyValue("display") == "none") {
-            modal.classList.toggle("modal-shown");
+            body.classList.add("unclicable");
+            modal.classList.add("modal-shown");
+            modalContent.src = image.src;
 
             modalContent.addEventListener("load", function () {
-                modalContent.width = modalContent.width / window.devicePixelRatio;
+                modalContent.width /= window.devicePixelRatio;
                 centerImage();
             }, {
                 once: true
@@ -174,30 +174,20 @@ function imageClick(image) {
                 body.classList.remove("unclicable");
                 html.classList.add("hide-scroll");
             }, modalTransitionMs + 50);
-
-        } else {
-            closeModal();
         }
     });
 }
 
 function closeModal() {
-    html.classList.remove("hide-scroll");
     modal.classList.toggle("fade-modal");
+    html.classList.remove("hide-scroll");
 
     setTimeout(() => {
-        body.classList.remove("unclicable");
+        modal.classList.remove("modal-shown");
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
-        modal.classList.toggle("modal-shown");
     }, modalTransitionMs);
 }
-
-document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
-        closeModal();
-    }
-});
 
 function centerImage() {
     modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
@@ -205,5 +195,48 @@ function centerImage() {
 }
 
 for (let i = 0; i < images.length; i++) {
-    imageClick(images[i]);
+    openModal(images[i]);
 };
+
+modalCross.addEventListener("click", () => {
+    closeModal();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
+        closeModal();
+    }
+});
+
+function panModal() {
+    const startPoint = {
+        x: 0,
+        y: 0
+    };
+    let panOn = false;
+
+    const panStart = (event) => {
+        event.preventDefault();
+        panOn = true;
+        startPoint.x = modal.scrollLeft + event.clientX;
+        startPoint.y = modal.scrollTop + event.clientY;
+    };
+
+    const panMove = (event) => {
+        if (!panOn) return;
+        modal.scrollTo(
+            startPoint.x - event.clientX,
+            startPoint.y - event.clientY
+        );
+    };
+
+    const panEnd = () => {
+        panOn = false;
+    };
+
+    modal.addEventListener("pointerdown", panStart);
+    addEventListener("pointermove", panMove);
+    addEventListener("pointerup", panEnd);
+};
+
+panModal();

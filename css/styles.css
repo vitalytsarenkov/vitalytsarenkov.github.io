@@ -46,7 +46,8 @@ img,
 }
 
 .a-icon,
-.menu-toggle {
+.menu-toggle,
+.modal-cross {
     line-height: 0;
 }
 
@@ -309,10 +310,20 @@ hr {
 
     z-index: 10000;
 
-    overflow: auto;
+    overflow: hidden;
 
     opacity: 0;
     transition: opacity var(--modal-transition);
+}
+
+.modal-cross {
+    padding: 0.5rem;
+
+    background-color: var(--page-color);
+
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
 }
 
 .modal-content {
@@ -321,6 +332,8 @@ hr {
     padding: 0;
 
     margin: auto;
+
+    cursor: move;
 }
 
 .modal-shown {

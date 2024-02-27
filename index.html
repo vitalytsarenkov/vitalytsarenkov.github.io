@@ -101,8 +101,8 @@
                         <div class="carousel-box">
                             <ul class="carousel-content">
                                 <li><img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 205px) / 2)" srcset="./img/slide_1_500.png 500w, ./img/slide_1_750.png 750w" src="./img/slide_1_750.png" alt=""></li>
-                                <li><img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 205px) / 2)" srcset="./img/slide_2_500.png 500w, ./img/slide_2_750.png 750w" src="./img/slide_2_750.png" alt=""></li>
-                                <li><img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 205px) / 2)" srcset="./img/slide_3_500.png 500w, ./img/slide_3_750.png 750w" src="./img/slide_3_750.png" alt=""></li>
+                                <li><img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 205px) / 2)" srcset="./img/slide_2_500.png 500w, ./img/slide_2_750.png 750w" src="./img/slide_2_750.png" loading="lazy" alt=""></li>
+                                <li><img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 205px) / 2)" srcset="./img/slide_3_500.png 500w, ./img/slide_3_750.png 750w" src="./img/slide_3_750.png" loading="lazy" alt=""></li>
                             </ul>
                             <div class="carousel-navigation">
                                 <button class="left">
@@ -174,6 +174,11 @@
     </div>
 
     <section class="modal">
+        <button class="modal-cross">
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
+                <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
+            </svg>
+        </button>
         <img class="modal-content">
     </section>
 
