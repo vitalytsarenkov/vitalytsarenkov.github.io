@@ -143,8 +143,8 @@ for (let i = 0; i < carousels.length; i++) {
 // Modal images
 
 const images = document.images;
+const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
-const modalCross = body.querySelector(".modal-cross");
 const modalContent = body.querySelector(".modal-content");
 
 let modalState = getComputedStyle(modal);
@@ -156,7 +156,7 @@ function openModal(image) {
     image.addEventListener("click", () => {
         if (modalState.getPropertyValue("display") == "none") {
             body.classList.add("unclicable");
-            modal.classList.add("modal-shown");
+            modal.classList.add("show-modal");
             modalContent.src = image.src;
 
             modalContent.addEventListener("load", function () {
@@ -172,20 +172,24 @@ function openModal(image) {
 
             setTimeout(() => {
                 body.classList.remove("unclicable");
+                page.classList.add("hide-page");
                 html.classList.add("hide-scroll");
-            }, modalTransitionMs + 50);
+            }, modalTransitionMs);
+        } else {
+            closeModal();
         }
     });
 }
 
 function closeModal() {
     body.classList.add("unclicable");
-    modal.classList.toggle("fade-modal");
+    page.classList.remove("hide-page");
     html.classList.remove("hide-scroll");
+    modal.classList.toggle("fade-modal");
 
     setTimeout(() => {
         body.classList.remove("unclicable");
-        modal.classList.remove("modal-shown");
+        modal.classList.remove("show-modal");
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
     }, modalTransitionMs);
@@ -200,45 +204,8 @@ for (let i = 0; i < images.length; i++) {
     openModal(images[i]);
 };
 
-modalCross.addEventListener("click", () => {
-    closeModal();
-});
-
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
         closeModal();
     }
 });
-
-function panModal() {
-    const startPoint = {
-        x: 0,
-        y: 0
-    };
-    let panOn = false;
-
-    const panStart = (event) => {
-        event.preventDefault();
-        panOn = true;
-        startPoint.x = modal.scrollLeft + event.clientX;
-        startPoint.y = modal.scrollTop + event.clientY;
-    };
-
-    const panMove = (event) => {
-        if (!panOn) return;
-        modal.scrollTo(
-            startPoint.x - event.clientX,
-            startPoint.y - event.clientY
-        );
-    };
-
-    const panEnd = () => {
-        panOn = false;
-    };
-
-    modalContent.addEventListener("pointerdown", panStart);
-    addEventListener("pointermove", panMove);
-    addEventListener("pointerup", panEnd);
-};
-
-panModal();

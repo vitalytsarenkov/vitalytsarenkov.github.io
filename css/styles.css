@@ -307,9 +307,6 @@ hr {
 
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
 
     z-index: 10000;
 
@@ -319,32 +316,24 @@ hr {
     transition: opacity var(--modal-transition);
 }
 
-.modal-cross {
-    padding: 0.5rem;
-
-    background-color: var(--page-color);
-
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-}
-
 .modal-content {
     max-width: fit-content;
 
     padding: 0;
 
     margin: auto;
-
-    cursor: move;
 }
 
-.modal-shown {
+.show-modal {
     display: flex;
 }
 
 .fade-modal {
     opacity: 1;
+}
+
+.hide-page {
+    opacity: 0;
 }
 
 /* Carousel */
