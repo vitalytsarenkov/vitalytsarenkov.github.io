@@ -179,10 +179,12 @@ function openModal(image) {
 }
 
 function closeModal() {
+    body.classList.add("unclicable");
     modal.classList.toggle("fade-modal");
     html.classList.remove("hide-scroll");
 
     setTimeout(() => {
+        body.classList.remove("unclicable");
         modal.classList.remove("modal-shown");
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
