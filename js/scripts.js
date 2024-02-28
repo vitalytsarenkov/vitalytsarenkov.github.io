@@ -1,6 +1,12 @@
 const html = document.querySelector("html");
 const body = document.querySelector("body");
 
+// Test function
+
+function test() {
+    alert("!!!");
+}
+
 // Toggle menu
 
 const menuButton = body.querySelector(".menu-button");
@@ -145,6 +151,7 @@ for (let i = 0; i < carousels.length; i++) {
 const images = document.images;
 const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
+const modalClose = body.querySelector(".modal-close");
 const modalContent = body.querySelector(".modal-content");
 
 let modalState = getComputedStyle(modal);
@@ -175,8 +182,6 @@ function openModal(image) {
                 page.classList.add("hide-page");
                 html.classList.add("hide-scroll");
             }, modalTransitionMs);
-        } else {
-            closeModal();
         }
     });
 }
@@ -204,8 +209,47 @@ for (let i = 0; i < images.length; i++) {
     openModal(images[i]);
 };
 
+modalClose.addEventListener("click", () => {
+    closeModal();
+});
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
         closeModal();
     }
 });
+
+function panModal() {
+    const startPoint = {
+        x: 0,
+        y: 0
+    };
+    let panOn = false;
+
+    const panStart = (event) => {
+        event.preventDefault();
+        panOn = true;
+        startPoint.x = modal.scrollLeft + event.clientX;
+        startPoint.y = modal.scrollTop + event.clientY;
+    };
+
+    const panMove = (event) => {
+        if (!panOn) return;
+        modal.scrollTo(
+            startPoint.x - event.clientX,
+            startPoint.y - event.clientY
+        );
+    };
+
+    const panEnd = () => {
+        panOn = false;
+    };
+
+    modalContent.addEventListener("pointerdown", panStart);
+    addEventListener("pointermove", panMove);
+    addEventListener("pointerup", panEnd);
+};
+
+if (window.matchMedia("(pointer: fine)").matches) {
+    panModal();
+}

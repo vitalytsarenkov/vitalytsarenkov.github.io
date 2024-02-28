@@ -45,9 +45,14 @@ img,
     padding: var(--padding);
 }
 
-.a-icon,
-.menu-toggle,
-.modal-cross {
+.menu-button,
+.modal-close {
+    line-height: 1rem;
+}
+
+.menu-cross,
+.mode-toggle,
+.a-icon {
     line-height: 0;
 }
 
@@ -159,16 +164,12 @@ hr {
     font-size: 1rem;
     color: var(--icon-color);
 
-    line-height: 1rem;
-
     opacity: 1;
     transition: opacity var(--page-transition);
 }
 
 .menu-cross {
     display: none;
-
-    height: 1rem;
 }
 
 .container {
@@ -316,12 +317,26 @@ hr {
     transition: opacity var(--modal-transition);
 }
 
+.modal-close {
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+
+    background-color: var(--page-color);
+
+    position: fixed;
+    top: 0.5rem;
+    left: 50vw;
+    transform: translateX(-50%);
+}
+
 .modal-content {
     max-width: fit-content;
 
     padding: 0;
 
     margin: auto;
+
+    cursor: move;
 }
 
 .show-modal {
