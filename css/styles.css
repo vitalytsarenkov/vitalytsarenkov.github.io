@@ -317,31 +317,16 @@ hr {
     transition: opacity var(--modal-transition);
 }
 
-.controls {
+.modal-close {
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+
     background-color: var(--page-color);
 
     position: fixed;
     top: 0;
     left: 50vw;
     transform: translateX(-50%);
-
-    display: flex;
-}
-
-.zoom-out,
-.modal-close,
-.zoom-in {
-    font-size: 1rem;
-    line-height: 1rem;
-}
-
-.zoom-out,
-.zoom-in {
-    padding: 0.75rem 1rem;
-}
-
-.modal-close {
-    padding: 0.75rem 0;
 }
 
 .modal-content {
@@ -352,8 +337,6 @@ hr {
     margin: auto;
 
     cursor: move;
-
-    transition: width ease-in-out 0.25s;
 }
 
 .show-modal {

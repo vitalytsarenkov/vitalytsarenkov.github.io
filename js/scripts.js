@@ -5,7 +5,7 @@ const body = document.querySelector("body");
 
 function test() {
     alert("!!!");
-}
+};
 
 // Toggle menu
 
@@ -100,50 +100,48 @@ modeToggle.addEventListener("click", () => {
 
 const carousels = body.querySelectorAll(".carousel");
 
-for (let i = 0; i < carousels.length; i++) {
+function carousel(carousel) {
+    const images = carousel.querySelectorAll(".carousel-content li");
+    const positions = carousel.querySelectorAll(".carousel-position li");
+    const left = carousel.querySelector(".left");
+    const right = carousel.querySelector(".right");
 
-    const carousel = function () {
+    let counter = 0;
+    let amount = images.length;
+    let currentImage = images[0];
+    let currentPosition = positions[0];
 
-        const images = carousels[i].querySelectorAll(".carousel-content li");
-        const positions = carousels[i].querySelectorAll(".carousel-position li");
-        const left = carousels[i].querySelector(".left");
-        const right = carousels[i].querySelector(".right");
-
-        let counter = 0;
-        let amount = images.length;
-        let currentImage = images[0];
-        let currentPosition = positions[0];
-
-        function navigate(direction) {
-            currentImage.classList.remove("shown");
-            currentPosition.classList.remove("shown");
-            counter = counter + direction;
-            if (direction === -1 &&
-                counter < 0) {
-                counter = amount - 1;
-            }
-            if (direction === 1 &&
-                !images[counter]) {
-                counter = 0;
-            }
-            currentImage = images[counter];
-            currentPosition = positions[counter];
-            currentImage.classList.add("shown");
-            currentPosition.classList.add("shown");
+    function navigate(direction) {
+        currentImage.classList.remove("shown");
+        currentPosition.classList.remove("shown");
+        counter = counter + direction;
+        if (direction === -1 &&
+            counter < 0) {
+            counter = amount - 1;
         }
-
-        left.addEventListener("click", () => {
-            navigate(-1);
-        });
-
-        right.addEventListener("click", () => {
-            navigate(1);
-        });
-
-        navigate(0);
+        if (direction === 1 &&
+            !images[counter]) {
+            counter = 0;
+        }
+        currentImage = images[counter];
+        currentPosition = positions[counter];
+        currentImage.classList.add("shown");
+        currentPosition.classList.add("shown");
     };
 
-    carousel();
+    left.addEventListener("click", () => {
+        navigate(-1);
+    });
+
+    right.addEventListener("click", () => {
+        navigate(1);
+    });
+
+    navigate(0);
+};
+
+for (let i = 0; i < carousels.length; i++) {
+    carousel(carousels[i]);
 };
 
 // Modal images
@@ -166,7 +164,7 @@ function openModal(image) {
             modal.classList.add("show-modal");
             modalContent.src = image.src;
 
-            modalContent.addEventListener("load", function () {
+            modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
                 centerImage();
             }, {
@@ -184,7 +182,7 @@ function openModal(image) {
             }, modalTransitionMs);
         }
     });
-}
+};
 
 function closeModal() {
     body.classList.add("unclicable");
@@ -198,12 +196,12 @@ function closeModal() {
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
     }, modalTransitionMs);
-}
+};
 
 function centerImage() {
     modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
     modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
-}
+};
 
 for (let i = 0; i < images.length; i++) {
     openModal(images[i]);
@@ -256,20 +254,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
     panModal();
 };
 
-const zoomFactor = 0.5;
-
-const zoomModal = (event) => {
+modalContent.addEventListener("wheel", () => {
     event.preventDefault();
-
-    let direction = event.deltaY > 0 ? 1 : -1;
-
-    if (direction == 1) {
-        modalContent.width *= zoomFactor;
-    }
-
-    if (direction == -1) {
-        modalContent.width /= zoomFactor;
-    }
-};
-
-modalContent.addEventListener("wheel", zoomModal);
+});
