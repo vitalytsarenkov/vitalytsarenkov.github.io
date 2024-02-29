@@ -224,25 +224,27 @@ function panModal() {
         x: 0,
         y: 0
     };
-    let panOn = false;
+    let panning = false;
 
     const panStart = (event) => {
         event.preventDefault();
-        panOn = true;
+        panning = true;
         startPoint.x = modal.scrollLeft + event.clientX;
         startPoint.y = modal.scrollTop + event.clientY;
     };
 
     const panMove = (event) => {
-        if (!panOn) return;
+        if (!panning) return;
         modal.scrollTo(
             startPoint.x - event.clientX,
             startPoint.y - event.clientY
         );
+        modalContent.style.cursor = "grabbing";
     };
 
     const panEnd = () => {
-        panOn = false;
+        panning = false;
+        modalContent.style.cursor = "grab";
     };
 
     modalContent.addEventListener("pointerdown", panStart);
@@ -252,4 +254,22 @@ function panModal() {
 
 if (window.matchMedia("(pointer: fine)").matches) {
     panModal();
-}
+};
+
+const zoomFactor = 0.5;
+
+const zoomModal = (event) => {
+    event.preventDefault();
+
+    let direction = event.deltaY > 0 ? 1 : -1;
+
+    if (direction == 1) {
+        modalContent.width *= zoomFactor;
+    }
+
+    if (direction == -1) {
+        modalContent.width /= zoomFactor;
+    }
+};
+
+modalContent.addEventListener("wheel", zoomModal);
