@@ -166,7 +166,9 @@ function openModal(image) {
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
-                centerImage();
+                getModalDimensions();
+                setModalSlider();
+                centerScroll();
             }, {
                 once: true
             });
@@ -198,7 +200,7 @@ function closeModal() {
     }, modalTransitionMs);
 };
 
-function centerImage() {
+function centerScroll() {
     modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
     modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
 };
@@ -254,6 +256,97 @@ if (window.matchMedia("(pointer: fine)").matches) {
     panModal();
 };
 
-modalContent.addEventListener("wheel", () => {
-    event.preventDefault();
+// Zoom image
+
+const modalSlider = body.querySelector(".modal-slider");
+
+let originalWidth,
+    originalHeight;
+
+function getModalDimensions() {
+    originalWidth = modalContent.width;
+    originalHeight = modalContent.height;
+};
+
+function setModalSlider() {
+    modalSliderMin();
+    modalSlider.max = originalWidth;
+    modalSlider.value = originalWidth;
+};
+
+function modalSliderMin() {
+    const modalProportion = originalWidth / originalHeight;
+    const windowProportion = window.innerWidth / window.innerHeight;
+    const portrait = windowProportion < 1 ? "true" : "false";
+    const minimumWidth = window.innerHeight / originalHeight * originalWidth;
+
+    if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
+        modalSlider.min = originalWidth;
+    }
+
+    if (portrait == "true") {
+        if (modalProportion < windowProportion) {
+            modalSlider.min = minimumWidth;
+        } else {
+            modalSlider.min = window.innerWidth;
+        }
+    }
+
+    if (portrait == "false") {
+        if (modalProportion > windowProportion) {
+            modalSlider.min = window.innerWidth;
+        } else {
+            modalSlider.min = minimumWidth;
+        }
+    }
+};
+
+function updateSlider() {
+    const oldRange = modalSlider.max - modalSlider.min;
+    const oldValueShift = modalSlider.value - modalSlider.min;
+    const delta = oldRange / oldValueShift;
+
+    modalSliderMin();
+
+    const newRange = modalSlider.max - modalSlider.min;
+    const newValueShift = newRange / delta;
+
+    modalSlider.value = Number(modalSlider.min) + newValueShift;
+    modalContent.width = modalSlider.value;
+};
+
+window.onresize = function () {
+    if (modalState.getPropertyValue("display") !== "none") {
+        updateSlider();
+    }
+};
+
+function zoomModal() {
+    const oldWidth = modalContent.width;
+    const oldHeight = modalContent.height;
+
+    const x = modal.scrollLeft + modal.clientWidth / 2;
+    const y = modal.scrollTop + modal.clientHeight / 2;
+
+    modalContent.width = modalSlider.value;
+
+    const newWidth = modalContent.width;
+    const newHeight = modalContent.height;
+
+    const ratioX = newWidth / oldWidth;
+    const ratioY = newHeight / oldHeight;
+
+    const xNew = x * ratioX;
+    const yNew = y * ratioY;
+
+    modal.scrollTo({
+        left: xNew - modal.clientWidth / 2,
+        top: yNew - modal.clientHeight / 2
+    });
+};
+
+modalSlider.addEventListener("input", () => {
+    zoomModal();
 });
+
+// console.log("x =" + " " + x);
