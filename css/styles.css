@@ -272,10 +272,6 @@ hr {
     display: flex;
 }
 
-.fade-sidebar {
-    opacity: 1;
-}
-
 /* Toggle dark and light modes */
 
 .toggle-mode body,
@@ -307,8 +303,8 @@ hr {
     fill: red;
     top: 50%;
     left: 50%;
-    transform: translate(calc(-50% - 7.5px), calc(-50% - 7.5px));
-    /*    transform: translate(calc(-50%), calc(-50%));*/
+    /*    transform: translate(calc(-50% - 7.5px), calc(-50% - 7.5px));*/
+    transform: translate(calc(-50%), calc(-50%));
 }
 
 .zoomtest img {
@@ -329,7 +325,7 @@ hr {
 
     z-index: 10000;
 
-    overflow: scroll;
+    overflow: auto;
 
     opacity: 0;
     transition: opacity var(--modal-transition);
@@ -351,6 +347,10 @@ hr {
     transform: translateY(-50%);
 }
 
+.no-zoom {
+    display: none;
+}
+
 .modal-close,
 .zoom-out,
 .zoom-in {
@@ -368,18 +368,12 @@ hr {
     margin: auto;
 
     cursor: move;
+
+    opacity: 0;
 }
 
 .show-modal {
     display: flex;
-}
-
-.fade-modal {
-    opacity: 1;
-}
-
-.hide-page {
-    opacity: 0;
 }
 
 /* Carousel */
@@ -443,8 +437,12 @@ hr {
 
 /* Page transition */
 
-.page-transition {
+.zero-opacity {
     opacity: 0;
+}
+
+.full-opacity {
+    opacity: 1;
 }
 
 /* Animations */

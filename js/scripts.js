@@ -35,7 +35,7 @@ menuButton.addEventListener("click", () => {
     sidebar.classList.toggle("toggle-sidebar");
 
     setTimeout(() => {
-        sidebar.classList.toggle("fade-sidebar");
+        sidebar.classList.add("full-opacity");
     }, "100");
 
     setTimeout(() => {
@@ -48,7 +48,7 @@ menuCross.addEventListener("click", () => {
     body.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
-    sidebar.classList.toggle("fade-sidebar");
+    sidebar.classList.remove("full-opacity");
 
     setTimeout(() => {
         body.classList.remove("unclicable");
@@ -166,20 +166,22 @@ function openModal(image) {
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
-                originalWidth = modalContent.width;
+                getModalDimensions();
+                getMinimumWidth();
                 xCenterScroll();
                 yCenterScroll();
+                modalContent.classList.add("full-opacity");
             }, {
                 once: true
             });
 
             setTimeout(() => {
-                modal.classList.toggle("fade-modal");
+                modal.classList.add("full-opacity");
             }, "100");
 
             setTimeout(() => {
                 body.classList.remove("unclicable");
-                page.classList.add("hide-page");
+                page.classList.add("zero-opacity");
                 html.classList.add("hide-scroll");
             }, modalTransitionMs);
         }
@@ -188,13 +190,15 @@ function openModal(image) {
 
 function closeModal() {
     body.classList.add("unclicable");
-    page.classList.remove("hide-page");
+    page.classList.remove("zero-opacity");
     html.classList.remove("hide-scroll");
-    modal.classList.toggle("fade-modal");
+    modal.classList.remove("full-opacity");
 
     setTimeout(() => {
         body.classList.remove("unclicable");
         modal.classList.remove("show-modal");
+        modalContent.classList.remove("full-opacity");
+        zoom.classList.remove("no-zoom");
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
     }, modalTransitionMs);
@@ -261,18 +265,69 @@ if (window.matchMedia("(pointer: fine)").matches) {
 
 // Zoom image
 
+const zoom = body.querySelector(".zoom");
 const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
 
-let originalWidth;
+let originalWidth,
+    originalHeight,
+    minimumWidth,
+    lastWidth;
+
+function getModalDimensions() {
+    originalWidth = modalContent.width;
+    originalHeight = modalContent.height;
+
+    if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
+        zoom.classList.add("no-zoom");
+    };
+};
+
+function getMinimumWidth() {
+    const windowProportion = window.innerWidth / window.innerHeight;
+    const portrait = windowProportion < 1 ? "true" : "false";
+
+    if (portrait == "true") {
+        minimumWidth = window.innerWidth;
+    } else {
+        minimumWidth = window.innerHeight / originalHeight * originalWidth;
+    }
+
+    return minimumWidth;
+};
+
+//function updateMinimumWidth() {
+//    oldMinimumWidth = minimumWidth;
+//    newMinimumWidth = getMinimumWidth();
+//    previousWidth = modalContent.width;
+//    ratio = oldMinimumWidth / newMinimumWidth;
+//    updatedWidth = previousWidth / ratio;
+//    newLastWidth = lastWidth / ratio;
+//
+//    modalContent.width = updatedWidth;
+//};
+//
+//window.onresize = function () {
+//    if (modalState.getPropertyValue("display") !== "none") {
+//        updateMinimumWidth();
+//    }
+//};
 
 function zoomModal(direction) {
-    let zoomFactor = 200 / window.devicePixelRatio,
+    let currentWidth,
+        currentHeight = modalContent.height;
 
-        currentWidth = modalContent.width,
+    if (modalContent.width !== minimumWidth) {
+        currentWidth = modalContent.width;
+    } else {
+        currentWidth = lastWidth;
+    };
+
+    let zoomFactor = Math.round((originalWidth - minimumWidth) / 10),
+
         newWidth = currentWidth + zoomFactor * direction,
-
         ratio = newWidth / currentWidth,
+        newHeight = ratio * currentHeight,
 
         x = modal.scrollLeft + modal.clientWidth / 2,
         y = modal.scrollTop + modal.clientHeight / 2,
@@ -283,27 +338,41 @@ function zoomModal(direction) {
         xScroll = modal.scrollLeftMax,
         yScroll = modal.scrollTopMax;
 
-    modal.classList.toggle("hide-scroll");
+    html.classList.toggle("hide-scroll");
 
-    if (newWidth <= originalWidth && newWidth >= 200) {
-
-        modalContent.width = newWidth;
+    if (newWidth - zoomFactor < originalWidth) {
+        if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
+            modalContent.width = originalWidth;
+        } else if (newWidth > window.innerWidth || newHeight > window.innerHeight) {
+            modalContent.width = newWidth;
+        } else {
+            modalContent.width = minimumWidth;
+        }
 
         modal.scrollTo({
             left: xNew - modal.clientWidth / 2,
             top: yNew - modal.clientHeight / 2
         });
-    }
+    };
 
     if (xScroll == 0) {
         xCenterScroll();
-    }
+    };
 
     if (yScroll == 0) {
         yCenterScroll();
-    }
+    };
 
-    modal.classList.toggle("hide-scroll");
+    if (newWidth > minimumWidth) {
+        lastWidth = newWidth - zoomFactor;
+    };
+
+    html.classList.toggle("hide-scroll");
+
+    //    console.log("currentWidth =" + " " + currentWidth);
+    //    console.log("newWidth =" + " " + newWidth);
+    //    console.log("lastWidth =" + " " + lastWidth);
+    console.log("modalContent.width =" + " " + modalContent.width);
 };
 
 zoomOut.addEventListener("click", () => {
