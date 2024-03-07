@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-    --page-color: white;
+    --page-color: #fff;
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
@@ -325,7 +325,7 @@ hr {
 
     z-index: 10000;
 
-    overflow: auto;
+    overflow: hidden;
 
     opacity: 0;
     transition: opacity var(--modal-transition);
@@ -470,7 +470,7 @@ hr {
 @media (prefers-color-scheme: dark) {
 
     [data-theme="light"] {
-        --page-color: white;
+        --page-color: #fff;
         --text-color: #333;
         --icon-color: black;
         --hover-color: blue;

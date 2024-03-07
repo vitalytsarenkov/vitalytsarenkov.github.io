@@ -259,9 +259,9 @@ function panModal() {
     addEventListener("pointerup", panEnd);
 };
 
-if (window.matchMedia("(pointer: fine)").matches) {
-    panModal();
-};
+//if (window.matchMedia("(pointer: fine)").matches) {
+panModal();
+//};
 
 // Zoom image
 
@@ -338,7 +338,7 @@ function zoomModal(direction) {
         xScroll = modal.scrollLeftMax,
         yScroll = modal.scrollTopMax;
 
-    html.classList.toggle("hide-scroll");
+    //    html.classList.toggle("hide-scroll");
 
     if (newWidth - zoomFactor < originalWidth) {
         if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
@@ -367,7 +367,7 @@ function zoomModal(direction) {
         lastWidth = newWidth - zoomFactor;
     };
 
-    html.classList.toggle("hide-scroll");
+    //    html.classList.toggle("hide-scroll");
 
     //    console.log("currentWidth =" + " " + currentWidth);
     //    console.log("newWidth =" + " " + newWidth);
