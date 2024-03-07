@@ -166,9 +166,9 @@ function openModal(image) {
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
-                getModalDimensions();
-                setModalSlider();
-                centerScroll();
+                originalWidth = modalContent.width;
+                xCenterScroll();
+                yCenterScroll();
             }, {
                 once: true
             });
@@ -200,8 +200,11 @@ function closeModal() {
     }, modalTransitionMs);
 };
 
-function centerScroll() {
+function xCenterScroll() {
     modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
+};
+
+function yCenterScroll() {
     modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
 };
 
@@ -258,95 +261,69 @@ if (window.matchMedia("(pointer: fine)").matches) {
 
 // Zoom image
 
-const modalSlider = body.querySelector(".modal-slider");
+const zoomOut = body.querySelector(".zoom-out");
+const zoomIn = body.querySelector(".zoom-in");
 
-let originalWidth,
-    originalHeight;
+let originalWidth;
 
-function getModalDimensions() {
-    originalWidth = modalContent.width;
-    originalHeight = modalContent.height;
-};
+function zoomModal(direction) {
+    let zoomFactor = 200 / window.devicePixelRatio,
 
-function setModalSlider() {
-    modalSliderMin();
-    modalSlider.max = originalWidth;
-    modalSlider.value = originalWidth;
-};
+        currentWidth = modalContent.width,
+        newWidth = currentWidth + zoomFactor * direction,
 
-function modalSliderMin() {
-    const modalProportion = originalWidth / originalHeight;
-    const windowProportion = window.innerWidth / window.innerHeight;
-    const portrait = windowProportion < 1 ? "true" : "false";
-    const minimumWidth = window.innerHeight / originalHeight * originalWidth;
+        ratio = newWidth / currentWidth,
 
-    if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
-        modalSlider.min = originalWidth;
+        x = modal.scrollLeft + modal.clientWidth / 2,
+        y = modal.scrollTop + modal.clientHeight / 2,
+
+        xNew = x * ratio,
+        yNew = y * ratio,
+
+        xScroll = modal.scrollLeftMax,
+        yScroll = modal.scrollTopMax;
+
+    modal.classList.toggle("hide-scroll");
+
+    if (newWidth <= originalWidth && newWidth >= 200) {
+
+        modalContent.width = newWidth;
+
+        modal.scrollTo({
+            left: xNew - modal.clientWidth / 2,
+            top: yNew - modal.clientHeight / 2
+        });
     }
 
-    if (portrait == "true") {
-        if (modalProportion < windowProportion) {
-            modalSlider.min = minimumWidth;
-        } else {
-            modalSlider.min = window.innerWidth;
-        }
+    if (xScroll == 0) {
+        xCenterScroll();
     }
 
-    if (portrait == "false") {
-        if (modalProportion > windowProportion) {
-            modalSlider.min = window.innerWidth;
-        } else {
-            modalSlider.min = minimumWidth;
-        }
+    if (yScroll == 0) {
+        yCenterScroll();
     }
+
+    modal.classList.toggle("hide-scroll");
 };
 
-function updateSlider() {
-    const oldRange = modalSlider.max - modalSlider.min;
-    const oldValueShift = modalSlider.value - modalSlider.min;
-    const delta = oldRange / oldValueShift;
+zoomOut.addEventListener("click", () => {
+    zoomModal(-1);
+});
 
-    modalSliderMin();
+zoomIn.addEventListener("click", () => {
+    zoomModal(1);
+});
 
-    const newRange = modalSlider.max - modalSlider.min;
-    const newValueShift = newRange / delta;
-
-    modalSlider.value = Number(modalSlider.min) + newValueShift;
-    modalContent.width = modalSlider.value;
-};
-
-window.onresize = function () {
-    if (modalState.getPropertyValue("display") !== "none") {
-        updateSlider();
+document.addEventListener("keydown", (event) => {
+    if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
+        zoomModal(-1);
     }
-};
+});
 
-function zoomModal() {
-    const oldWidth = modalContent.width;
-    const oldHeight = modalContent.height;
-
-    const x = modal.scrollLeft + modal.clientWidth / 2;
-    const y = modal.scrollTop + modal.clientHeight / 2;
-
-    modalContent.width = modalSlider.value;
-
-    const newWidth = modalContent.width;
-    const newHeight = modalContent.height;
-
-    const ratioX = newWidth / oldWidth;
-    const ratioY = newHeight / oldHeight;
-
-    const xNew = x * ratioX;
-    const yNew = y * ratioY;
-
-    modal.scrollTo({
-        left: xNew - modal.clientWidth / 2,
-        top: yNew - modal.clientHeight / 2
-    });
-};
-
-modalSlider.addEventListener("input", () => {
-    zoomModal();
+document.addEventListener("keydown", (event) => {
+    if (event.key === "=" && modalState.getPropertyValue("display") !== "none") {
+        zoomModal(1);
+    }
 });
 
 // console.log("x =" + " " + x);

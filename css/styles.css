@@ -13,7 +13,6 @@
     --icon-color: black;
     --hover-color: blue;
     --current-page-color: grey;
-    --modal-slider: #ccc;
 }
 
 [data-theme="dark"] {
@@ -22,7 +21,6 @@
     --icon-color: white;
     --hover-color: yellow;
     --current-page-color: grey;
-    --modal-slider: #333;
 }
 
 * {
@@ -48,7 +46,8 @@ img,
 .mode-toggle,
 .a-icon,
 .modal-close,
-.modal-slider-box {
+.zoom-out,
+.zoom-in {
     line-height: 0;
 }
 
@@ -308,11 +307,11 @@ hr {
     fill: red;
     top: 50%;
     left: 50%;
-    /*    transform: translate(calc(-50% - 7.5px), calc(-50% - 7.5px));*/
-    transform: translate(calc(-50%), calc(-50%));
+    transform: translate(calc(-50% - 7.5px), calc(-50% - 7.5px));
+    /*    transform: translate(calc(-50%), calc(-50%));*/
 }
 
-.zoom img {
+.zoomtest img {
     display: inline;
     height: 100px;
 }
@@ -330,72 +329,35 @@ hr {
 
     z-index: 10000;
 
-    overflow: auto;
+    overflow: scroll;
 
     opacity: 0;
     transition: opacity var(--modal-transition);
 }
 
 .modal-close {
-    background-color: var(--page-color);
-
-    width: 3rem;
-    height: 2.5rem;
-
     position: fixed;
     top: 0;
-    right: 0;
-}
-
-.modal-slider-box {
-    background-color: var(--page-color);
-
-    width: 100%;
-    height: 2.5rem;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: fixed;
-    bottom: 0;
     left: 0;
 }
 
-.modal-slider {
-    -webkit-appearance: none;
-    appearance: none;
+.zoom {
+    display: flex;
+    flex-direction: column;
 
-    background-color: var(--modal-slider);
-    outline: none;
-
-    width: calc(100% - 2rem);
-    height: 1rem;
+    position: fixed;
+    top: 50vh;
+    left: 0;
+    transform: translateY(-50%);
 }
 
-.modal-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
+.modal-close,
+.zoom-out,
+.zoom-in {
+    background-color: var(--page-color);
 
-    width: 1rem;
-    height: 1rem;
-
-    background-color: var(--icon-color);
-    border: none;
-    border-radius: 0;
-
-    cursor: pointer;
-}
-
-.modal-slider::-moz-range-thumb {
-    width: 1rem;
-    height: 1rem;
-
-    background-color: var(--icon-color);
-    border: none;
-    border-radius: 0;
-
-    cursor: pointer;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .modal-content {
@@ -515,7 +477,6 @@ hr {
         --icon-color: black;
         --hover-color: blue;
         --current-page-color: grey;
-        --modal-slider: #ccc;
     }
 
     [data-theme="dark"] {
@@ -524,7 +485,6 @@ hr {
         --icon-color: white;
         --hover-color: yellow;
         --current-page-color: grey;
-        --modal-slider: #333;
     }
 }
 
@@ -597,18 +557,5 @@ hr {
 
     .carousel figcaption {
         padding-left: var(--padding);
-    }
-
-    .modal-close {
-        top: 0.75rem;
-        left: calc(100vw - 3.75rem);
-    }
-
-    .modal-slider-box {
-        width: calc(25vw);
-
-        bottom: 0.75rem;
-        left: 50vw;
-        transform: translateX(-50%);
     }
 }
