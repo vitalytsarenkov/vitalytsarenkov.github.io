@@ -204,8 +204,8 @@ function closeModal() {
 };
 
 function centerScroll() {
-    modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
-    modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
+    modal.scrollLeft = (modal.scrollWidth - window.innerWidth) / 2;
+    modal.scrollTop = (modal.scrollHeight - window.innerHeight) / 2;
 };
 
 for (let i = 0; i < images.length; i++) {
@@ -266,13 +266,19 @@ const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
 
 let originalWidth,
-    originalHeight;
+    originalHeight,
+    modalScrollLeft,
+    modalScrollTop;
 
 function getModalDimensions() {
     originalWidth = modalContent.width;
     originalHeight = modalContent.height;
 
-    if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
+    if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
+        zoom.classList.add("no-zoom");
+    };
+
+    if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
         zoom.classList.add("no-zoom");
     };
 
@@ -280,13 +286,24 @@ function getModalDimensions() {
 };
 
 function zoomModalOut() {
+    const modalProportion = originalWidth / originalHeight;
     const windowProportion = window.innerWidth / window.innerHeight;
     const portrait = windowProportion < 1 ? "true" : "false";
 
     if (portrait == "true") {
-        modalContent.classList.add("fit-width");
-    } else {
-        modalContent.classList.add("fit-height");
+        if (modalProportion > windowProportion) {
+            modalContent.classList.add("fit-width");
+        } else {
+            modalContent.classList.add("fit-height");
+        }
+    }
+
+    if (portrait == "false") {
+        if (modalProportion < windowProportion) {
+            modalContent.classList.add("fit-height");
+        } else {
+            modalContent.classList.add("fit-width");
+        }
     }
 
     modalContent.classList.remove("fit-content");
@@ -296,17 +313,20 @@ function zoomModalIn() {
     modalContent.classList.add("fit-content");
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
-    centerScroll();
+    resetScrollPosition();
 };
 
-function updateModal() {
-    if (modalContent.classList.contains("fit-content")) {
-        updateScroll();
-    } else {
-        modalContent.classList.remove("fit-width");
-        modalContent.classList.remove("fit-height");
-        zoomModalOut();
-    }
+modal.addEventListener("scrollend", (event) => {
+    getScrollPosition();
+});
+
+function getScrollPosition() {
+    modalScrollLeft = modal.scrollLeft + window.innerWidth / 2;
+    modalScrollTop = modal.scrollTop + window.innerHeight / 2;
+};
+
+function resetScrollPosition() {
+    modal.scrollTo(modalScrollLeft - window.innerWidth / 2, modalScrollTop - window.innerHeight / 2);
 };
 
 window.onresize = function () {
@@ -315,102 +335,15 @@ window.onresize = function () {
     }
 };
 
-let xOld,
-    yOld,
-    xMaxOld,
-    yMaxOld,
-    xNew,
-    yNew,
-    xMaxNew,
-    yMaxNew;
-
-function getScrollPosition() {
-    xOld = modal.scrollLeft;
-    yOld = modal.scrollTop;
-
-    xMaxOld = modal.scrollLeftMax;
-    yMaxOld = modal.scrollTopMax;
+function updateModal() {
+    if (modalContent.classList.contains("fit-content")) {
+        resetScrollPosition();
+    } else {
+        modalContent.classList.remove("fit-width");
+        modalContent.classList.remove("fit-height");
+        zoomModalOut();
+    }
 };
-
-modal.addEventListener("scrollend", (event) => {
-    getScrollPosition();
-});
-
-function updateScroll() {
-    xNew = modal.scrollLeft;
-    yNew = modal.scrollTop;
-
-    xMaxNew = modal.scrollLeftMax;
-    yMaxNew = modal.scrollTopMax;
-
-    modal.scrollBy({
-        left: (xMaxNew - xMaxOld) / 2,
-        top: (yMaxNew - yMaxOld) / 2
-    });
-
-    //    console.log("xOld =" + " " + xOld);
-    //    console.log("yOld =" + " " + yOld);
-    //    console.log("xMaxOld =" + " " + xMaxOld);
-    //    console.log("yMaxOld =" + " " + yMaxOld);
-    //    console.log("xNew =" + " " + xNew);
-    //    console.log("yNew =" + " " + yNew);
-    //    console.log("xMaxNew =" + " " + xMaxNew);
-    //    console.log("yMaxNew =" + " " + yMaxNew);
-}
-
-//function zoomModal(direction) {
-//    let currentWidth,
-//        currentHeight = modalContent.height;
-//
-//    if (modalContent.width !== minimumWidth) {
-//        currentWidth = modalContent.width;
-//    } else {
-//        currentWidth = lastWidth;
-//    };
-//
-//    let zoomFactor = Math.round((originalWidth - minimumWidth) / 10),
-//
-//        newWidth = currentWidth + zoomFactor * direction,
-//        ratio = newWidth / currentWidth,
-//        newHeight = ratio * currentHeight,
-//
-//        x = modal.scrollLeft + modal.clientWidth / 2,
-//        y = modal.scrollTop + modal.clientHeight / 2,
-//
-//        xNew = x * ratio,
-//        yNew = y * ratio,
-//
-//        xScroll = modal.scrollLeftMax,
-//        yScroll = modal.scrollTopMax;
-//
-//    if (newWidth - zoomFactor < originalWidth) {
-//        if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
-//            modalContent.width = originalWidth;
-//        } else if (newWidth > window.innerWidth || newHeight > window.innerHeight) {
-//            modalContent.width = newWidth;
-//        } else {
-//            modalContent.width = minimumWidth;
-//        }
-//
-//        modal.scrollTo({
-//            left: xNew - modal.clientWidth / 2,
-//            top: yNew - modal.clientHeight / 2
-//        });
-//    };
-//
-//    if (xScroll == 0) {
-//        xCenterScroll();
-//    };
-//
-//    if (yScroll == 0) {
-//        yCenterScroll();
-//    };
-//
-//    if (newWidth > minimumWidth) {
-//        lastWidth = newWidth - zoomFactor;
-//    };
-//
-//};
 
 zoomOut.addEventListener("click", () => {
     zoomModalOut();
