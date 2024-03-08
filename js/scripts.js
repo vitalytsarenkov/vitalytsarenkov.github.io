@@ -157,11 +157,32 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
+const loading = body.querySelector(".loading");
+const dots = body.querySelector(".dots");
+
+let dot = "",
+    counter = 0;
+
+function loadingModal() {
+    dots.innerHTML = dot;
+
+    if (counter < 3) {
+        dot = dot + ".";
+        counter++;
+    } else {
+        dot = "";
+        counter = 0;
+    }
+};
+
+const dotsUpdate = setInterval(loadingModal, 500);
+
 function openModal(image) {
     image.addEventListener("click", () => {
         if (modalState.getPropertyValue("display") == "none") {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
+            loading.classList.add("show-loading");
             modalContent.src = image.src;
             zoomModalIn();
 
@@ -169,6 +190,7 @@ function openModal(image) {
                 modalContent.width /= window.devicePixelRatio;
                 getModalDimensions();
                 centerScroll();
+                loading.classList.remove("show-loading");
                 modalContent.classList.add("full-opacity");
             }, {
                 once: true
@@ -326,7 +348,10 @@ function getScrollPosition() {
 };
 
 function resetScrollPosition() {
-    modal.scrollTo(modalScrollLeft - window.innerWidth / 2, modalScrollTop - window.innerHeight / 2);
+    modal.scrollTo({
+        left: modalScrollLeft - window.innerWidth / 2,
+        top: modalScrollTop - window.innerHeight / 2
+    });
 };
 
 window.onresize = function () {

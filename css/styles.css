@@ -316,7 +316,7 @@ hr {
     background-color: var(--page-color);
 
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 
     display: none;
 
@@ -358,6 +358,24 @@ hr {
 
     width: 2.5rem;
     height: 2.5rem;
+}
+
+.loading {
+    display: none;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.dots {
+    position: absolute;
+    left: 7.3ch;
+}
+
+.show-loading {
+    display: block;
 }
 
 .modal-content {
