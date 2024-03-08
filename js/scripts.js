@@ -163,13 +163,12 @@ function openModal(image) {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
             modalContent.src = image.src;
+            zoomModalIn();
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
                 getModalDimensions();
-                getMinimumWidth();
-                xCenterScroll();
-                yCenterScroll();
+                centerScroll();
                 modalContent.classList.add("full-opacity");
             }, {
                 once: true
@@ -204,11 +203,8 @@ function closeModal() {
     }, modalTransitionMs);
 };
 
-function xCenterScroll() {
+function centerScroll() {
     modal.scrollLeft = (modal.scrollWidth - modal.clientWidth) / 2;
-};
-
-function yCenterScroll() {
     modal.scrollTop = (modal.scrollHeight - modal.clientHeight) / 2;
 };
 
@@ -259,9 +255,9 @@ function panModal() {
     addEventListener("pointerup", panEnd);
 };
 
-//if (window.matchMedia("(pointer: fine)").matches) {
-panModal();
-//};
+if (window.matchMedia("(pointer: fine)").matches) {
+    panModal();
+};
 
 // Zoom image
 
@@ -270,9 +266,7 @@ const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
 
 let originalWidth,
-    originalHeight,
-    minimumWidth,
-    lastWidth;
+    originalHeight;
 
 function getModalDimensions() {
     originalWidth = modalContent.width;
@@ -281,117 +275,160 @@ function getModalDimensions() {
     if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
         zoom.classList.add("no-zoom");
     };
+
+    getScrollPosition();
 };
 
-function getMinimumWidth() {
+function zoomModalOut() {
     const windowProportion = window.innerWidth / window.innerHeight;
     const portrait = windowProportion < 1 ? "true" : "false";
 
     if (portrait == "true") {
-        minimumWidth = window.innerWidth;
+        modalContent.classList.add("fit-width");
     } else {
-        minimumWidth = window.innerHeight / originalHeight * originalWidth;
+        modalContent.classList.add("fit-height");
     }
 
-    return minimumWidth;
+    modalContent.classList.remove("fit-content");
 };
 
-//function updateMinimumWidth() {
-//    oldMinimumWidth = minimumWidth;
-//    newMinimumWidth = getMinimumWidth();
-//    previousWidth = modalContent.width;
-//    ratio = oldMinimumWidth / newMinimumWidth;
-//    updatedWidth = previousWidth / ratio;
-//    newLastWidth = lastWidth / ratio;
-//
-//    modalContent.width = updatedWidth;
-//};
-//
-//window.onresize = function () {
-//    if (modalState.getPropertyValue("display") !== "none") {
-//        updateMinimumWidth();
-//    }
-//};
+function zoomModalIn() {
+    modalContent.classList.add("fit-content");
+    modalContent.classList.remove("fit-width");
+    modalContent.classList.remove("fit-height");
+    centerScroll();
+};
 
-function zoomModal(direction) {
-    let currentWidth,
-        currentHeight = modalContent.height;
-
-    if (modalContent.width !== minimumWidth) {
-        currentWidth = modalContent.width;
+function updateModal() {
+    if (modalContent.classList.contains("fit-content")) {
+        updateScroll();
     } else {
-        currentWidth = lastWidth;
-    };
-
-    let zoomFactor = Math.round((originalWidth - minimumWidth) / 10),
-
-        newWidth = currentWidth + zoomFactor * direction,
-        ratio = newWidth / currentWidth,
-        newHeight = ratio * currentHeight,
-
-        x = modal.scrollLeft + modal.clientWidth / 2,
-        y = modal.scrollTop + modal.clientHeight / 2,
-
-        xNew = x * ratio,
-        yNew = y * ratio,
-
-        xScroll = modal.scrollLeftMax,
-        yScroll = modal.scrollTopMax;
-
-    //    html.classList.toggle("hide-scroll");
-
-    if (newWidth - zoomFactor < originalWidth) {
-        if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
-            modalContent.width = originalWidth;
-        } else if (newWidth > window.innerWidth || newHeight > window.innerHeight) {
-            modalContent.width = newWidth;
-        } else {
-            modalContent.width = minimumWidth;
-        }
-
-        modal.scrollTo({
-            left: xNew - modal.clientWidth / 2,
-            top: yNew - modal.clientHeight / 2
-        });
-    };
-
-    if (xScroll == 0) {
-        xCenterScroll();
-    };
-
-    if (yScroll == 0) {
-        yCenterScroll();
-    };
-
-    if (newWidth > minimumWidth) {
-        lastWidth = newWidth - zoomFactor;
-    };
-
-    //    html.classList.toggle("hide-scroll");
-
-    //    console.log("currentWidth =" + " " + currentWidth);
-    //    console.log("newWidth =" + " " + newWidth);
-    //    console.log("lastWidth =" + " " + lastWidth);
-    console.log("modalContent.width =" + " " + modalContent.width);
+        modalContent.classList.remove("fit-width");
+        modalContent.classList.remove("fit-height");
+        zoomModalOut();
+    }
 };
+
+window.onresize = function () {
+    if (modalState.getPropertyValue("display") !== "none") {
+        updateModal();
+    }
+};
+
+let xOld,
+    yOld,
+    xMaxOld,
+    yMaxOld,
+    xNew,
+    yNew,
+    xMaxNew,
+    yMaxNew;
+
+function getScrollPosition() {
+    xOld = modal.scrollLeft;
+    yOld = modal.scrollTop;
+
+    xMaxOld = modal.scrollLeftMax;
+    yMaxOld = modal.scrollTopMax;
+};
+
+modal.addEventListener("scrollend", (event) => {
+    getScrollPosition();
+});
+
+function updateScroll() {
+    xNew = modal.scrollLeft;
+    yNew = modal.scrollTop;
+
+    xMaxNew = modal.scrollLeftMax;
+    yMaxNew = modal.scrollTopMax;
+
+    modal.scrollBy({
+        left: (xMaxNew - xMaxOld) / 2,
+        top: (yMaxNew - yMaxOld) / 2
+    });
+
+    //    console.log("xOld =" + " " + xOld);
+    //    console.log("yOld =" + " " + yOld);
+    //    console.log("xMaxOld =" + " " + xMaxOld);
+    //    console.log("yMaxOld =" + " " + yMaxOld);
+    //    console.log("xNew =" + " " + xNew);
+    //    console.log("yNew =" + " " + yNew);
+    //    console.log("xMaxNew =" + " " + xMaxNew);
+    //    console.log("yMaxNew =" + " " + yMaxNew);
+}
+
+//function zoomModal(direction) {
+//    let currentWidth,
+//        currentHeight = modalContent.height;
+//
+//    if (modalContent.width !== minimumWidth) {
+//        currentWidth = modalContent.width;
+//    } else {
+//        currentWidth = lastWidth;
+//    };
+//
+//    let zoomFactor = Math.round((originalWidth - minimumWidth) / 10),
+//
+//        newWidth = currentWidth + zoomFactor * direction,
+//        ratio = newWidth / currentWidth,
+//        newHeight = ratio * currentHeight,
+//
+//        x = modal.scrollLeft + modal.clientWidth / 2,
+//        y = modal.scrollTop + modal.clientHeight / 2,
+//
+//        xNew = x * ratio,
+//        yNew = y * ratio,
+//
+//        xScroll = modal.scrollLeftMax,
+//        yScroll = modal.scrollTopMax;
+//
+//    if (newWidth - zoomFactor < originalWidth) {
+//        if (originalWidth <= window.innerWidth && originalHeight <= window.innerHeight) {
+//            modalContent.width = originalWidth;
+//        } else if (newWidth > window.innerWidth || newHeight > window.innerHeight) {
+//            modalContent.width = newWidth;
+//        } else {
+//            modalContent.width = minimumWidth;
+//        }
+//
+//        modal.scrollTo({
+//            left: xNew - modal.clientWidth / 2,
+//            top: yNew - modal.clientHeight / 2
+//        });
+//    };
+//
+//    if (xScroll == 0) {
+//        xCenterScroll();
+//    };
+//
+//    if (yScroll == 0) {
+//        yCenterScroll();
+//    };
+//
+//    if (newWidth > minimumWidth) {
+//        lastWidth = newWidth - zoomFactor;
+//    };
+//
+//};
 
 zoomOut.addEventListener("click", () => {
-    zoomModal(-1);
+    zoomModalOut();
 });
 
 zoomIn.addEventListener("click", () => {
-    zoomModal(1);
+    zoomModalIn();
 });
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
-        zoomModal(-1);
+        zoomModalOut();
     }
 });
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "=" && modalState.getPropertyValue("display") !== "none") {
-        zoomModal(1);
+        zoomModalIn();
     }
 });
 

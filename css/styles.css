@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-    --page-color: #fff;
+    --page-color: white;
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
@@ -325,7 +325,7 @@ hr {
 
     z-index: 10000;
 
-    overflow: hidden;
+    overflow: auto;
 
     opacity: 0;
     transition: opacity var(--modal-transition);
@@ -361,8 +361,6 @@ hr {
 }
 
 .modal-content {
-    max-width: fit-content;
-
     padding: 0;
 
     margin: auto;
@@ -370,6 +368,21 @@ hr {
     cursor: move;
 
     opacity: 0;
+}
+
+.fit-content {
+    max-width: fit-content;
+    height: auto;
+}
+
+.fit-width {
+    width: 100%;
+    height: auto;
+}
+
+.fit-height {
+    width: auto;
+    height: 100%;
 }
 
 .show-modal {
@@ -470,7 +483,7 @@ hr {
 @media (prefers-color-scheme: dark) {
 
     [data-theme="light"] {
-        --page-color: #fff;
+        --page-color: white;
         --text-color: #333;
         --icon-color: black;
         --hover-color: blue;
