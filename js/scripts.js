@@ -1,3 +1,5 @@
+"use strict";
+
 const html = document.querySelector("html");
 const body = document.querySelector("body");
 
@@ -183,13 +185,14 @@ function openModal(image) {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
             loading.classList.add("show-loading");
+            modalContent.classList.add("fit-content");
             modalContent.src = image.src;
-            zoomModalIn();
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
-                getModalDimensions();
-                centerScroll();
+                updateModal();
+                centerModal();
+                getScrollPosition();
                 loading.classList.remove("show-loading");
                 modalContent.classList.add("full-opacity");
             }, {
@@ -219,13 +222,13 @@ function closeModal() {
         body.classList.remove("unclicable");
         modal.classList.remove("show-modal");
         modalContent.classList.remove("full-opacity");
-        zoom.classList.remove("no-zoom");
+        clearModal();
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
     }, modalTransitionMs);
 };
 
-function centerScroll() {
+function centerModal() {
     modal.scrollLeft = (modal.scrollWidth - window.innerWidth) / 2;
     modal.scrollTop = (modal.scrollHeight - window.innerHeight) / 2;
 };
@@ -264,12 +267,13 @@ function panModal() {
             startPoint.x - event.clientX,
             startPoint.y - event.clientY
         );
-        modalContent.style.cursor = "grabbing";
+        modalContent.classList.add("grabbing");
+        getScrollPosition();
     };
 
     const panEnd = () => {
         panning = false;
-        modalContent.style.cursor = "grab";
+        modalContent.classList.remove("grabbing");
     };
 
     modalContent.addEventListener("pointerdown", panStart);
@@ -292,19 +296,32 @@ let originalWidth,
     modalScrollLeft,
     modalScrollTop;
 
-function getModalDimensions() {
+function updateModal() {
     originalWidth = modalContent.width;
     originalHeight = modalContent.height;
 
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
         zoom.classList.add("no-zoom");
-    };
-
-    if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
+    } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
         zoom.classList.add("no-zoom");
-    };
+    } else {
+        zoom.classList.remove("no-zoom");
+    }
 
-    getScrollPosition();
+    if (modalContent.classList.contains("fit-content")) {
+        resetScrollPosition();
+    } else {
+        modalContent.classList.remove("fit-width");
+        modalContent.classList.remove("fit-height");
+        zoomModalOut();
+    }
+};
+
+function clearModal() {
+    modalContent.classList.remove("fit-width");
+    modalContent.classList.remove("fit-height");
+    modalContent.classList.remove("fit-content");
+    zoom.classList.remove("no-zoom");
 };
 
 function zoomModalOut() {
@@ -360,16 +377,6 @@ window.onresize = function () {
     }
 };
 
-function updateModal() {
-    if (modalContent.classList.contains("fit-content")) {
-        resetScrollPosition();
-    } else {
-        modalContent.classList.remove("fit-width");
-        modalContent.classList.remove("fit-height");
-        zoomModalOut();
-    }
-};
-
 zoomOut.addEventListener("click", () => {
     zoomModalOut();
 });
@@ -377,6 +384,10 @@ zoomOut.addEventListener("click", () => {
 zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
+
+//body.addEventListener("click", () => {
+//    alert(modalScrollLeft);
+//});
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {

@@ -361,6 +361,8 @@ hr {
 }
 
 .loading {
+    font-size: 0.75rem;
+
     display: none;
 
     position: fixed;
@@ -383,9 +385,13 @@ hr {
 
     margin: auto;
 
-    cursor: move;
+    cursor: grab;
 
     opacity: 0;
+}
+
+.grabbing {
+    cursor: grabbing;
 }
 
 .fit-content {
