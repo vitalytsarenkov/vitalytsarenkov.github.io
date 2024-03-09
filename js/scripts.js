@@ -190,6 +190,7 @@ function openModal(image) {
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
+                getModal();
                 updateModal();
                 centerModal();
                 getScrollPosition();
@@ -295,20 +296,27 @@ let originalWidth,
     modalScrollLeft,
     modalScrollTop;
 
-function updateModal() {
+function getModal() {
     originalWidth = modalContent.width;
     originalHeight = modalContent.height;
+};
 
+function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
         zoom.classList.add("no-zoom");
     } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
         zoom.classList.add("no-zoom");
+        modalContent.classList.add("fit-size");
     } else {
         zoom.classList.remove("no-zoom");
     }
 
     if (modalContent.classList.contains("fit-content")) {
-        resetScrollPosition();
+        if (modalContent.classList.contains("fit-size")) {
+            centerModal();
+        } else {
+            resetScrollPosition();
+        }
     } else {
         modalContent.classList.remove("fit-width");
         modalContent.classList.remove("fit-height");
@@ -317,6 +325,7 @@ function updateModal() {
 };
 
 function clearModal() {
+    modalContent.classList.remove("fit-size");
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     modalContent.classList.remove("fit-content");
@@ -393,6 +402,10 @@ modalContent.addEventListener("click", () => {
 });
 
 modalContent.addEventListener("touchend", () => {
+    getScrollPosition();
+});
+
+modal.addEventListener("scrollend", () => {
     getScrollPosition();
 });
 
