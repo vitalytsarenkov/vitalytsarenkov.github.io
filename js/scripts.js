@@ -306,17 +306,12 @@ function updateModal() {
         zoom.classList.add("no-zoom");
     } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
         zoom.classList.add("no-zoom");
-        modalContent.classList.add("fit-size");
     } else {
         zoom.classList.remove("no-zoom");
     }
 
     if (modalContent.classList.contains("fit-content")) {
-        if (modalContent.classList.contains("fit-size")) {
-            centerModal();
-        } else {
-            resetScrollPosition();
-        }
+        resetScrollPosition();
     } else {
         modalContent.classList.remove("fit-width");
         modalContent.classList.remove("fit-height");
@@ -325,7 +320,6 @@ function updateModal() {
 };
 
 function clearModal() {
-    modalContent.classList.remove("fit-size");
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     modalContent.classList.remove("fit-content");
@@ -387,7 +381,6 @@ window.onresize = function () {
         }
         updateModal();
     }
-    modalContent.classList.remove("fit-size");
 };
 
 zoomOut.addEventListener("click", () => {
