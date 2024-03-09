@@ -80,8 +80,8 @@ function setAriaLabel() {
 setAriaLabel();
 
 modeToggle.addEventListener("click", () => {
-    const newMode = currentMode === "dark" ? "light" : "dark";
-    const newAriaLabel = newMode === "dark" ? "Change to light mode" : "Change to dark mode";
+    let newMode = currentMode === "dark" ? "light" : "dark",
+        newAriaLabel = newMode === "dark" ? "Change to light mode" : "Change to dark mode";
 
     modeToggle.setAttribute("aria-label", newAriaLabel);
     html.setAttribute("data-theme", newMode);
@@ -387,6 +387,7 @@ window.onresize = function () {
         }
         updateModal();
     }
+    modalContent.classList.remove("fit-size");
 };
 
 zoomOut.addEventListener("click", () => {
@@ -402,10 +403,6 @@ modalContent.addEventListener("click", () => {
 });
 
 modalContent.addEventListener("touchend", () => {
-    getScrollPosition();
-});
-
-modal.addEventListener("scrollend", () => {
     getScrollPosition();
 });
 
