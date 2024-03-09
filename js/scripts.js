@@ -268,7 +268,6 @@ function panModal() {
             startPoint.y - event.clientY
         );
         modalContent.classList.add("grabbing");
-        getScrollPosition();
     };
 
     const panEnd = () => {
@@ -325,6 +324,8 @@ function clearModal() {
 };
 
 function zoomModalOut() {
+    getScrollPosition();
+
     const modalProportion = originalWidth / originalHeight;
     const windowProportion = window.innerWidth / window.innerHeight;
     const portrait = windowProportion < 1 ? "true" : "false";
@@ -349,19 +350,18 @@ function zoomModalOut() {
 };
 
 function zoomModalIn() {
+    getScrollPosition();
     modalContent.classList.add("fit-content");
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     resetScrollPosition();
 };
 
-modal.addEventListener("scrollend", (event) => {
-    getScrollPosition();
-});
-
 function getScrollPosition() {
-    modalScrollLeft = modal.scrollLeft + window.innerWidth / 2;
-    modalScrollTop = modal.scrollTop + window.innerHeight / 2;
+    if (modalContent.classList.contains("fit-content")) {
+        modalScrollLeft = modal.scrollLeft + window.innerWidth / 2;
+        modalScrollTop = modal.scrollTop + window.innerHeight / 2;
+    }
 };
 
 function resetScrollPosition() {
@@ -373,6 +373,9 @@ function resetScrollPosition() {
 
 window.onresize = function () {
     if (modalState.getPropertyValue("display") !== "none") {
+        if (!modalContent.classList.contains("fit-content")) {
+            clearModal();
+        }
         updateModal();
     }
 };
@@ -385,9 +388,13 @@ zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
 
-//body.addEventListener("click", () => {
-//    alert(modalScrollLeft);
-//});
+modalContent.addEventListener("click", () => {
+    getScrollPosition();
+});
+
+modalContent.addEventListener("touchend", () => {
+    getScrollPosition();
+});
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
