@@ -159,32 +159,32 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
-const loading = body.querySelector(".loading");
-const dots = body.querySelector(".dots");
+const modalLoading = body.querySelector(".modal-loading");
+const loadingIndicator = body.querySelector(".loading-indicator");
 
-let dot = "",
+let loading = "loading",
     counter = 0;
 
 function loadingModal() {
-    dots.innerHTML = dot;
+    loadingIndicator.innerHTML = loading;
 
     if (counter < 3) {
-        dot = dot + ".";
+        loading = loading + ".";
         counter++;
     } else {
-        dot = "";
+        loading = "loading";
         counter = 0;
     }
 };
 
-const dotsUpdate = setInterval(loadingModal, 500);
+setInterval(loadingModal, 250);
 
 function openModal(image) {
     image.addEventListener("click", () => {
         if (modalState.getPropertyValue("display") == "none") {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
-            loading.classList.add("show-loading");
+            modalLoading.classList.add("show-loading");
             modalContent.classList.add("fit-content");
             modalContent.src = image.src;
 
@@ -194,7 +194,7 @@ function openModal(image) {
                 updateModal();
                 centerModal();
                 getScrollPosition();
-                loading.classList.remove("show-loading");
+                modalLoading.classList.remove("show-loading");
                 modalContent.classList.add("full-opacity");
             }, {
                 once: true

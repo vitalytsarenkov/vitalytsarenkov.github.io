@@ -1,6 +1,8 @@
 :root {
     --padding: 1rem;
 
+    --header-size: calc(1rem + 2 * var(--padding) * 0.75 + 1px);
+
     --menu-transition: 0.25s;
     --mode-transition: 0.5s;
     --page-transition: 1s;
@@ -34,11 +36,13 @@
 }
 
 p,
+hr,
 img,
 .nav,
 .sidebar-footer,
 .main-header,
-.carousel {
+.carousel,
+.carousel-navigation {
     padding: var(--padding);
 }
 
@@ -62,10 +66,11 @@ img,
 
 .sidebar,
 .main {
-    width: 100%;
-    min-height: calc(100dvh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));
+    margin-top: var(--header-size);
 
-    /*    -webkit-min-logical-height: calc(100vh - calc(1rem + 2 * var(--padding) * 0.75 + 1px));*/
+    width: 100%;
+    min-height: calc(100dvh - var(--header-size));
+    -webkit-min-logical-height: calc(100vh - var(--header-size));
 }
 
 /* Element rules */
@@ -84,6 +89,8 @@ body {
 
 h1 {
     font-size: 1.5rem;
+
+    line-height: 1.5rem;
 }
 
 p {
@@ -125,7 +132,15 @@ address a {
 hr {
     border: 0;
 
-    padding: calc(var(--padding) / 2);
+    /*
+    padding: 0;
+    margin: calc(var(--padding) * 2) var(--padding);
+
+    border-top: 1px solid #ccc;
+
+    width: 10rem;
+    align-self: center;
+*/
 }
 
 /* Class rules */
@@ -174,8 +189,6 @@ hr {
 .container {
     display: flex;
     flex-direction: column;
-
-    padding-top: calc(1rem + 2 * var(--padding) * 0.75 + 1px);
 
     transition: opacity var(--page-transition);
 }
@@ -228,11 +241,10 @@ hr {
     flex-direction: column;
 }
 
-.main-header {
-    padding-bottom: 0;
-}
-
 .content {
+    display: flex;
+    flex-direction: column;
+
     flex: 1;
 }
 
@@ -276,16 +288,17 @@ hr {
 
 .toggle-mode body,
 .toggle-mode .sidebar {
-    transition: background-color var(--mode-transition);
+    transition: background-color var(--mode-transition) linear;
 }
 
 .toggle-mode .header {
     transition-property: background-color, border;
     transition-duration: var(--mode-transition);
+    transition-timing-function: linear;
 }
 
 .toggle-mode .icon {
-    transition: fill var(--mode-transition);
+    transition: fill var(--mode-transition) linear;
 }
 
 .toggle-mode h1,
@@ -293,19 +306,10 @@ hr {
 .toggle-mode figcaption,
 .toggle-mode a,
 .toggle-mode .menu-button {
-    transition: color var(--mode-transition);
+    transition: color var(--mode-transition) linear;
 }
 
 /* Modal images */
-
-.plus {
-    position: fixed;
-    fill: red;
-    top: 50%;
-    left: 50%;
-    /*    transform: translate(calc(-50% - 7.5px), calc(-50% - 7.5px));*/
-    transform: translate(calc(-50%), calc(-50%));
-}
 
 .zoomtest img {
     display: inline;
@@ -360,7 +364,7 @@ hr {
     height: 2.5rem;
 }
 
-.loading {
+.modal-loading {
     font-size: 0.75rem;
 
     display: none;
@@ -368,12 +372,7 @@ hr {
     position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.dots {
-    position: absolute;
-    left: 7.3ch;
+    transform: translate(-3ch, -50%);
 }
 
 .show-loading {
@@ -448,7 +447,7 @@ hr {
 .carousel-position p {
     font-size: 0.75rem;
 
-    padding: 1rem 0.5rem;
+    padding: 0 0.5rem;
 }
 
 .carousel-content,
@@ -525,6 +524,11 @@ hr {
 
 @media only screen and (orientation: landscape) {
 
+    .sidebar,
+    .main {
+        margin-top: 0;
+    }
+
     html {
         overflow-y: scroll;
         /*        scrollbar-gutter: stable;*/
@@ -549,25 +553,20 @@ hr {
 
     .container {
         flex-direction: row;
-
-        padding-top: 0;
-    }
-
-    h1 {
-        line-height: 2rem;
     }
 
     .sidebar {
         background-color: transparent;
 
         width: initial;
+        min-height: 0;
 
         position: static;
 
         display: flex;
         align-items: flex-start;
 
-        padding-top: calc(2rem + var(--padding));
+        margin-top: calc(3.5 * var(--padding));
 
         opacity: 1;
     }
@@ -588,6 +587,10 @@ hr {
 
     .carousel {
         flex-direction: row;
+    }
+
+    .carousel-navigation {
+        padding-bottom: 0;
     }
 
     .carousel figcaption {
