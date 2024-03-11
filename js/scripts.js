@@ -300,26 +300,13 @@ function getModal() {
     originalHeight = modalContent.height;
 };
 
-function noClick() {
-    if (modalContent.classList.contains("fit-content")) {
-        zoomIn.classList.add("no-click");
-        zoomOut.classList.remove("no-click");
-    } else {
-        zoomIn.classList.remove("no-click");
-        zoomOut.classList.add("no-click");
-    }
-};
-
 function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
-        zoomOut.classList.add("no-zoom");
-        zoomIn.classList.add("no-zoom");
+        modalContent.classList.add("fit-size");
     } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
-        zoomOut.classList.add("no-zoom");
-        zoomIn.classList.add("no-zoom");
+        modalContent.classList.add("fit-size");
     } else {
-        zoomOut.classList.remove("no-zoom");
-        zoomIn.classList.remove("no-zoom");
+        modalContent.classList.remove("fit-size");
     }
 
     if (modalContent.classList.contains("fit-content")) {
@@ -329,15 +316,14 @@ function updateModal() {
         modalContent.classList.remove("fit-height");
         zoomModalOut();
     }
-    noClick();
+    disableZoom();
 };
 
 function clearModal() {
+    modalContent.classList.remove("fit-size");
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     modalContent.classList.remove("fit-content");
-    zoomOut.classList.remove("no-zoom");
-    zoomIn.classList.remove("no-zoom");
 };
 
 function zoomModalOut() {
@@ -365,7 +351,7 @@ function zoomModalOut() {
 
     modalContent.classList.remove("fit-content");
 
-    noClick();
+    disableZoom();
 };
 
 function zoomModalIn() {
@@ -374,7 +360,20 @@ function zoomModalIn() {
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     resetScrollPosition();
-    noClick();
+    disableZoom();
+};
+
+function disableZoom() {
+    if (modalContent.classList.contains("fit-size")) {
+        zoomIn.classList.add("disable-zoom");
+        zoomOut.classList.add("disable-zoom");
+    } else if (modalContent.classList.contains("fit-content")) {
+        zoomIn.classList.add("disable-zoom");
+        zoomOut.classList.remove("disable-zoom");
+    } else {
+        zoomIn.classList.remove("disable-zoom");
+        zoomOut.classList.add("disable-zoom");
+    }
 };
 
 function getScrollPosition() {
@@ -391,6 +390,14 @@ function resetScrollPosition() {
     });
 };
 
+modalContent.addEventListener("click", () => {
+    getScrollPosition();
+});
+
+modalContent.addEventListener("touchend", () => {
+    getScrollPosition();
+});
+
 window.onresize = function () {
     if (modalState.getPropertyValue("display") !== "none") {
         if (!modalContent.classList.contains("fit-content")) {
@@ -406,14 +413,6 @@ zoomOut.addEventListener("click", () => {
 
 zoomIn.addEventListener("click", () => {
     zoomModalIn();
-});
-
-modalContent.addEventListener("click", () => {
-    getScrollPosition();
-});
-
-modalContent.addEventListener("touchend", () => {
-    getScrollPosition();
 });
 
 document.addEventListener("keydown", (event) => {

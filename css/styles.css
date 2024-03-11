@@ -14,7 +14,7 @@
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
-    --current-page-color: grey;
+    --inactive-color: grey;
 }
 
 [data-theme="dark"] {
@@ -22,7 +22,7 @@
     --text-color: #ccc;
     --icon-color: white;
     --hover-color: yellow;
-    --current-page-color: grey;
+    --inactive-color: grey;
 }
 
 * {
@@ -220,17 +220,13 @@ hr {
     margin: auto;
 }
 
-.menu a {
-    display: block;
-}
-
 .menu a:hover {
     color: var(--hover-color);
 }
 
-.current-page {
-    color: var(--current-page-color);
-    cursor: default;
+.current-page a {
+    color: var(--inactive-color);
+    pointer-events: none;
 }
 
 .sidebar-footer {}
@@ -410,23 +406,19 @@ hr {
     transform: translateX(-50%);
 }
 
-.no-click {
-    cursor: auto;
+.disable-zoom {
+    pointer-events: none;
 }
 
-.no-click .icon {
-    fill: grey;
-}
-
-.no-zoom {
-    display: none;
+.disable-zoom .icon {
+    fill: var(--inactive-color);
 }
 
 .zoom-out,
 .modal-close,
 .zoom-in {
-    padding: 0.5rem;
-    margin: 0.25rem;
+    width: 2.5rem;
+    height: 2.5rem;
 }
 
 .modal-loading {
@@ -473,11 +465,6 @@ hr {
     height: 100%;
 }
 
-.fit-width,
-.fit-height {
-    padding: 1rem;
-}
-
 /* Page transition */
 
 .zero-opacity {
@@ -517,7 +504,7 @@ hr {
         --text-color: #333;
         --icon-color: black;
         --hover-color: blue;
-        --current-page-color: grey;
+        --inactive-color: grey;
     }
 
     [data-theme="dark"] {
@@ -525,7 +512,7 @@ hr {
         --text-color: #ccc;
         --icon-color: white;
         --hover-color: yellow;
-        --current-page-color: grey;
+        --inactive-color: grey;
     }
 }
 
