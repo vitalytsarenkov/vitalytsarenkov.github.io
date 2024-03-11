@@ -287,7 +287,6 @@ if (window.matchMedia("(pointer: fine)").matches) {
 
 // Zoom image
 
-const zoom = body.querySelector(".zoom");
 const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
 
@@ -301,13 +300,26 @@ function getModal() {
     originalHeight = modalContent.height;
 };
 
+function noClick() {
+    if (modalContent.classList.contains("fit-content")) {
+        zoomIn.classList.add("no-click");
+        zoomOut.classList.remove("no-click");
+    } else {
+        zoomIn.classList.remove("no-click");
+        zoomOut.classList.add("no-click");
+    }
+};
+
 function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
-        zoom.classList.add("no-zoom");
+        zoomOut.classList.add("no-zoom");
+        zoomIn.classList.add("no-zoom");
     } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
-        zoom.classList.add("no-zoom");
+        zoomOut.classList.add("no-zoom");
+        zoomIn.classList.add("no-zoom");
     } else {
-        zoom.classList.remove("no-zoom");
+        zoomOut.classList.remove("no-zoom");
+        zoomIn.classList.remove("no-zoom");
     }
 
     if (modalContent.classList.contains("fit-content")) {
@@ -317,13 +329,15 @@ function updateModal() {
         modalContent.classList.remove("fit-height");
         zoomModalOut();
     }
+    noClick();
 };
 
 function clearModal() {
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     modalContent.classList.remove("fit-content");
-    zoom.classList.remove("no-zoom");
+    zoomOut.classList.remove("no-zoom");
+    zoomIn.classList.remove("no-zoom");
 };
 
 function zoomModalOut() {
@@ -350,6 +364,8 @@ function zoomModalOut() {
     }
 
     modalContent.classList.remove("fit-content");
+
+    noClick();
 };
 
 function zoomModalIn() {
@@ -358,6 +374,7 @@ function zoomModalIn() {
     modalContent.classList.remove("fit-width");
     modalContent.classList.remove("fit-height");
     resetScrollPosition();
+    noClick();
 };
 
 function getScrollPosition() {
