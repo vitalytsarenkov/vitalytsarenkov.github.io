@@ -211,6 +211,10 @@ function openModal(image) {
             modalContent.src = image.src;
             disableScroll();
 
+            if (!window.matchMedia("(pointer: fine)").matches) {
+                html.classList.add("hide-scroll");
+            };
+
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
                 getModal();
@@ -231,7 +235,11 @@ function openModal(image) {
             setTimeout(() => {
                 body.classList.remove("unclicable");
                 page.classList.add("zero-opacity");
-                html.classList.add("hide-scroll");
+
+                if (window.matchMedia("(pointer: fine)").matches) {
+                    html.classList.add("hide-scroll");
+                };
+
             }, modalTransitionMs);
         }
     });
