@@ -14,24 +14,64 @@ function test() {
 const menuButton = body.querySelector(".menu-button");
 const menuCross = body.querySelector(".menu-cross");
 const sidebar = body.querySelector(".sidebar");
+const main = body.querySelector(".main");
 
 let sidebarState = getComputedStyle(sidebar);
 
 const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
 const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
-function hideScroll(state) {
-    if (state.getPropertyValue("display") == "flex" &&
-        state.getPropertyValue("position") == "fixed") {
-        body.classList.add("hide-scroll");
-    } else {
-        body.classList.remove("hide-scroll");
-    }
+//function hideScroll(state) {
+//    if (state.getPropertyValue("display") == "flex" &&
+//        state.getPropertyValue("position") == "fixed") {
+//        body.classList.add("hide-scroll");
+//    } else {
+//        body.classList.remove("hide-scroll");
+//    }
+//};
+
+let scrollTop,
+    isMenuOpen;
+
+function openMenu() {
+    scrollTop = html.scrollTop;
+    main.classList.add("hide-content");
 };
 
+function closeMenu() {
+    main.classList.remove("hide-content");
+    scrollMenu();
+};
+
+function scrollMenu() {
+    html.classList.add("disable-smooth-scroll");
+    html.scrollTop = scrollTop;
+    html.classList.remove("disable-smooth-scroll");
+};
+
+function updateMenu() {
+    if (!sidebarState.getPropertyValue("position") === "fixed") {
+        scrollTop = html.scrollTop;
+    }
+
+    if (sidebarState.getPropertyValue("position") === "fixed") {
+        openMenu();
+    } else {
+        closeMenu();
+    }
+}
+
+window.addEventListener("resize", () => {
+    if (isMenuOpen === true) {
+        updateMenu();
+    }
+});
+
 menuButton.addEventListener("click", () => {
+    isMenuOpen = true;
+    openMenu();
     body.classList.add("unclicable");
-    body.classList.add("hide-scroll");
+    //    body.classList.add("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
@@ -46,8 +86,10 @@ menuButton.addEventListener("click", () => {
 });
 
 menuCross.addEventListener("click", () => {
+    isMenuOpen = false;
+    closeMenu();
     body.classList.add("unclicable");
-    body.classList.remove("hide-scroll");
+    //    body.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.remove("full-opacity");
@@ -58,9 +100,9 @@ menuCross.addEventListener("click", () => {
     }, menuTransitionMs);
 });
 
-window.onresize = function () {
-    hideScroll(sidebarState);
-};
+//window.onresize = function () {
+//    hideScroll(sidebarState);
+//};
 
 // Toggle dark and light modes
 
@@ -398,14 +440,14 @@ modalContent.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
-window.onresize = function () {
+window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (!modalContent.classList.contains("fit-content")) {
             clearModal();
         }
         updateModal();
     }
-};
+});
 
 zoomOut.addEventListener("click", () => {
     zoomModalOut();
