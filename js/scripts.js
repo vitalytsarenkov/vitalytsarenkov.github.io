@@ -209,6 +209,7 @@ function openModal(image) {
             modalLoading.classList.add("show-loading");
             modalContent.classList.add("fit-content");
             modalContent.src = image.src;
+            disableScroll();
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
@@ -216,6 +217,7 @@ function openModal(image) {
                 updateModal();
                 centerModal();
                 getScrollPosition();
+                enableScroll();
                 modalLoading.classList.remove("show-loading");
                 modalContent.classList.add("full-opacity");
             }, {
@@ -229,8 +231,6 @@ function openModal(image) {
             setTimeout(() => {
                 body.classList.remove("unclicable");
                 page.classList.add("zero-opacity");
-                //                html.classList.add("hide-scroll");
-                disableScroll();
             }, modalTransitionMs);
         }
     });
@@ -239,9 +239,7 @@ function openModal(image) {
 function closeModal() {
     body.classList.add("unclicable");
     page.classList.remove("zero-opacity");
-    //    html.classList.remove("hide-scroll");
     modal.classList.remove("full-opacity");
-    enableScroll();
 
     setTimeout(() => {
         body.classList.remove("unclicable");
