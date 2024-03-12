@@ -391,20 +391,21 @@ hr {
     transition: opacity var(--modal-transition);
 }
 
-.show-modal {
-    display: flex;
-}
-
 .modal-buttons {
     background-color: var(--page-color);
 
-    display: flex;
+    display: none;
     flex-direction: row;
 
     position: fixed;
     top: 0;
     left: 50%;
     transform: translateX(-50%);
+}
+
+.show-modal,
+.show-buttons {
+    display: flex;
 }
 
 .disable-zoom {
@@ -437,23 +438,17 @@ hr {
     display: block;
 }
 
-.modal-content {
+.modal-image {
     padding: 0;
 
     margin: auto;
-
-    cursor: grab;
-
-    opacity: 0;
-}
-
-.grabbing {
-    cursor: grabbing;
 }
 
 .fit-content {
     max-width: fit-content;
     height: auto;
+
+    cursor: grab;
 }
 
 .fit-width {
@@ -464,6 +459,15 @@ hr {
 .fit-height {
     width: auto;
     height: 100%;
+}
+
+.fit-width,
+.fit-height {
+    cursor: default;
+}
+
+.grabbing {
+    cursor: grabbing;
 }
 
 /* Page transition */

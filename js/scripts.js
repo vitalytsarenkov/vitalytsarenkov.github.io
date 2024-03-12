@@ -173,8 +173,9 @@ for (let i = 0; i < carousels.length; i++) {
 const images = document.images;
 const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
+const modalButtons = body.querySelector(".modal-buttons");
 const modalClose = body.querySelector(".modal-close");
-const modalContent = body.querySelector(".modal-content");
+const modalImage = body.querySelector(".modal-image");
 
 let modalState = getComputedStyle(modal);
 
@@ -207,17 +208,21 @@ function openModal(image) {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
             modalLoading.classList.add("show-loading");
-            modalContent.classList.add("fit-content");
-            modalContent.src = image.src;
+            modalImage.classList.add("fit-content");
+            modalImage.src = image.src;
 
-            modalContent.addEventListener("load", () => {
-                modalContent.width /= window.devicePixelRatio;
+            function imageLoaded() {
+                modalImage.width /= window.devicePixelRatio;
                 getModal();
                 updateModal();
                 centerModal();
                 getScrollPosition();
                 modalLoading.classList.remove("show-loading");
-                modalContent.classList.add("full-opacity");
+                modalButtons.classList.add("show-buttons");
+            };
+
+            modalImage.addEventListener("load", () => {
+                imageLoaded();
             }, {
                 once: true
             });
@@ -244,10 +249,9 @@ function closeModal() {
     setTimeout(() => {
         body.classList.remove("unclicable");
         modal.classList.remove("show-modal");
-        modalContent.classList.remove("full-opacity");
         clearModal();
-        modalContent.removeAttribute("src");
-        modalContent.removeAttribute("width");
+        modalImage.removeAttribute("src");
+        modalImage.removeAttribute("width");
     }, modalTransitionMs);
 };
 
@@ -290,15 +294,17 @@ function panModal() {
             startPoint.x - event.clientX,
             startPoint.y - event.clientY
         );
-        modalContent.classList.add("grabbing");
+        if (modalImage.classList.contains("fit-content")) {
+            modalImage.classList.add("grabbing");
+        }
     };
 
     const panEnd = () => {
         panning = false;
-        modalContent.classList.remove("grabbing");
+        modalImage.classList.remove("grabbing");
     };
 
-    modalContent.addEventListener("pointerdown", panStart);
+    modalImage.addEventListener("pointerdown", panStart);
     addEventListener("pointermove", panMove);
     addEventListener("pointerup", panEnd);
 };
@@ -318,34 +324,34 @@ let originalWidth,
     modalScrollTop;
 
 function getModal() {
-    originalWidth = modalContent.width;
-    originalHeight = modalContent.height;
+    originalWidth = modalImage.width;
+    originalHeight = modalImage.height;
 };
 
 function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
-        modalContent.classList.add("fit-size");
+        modalImage.classList.add("fit-size");
     } else if (originalWidth === window.innerWidth || originalHeight === window.innerHeight) {
-        modalContent.classList.add("fit-size");
+        modalImage.classList.add("fit-size");
     } else {
-        modalContent.classList.remove("fit-size");
+        modalImage.classList.remove("fit-size");
     }
 
-    if (modalContent.classList.contains("fit-content")) {
+    if (modalImage.classList.contains("fit-content")) {
         resetScrollPosition();
     } else {
-        modalContent.classList.remove("fit-width");
-        modalContent.classList.remove("fit-height");
+        modalImage.classList.remove("fit-width");
+        modalImage.classList.remove("fit-height");
         zoomModalOut();
     }
     disableZoom();
 };
 
 function clearModal() {
-    modalContent.classList.remove("fit-size");
-    modalContent.classList.remove("fit-width");
-    modalContent.classList.remove("fit-height");
-    modalContent.classList.remove("fit-content");
+    modalImage.classList.remove("fit-size");
+    modalImage.classList.remove("fit-width");
+    modalImage.classList.remove("fit-height");
+    modalImage.classList.remove("fit-content");
 };
 
 function zoomModalOut() {
@@ -357,39 +363,39 @@ function zoomModalOut() {
 
     if (portrait === "true") {
         if (modalProportion > windowProportion) {
-            modalContent.classList.add("fit-width");
+            modalImage.classList.add("fit-width");
         } else {
-            modalContent.classList.add("fit-height");
+            modalImage.classList.add("fit-height");
         }
     }
 
     if (portrait === "false") {
         if (modalProportion < windowProportion) {
-            modalContent.classList.add("fit-height");
+            modalImage.classList.add("fit-height");
         } else {
-            modalContent.classList.add("fit-width");
+            modalImage.classList.add("fit-width");
         }
     }
 
-    modalContent.classList.remove("fit-content");
+    modalImage.classList.remove("fit-content");
 
     disableZoom();
 };
 
 function zoomModalIn() {
     getScrollPosition();
-    modalContent.classList.add("fit-content");
-    modalContent.classList.remove("fit-width");
-    modalContent.classList.remove("fit-height");
+    modalImage.classList.add("fit-content");
+    modalImage.classList.remove("fit-width");
+    modalImage.classList.remove("fit-height");
     resetScrollPosition();
     disableZoom();
 };
 
 function disableZoom() {
-    if (modalContent.classList.contains("fit-size")) {
+    if (modalImage.classList.contains("fit-size")) {
         zoomIn.classList.add("disable-zoom");
         zoomOut.classList.add("disable-zoom");
-    } else if (modalContent.classList.contains("fit-content")) {
+    } else if (modalImage.classList.contains("fit-content")) {
         zoomIn.classList.add("disable-zoom");
         zoomOut.classList.remove("disable-zoom");
     } else {
@@ -399,7 +405,7 @@ function disableZoom() {
 };
 
 function getScrollPosition() {
-    if (modalContent.classList.contains("fit-content")) {
+    if (modalImage.classList.contains("fit-content")) {
         modalScrollLeft = modal.scrollLeft + window.innerWidth / 2;
         modalScrollTop = modal.scrollTop + window.innerHeight / 2;
     }
@@ -412,17 +418,17 @@ function resetScrollPosition() {
     });
 };
 
-modalContent.addEventListener("click", () => {
+modalImage.addEventListener("click", () => {
     getScrollPosition();
 });
 
-modalContent.addEventListener("touchend", () => {
+modalImage.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
 window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
-        if (!modalContent.classList.contains("fit-content")) {
+        if (!modalImage.classList.contains("fit-content")) {
             clearModal();
         }
         updateModal();
