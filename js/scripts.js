@@ -21,14 +21,14 @@ let sidebarState = getComputedStyle(sidebar);
 const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
 const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
-function hideScroll(state) {
-    if (state.getPropertyValue("display") == "flex" &&
-        state.getPropertyValue("position") == "fixed") {
-        body.classList.add("hide-scroll");
-    } else {
-        body.classList.remove("hide-scroll");
-    }
-};
+//function hideScroll(state) {
+//    if (state.getPropertyValue("display") == "flex" &&
+//        state.getPropertyValue("position") == "fixed") {
+//        body.classList.add("hide-scroll");
+//    } else {
+//        body.classList.remove("hide-scroll");
+//    }
+//};
 
 //let scrollTop,
 //    isMenuOpen;
@@ -68,22 +68,38 @@ function hideScroll(state) {
 //    }
 //});
 
-function preventDefault(e) {
+let isMenuOpen;
+
+function preventDefaultScroll(e) {
     e.preventDefault();
 }
 
 function disableScroll() {
-    body.addEventListener('touchmove', preventDefault, {
+    body.addEventListener('touchmove', preventDefaultScroll, {
         passive: false
     });
 }
 
 function enableScroll() {
-    body.removeEventListener('touchmove', preventDefault);
+    body.removeEventListener('touchmove', preventDefaultScroll);
 }
 
+function updateMenu() {
+    if (sidebarState.getPropertyValue("position") === "fixed") {
+        disableScroll();
+    } else {
+        enableScroll();
+    }
+}
+
+window.addEventListener("resize", () => {
+    if (isMenuOpen === true) {
+        updateMenu();
+    }
+});
+
 menuButton.addEventListener("click", () => {
-    //    isMenuOpen = true;
+    isMenuOpen = true;
     //    openMenu();
     disableScroll();
     body.classList.add("unclicable");
@@ -102,7 +118,7 @@ menuButton.addEventListener("click", () => {
 });
 
 menuCross.addEventListener("click", () => {
-    //    isMenuOpen = false;
+    isMenuOpen = false;
     //    closeMenu();
     enableScroll();
     body.classList.add("unclicable");
@@ -117,9 +133,9 @@ menuCross.addEventListener("click", () => {
     }, menuTransitionMs);
 });
 
-window.onresize = function () {
-    hideScroll(sidebarState);
-};
+//window.onresize = function () {
+//    hideScroll(sidebarState);
+//};
 
 // Toggle dark and light modes
 
