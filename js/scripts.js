@@ -21,53 +21,6 @@ let sidebarState = getComputedStyle(sidebar);
 const menuTransition = getComputedStyle(html).getPropertyValue("--menu-transition");
 const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
-//function hideScroll(state) {
-//    if (state.getPropertyValue("display") == "flex" &&
-//        state.getPropertyValue("position") == "fixed") {
-//        body.classList.add("hide-scroll");
-//    } else {
-//        body.classList.remove("hide-scroll");
-//    }
-//};
-
-//let scrollTop,
-//    isMenuOpen;
-//
-//function openMenu() {
-//    scrollTop = html.scrollTop;
-//    main.classList.add("hide-content");
-//};
-//
-//function closeMenu() {
-//    main.classList.remove("hide-content");
-//    scrollMenu();
-//};
-//
-//function scrollMenu() {
-//    html.classList.add("disable-smooth-scroll");
-//    //    html.scrollTop = scrollTop;
-//    html.scrollTo(0, scrollTop);
-//    html.classList.remove("disable-smooth-scroll");
-//};
-//
-//function updateMenu() {
-//    if (!sidebarState.getPropertyValue("position") === "fixed") {
-//        scrollTop = html.scrollTop;
-//    }
-//
-//    if (sidebarState.getPropertyValue("position") === "fixed") {
-//        openMenu();
-//    } else {
-//        closeMenu();
-//    }
-//}
-//
-//window.addEventListener("resize", () => {
-//    if (isMenuOpen === true) {
-//        updateMenu();
-//    }
-//});
-
 let isMenuOpen;
 
 function preventDefaultScroll(e) {
@@ -75,16 +28,18 @@ function preventDefaultScroll(e) {
 }
 
 function disableScroll() {
+    html.classList.add("hide-scroll");
     body.addEventListener('touchmove', preventDefaultScroll, {
         passive: false
     });
 }
 
 function enableScroll() {
+    html.classList.remove("hide-scroll");
     body.removeEventListener('touchmove', preventDefaultScroll);
 }
 
-function updateMenu() {
+function updateScroll() {
     if (sidebarState.getPropertyValue("position") === "fixed") {
         disableScroll();
     } else {
@@ -94,16 +49,14 @@ function updateMenu() {
 
 window.addEventListener("resize", () => {
     if (isMenuOpen === true) {
-        updateMenu();
+        updateScroll();
     }
 });
 
 menuButton.addEventListener("click", () => {
     isMenuOpen = true;
-    //    openMenu();
     disableScroll();
     body.classList.add("unclicable");
-    body.classList.add("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
@@ -119,10 +72,8 @@ menuButton.addEventListener("click", () => {
 
 menuCross.addEventListener("click", () => {
     isMenuOpen = false;
-    //    closeMenu();
     enableScroll();
     body.classList.add("unclicable");
-    body.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.remove("full-opacity");
