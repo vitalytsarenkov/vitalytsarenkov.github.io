@@ -28,12 +28,14 @@ function preventDefaultScroll(e) {
 }
 
 function disableScroll() {
+    html.classList.add("hide-scroll");
     body.addEventListener('touchmove', preventDefaultScroll, {
         passive: false
     });
 }
 
 function enableScroll() {
+    html.classList.remove("hide-scroll");
     body.removeEventListener('touchmove', preventDefaultScroll);
 }
 
@@ -55,7 +57,6 @@ menuButton.addEventListener("click", () => {
     isMenuOpen = true;
     disableScroll();
     body.classList.add("unclicable");
-    html.classList.add("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
@@ -73,7 +74,6 @@ menuCross.addEventListener("click", () => {
     isMenuOpen = false;
     enableScroll();
     body.classList.add("unclicable");
-    html.classList.remove("hide-scroll");
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.remove("full-opacity");
@@ -209,12 +209,6 @@ function openModal(image) {
             modalLoading.classList.add("show-loading");
             modalContent.classList.add("fit-content");
             modalContent.src = image.src;
-            disableScroll();
-
-            if (!window.matchMedia("(pointer: fine)").matches) {
-                html.classList.add("hide-scroll");
-                body.classList.add("hide-scroll");
-            };
 
             modalContent.addEventListener("load", () => {
                 modalContent.width /= window.devicePixelRatio;
@@ -222,7 +216,6 @@ function openModal(image) {
                 updateModal();
                 centerModal();
                 getScrollPosition();
-                enableScroll();
                 modalLoading.classList.remove("show-loading");
                 modalContent.classList.add("full-opacity");
             }, {
@@ -236,12 +229,7 @@ function openModal(image) {
             setTimeout(() => {
                 body.classList.remove("unclicable");
                 page.classList.add("zero-opacity");
-
-                if (window.matchMedia("(pointer: fine)").matches) {
-                    html.classList.add("hide-scroll");
-                    body.classList.add("hide-scroll");
-                };
-
+                html.classList.add("hide-scroll");
             }, modalTransitionMs);
         }
     });
@@ -251,7 +239,6 @@ function closeModal() {
     body.classList.add("unclicable");
     page.classList.remove("zero-opacity");
     html.classList.remove("hide-scroll");
-    body.classList.remove("hide-scroll");
     modal.classList.remove("full-opacity");
 
     setTimeout(() => {
@@ -259,7 +246,6 @@ function closeModal() {
         modal.classList.remove("show-modal");
         modalContent.classList.remove("full-opacity");
         clearModal();
-        enableScroll();
         modalContent.removeAttribute("src");
         modalContent.removeAttribute("width");
     }, modalTransitionMs);
