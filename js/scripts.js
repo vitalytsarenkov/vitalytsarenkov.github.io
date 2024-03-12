@@ -213,6 +213,7 @@ function openModal(image) {
 
             if (!window.matchMedia("(pointer: fine)").matches) {
                 html.classList.add("hide-scroll");
+                body.classList.add("hide-scroll");
             };
 
             modalContent.addEventListener("load", () => {
@@ -238,6 +239,7 @@ function openModal(image) {
 
                 if (window.matchMedia("(pointer: fine)").matches) {
                     html.classList.add("hide-scroll");
+                    body.classList.add("hide-scroll");
                 };
 
             }, modalTransitionMs);
@@ -249,6 +251,7 @@ function closeModal() {
     body.classList.add("unclicable");
     page.classList.remove("zero-opacity");
     html.classList.remove("hide-scroll");
+    body.classList.remove("hide-scroll");
     modal.classList.remove("full-opacity");
 
     setTimeout(() => {
