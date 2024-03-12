@@ -442,6 +442,8 @@ hr {
     padding: 0;
 
     margin: auto;
+
+    opacity: 0;
 }
 
 .fit-content {

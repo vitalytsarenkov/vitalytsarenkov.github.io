@@ -218,6 +218,7 @@ function openModal(image) {
                 centerModal();
                 getScrollPosition();
                 modalLoading.classList.remove("show-loading");
+                modalImage.classList.add("full-opacity");
                 modalButtons.classList.add("show-buttons");
             };
 
@@ -249,6 +250,8 @@ function closeModal() {
     setTimeout(() => {
         body.classList.remove("unclicable");
         modal.classList.remove("show-modal");
+        modalButtons.classList.remove("show-buttons");
+        modalImage.classList.remove("full-opacity");
         clearModal();
         modalImage.removeAttribute("src");
         modalImage.removeAttribute("width");
