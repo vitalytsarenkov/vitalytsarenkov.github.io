@@ -84,10 +84,6 @@ menuCross.addEventListener("click", () => {
     }, menuTransitionMs);
 });
 
-//window.onresize = function () {
-//    hideScroll(sidebarState);
-//};
-
 // Toggle dark and light modes
 
 const modeToggle = body.querySelector(".mode-toggle");
@@ -96,7 +92,7 @@ const modeTransition = getComputedStyle(html).getPropertyValue("--mode-transitio
 const modeTransitionMs = parseFloat(modeTransition) * 1000;
 
 function setAriaLabel() {
-    if (currentMode == "dark") {
+    if (currentMode === "dark") {
         modeToggle.setAttribute("aria-label", "Change to light mode");
     } else {
         modeToggle.setAttribute("aria-label", "Change to dark mode");
@@ -207,7 +203,7 @@ setInterval(loadingModal, 250);
 
 function openModal(image) {
     image.addEventListener("click", () => {
-        if (modalState.getPropertyValue("display") == "none") {
+        if (modalState.getPropertyValue("display") === "none") {
             body.classList.add("unclicable");
             modal.classList.add("show-modal");
             modalLoading.classList.add("show-loading");
@@ -233,7 +229,8 @@ function openModal(image) {
             setTimeout(() => {
                 body.classList.remove("unclicable");
                 page.classList.add("zero-opacity");
-                html.classList.add("hide-scroll");
+                //                html.classList.add("hide-scroll");
+                disableScroll();
             }, modalTransitionMs);
         }
     });
@@ -242,8 +239,9 @@ function openModal(image) {
 function closeModal() {
     body.classList.add("unclicable");
     page.classList.remove("zero-opacity");
-    html.classList.remove("hide-scroll");
+    //    html.classList.remove("hide-scroll");
     modal.classList.remove("full-opacity");
+    enableScroll();
 
     setTimeout(() => {
         body.classList.remove("unclicable");
@@ -329,7 +327,7 @@ function getModal() {
 function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
         modalContent.classList.add("fit-size");
-    } else if (originalWidth == window.innerWidth || originalHeight == window.innerHeight) {
+    } else if (originalWidth === window.innerWidth || originalHeight === window.innerHeight) {
         modalContent.classList.add("fit-size");
     } else {
         modalContent.classList.remove("fit-size");
@@ -359,7 +357,7 @@ function zoomModalOut() {
     const windowProportion = window.innerWidth / window.innerHeight;
     const portrait = windowProportion < 1 ? "true" : "false";
 
-    if (portrait == "true") {
+    if (portrait === "true") {
         if (modalProportion > windowProportion) {
             modalContent.classList.add("fit-width");
         } else {
@@ -367,7 +365,7 @@ function zoomModalOut() {
         }
     }
 
-    if (portrait == "false") {
+    if (portrait === "false") {
         if (modalProportion < windowProportion) {
             modalContent.classList.add("fit-height");
         } else {
