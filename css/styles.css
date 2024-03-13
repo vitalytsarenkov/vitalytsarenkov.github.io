@@ -78,6 +78,7 @@ html {
     font-size: 20px;
 
     scroll-behavior: smooth;
+    overscroll-behavior: none;
 }
 
 body {
@@ -386,6 +387,7 @@ hr {
     z-index: 10000;
 
     overflow: auto;
+    overscroll-behavior-y: contain;
 
     opacity: 0;
     transition: opacity var(--modal-transition);

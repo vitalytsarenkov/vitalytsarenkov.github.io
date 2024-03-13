@@ -260,9 +260,17 @@ function closeModal() {
 
     setTimeout(() => {
         modal.classList.remove("show-modal");
+        resetModal();
         clearModal();
         body.classList.remove("unclicable");
     }, modalTransitionMs);
+};
+
+function clearModal() {
+    modalImage.removeAttribute("src");
+    modalImage.removeAttribute("width");
+    modalImage.classList.remove("full-opacity");
+    modalButtons.classList.remove("show-buttons");
 };
 
 function centerModal() {
@@ -359,15 +367,11 @@ function updateModal() {
     disableZoom();
 };
 
-function clearModal() {
-    modalImage.removeAttribute("src");
-    modalImage.removeAttribute("width");
+function resetModal() {
     modalImage.classList.remove("fit-size");
     modalImage.classList.remove("fit-width");
     modalImage.classList.remove("fit-height");
     modalImage.classList.remove("fit-content");
-    modalImage.classList.remove("full-opacity");
-    modalButtons.classList.remove("show-buttons");
 };
 
 function zoomModalOut() {
@@ -445,7 +449,7 @@ modalImage.addEventListener("touchend", () => {
 window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (!modalImage.classList.contains("fit-content")) {
-            clearModal();
+            resetModal();
         }
         updateModal();
     }
