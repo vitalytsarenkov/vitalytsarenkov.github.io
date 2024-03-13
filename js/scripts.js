@@ -23,27 +23,27 @@ const menuTransitionMs = parseFloat(menuTransition) * 1000;
 
 let isMenuOpen;
 
-function preventDefaultScroll(e) {
-    e.preventDefault();
+function preventDefaultScroll(event) {
+    event.preventDefault();
 }
 
-function disableScroll() {
-    html.classList.add("hide-scroll");
+function disableScroll(element) {
+    element.classList.add("hide-scroll");
     body.addEventListener('touchmove', preventDefaultScroll, {
         passive: false
     });
 }
 
-function enableScroll() {
-    html.classList.remove("hide-scroll");
+function enableScroll(element) {
+    element.classList.remove("hide-scroll");
     body.removeEventListener('touchmove', preventDefaultScroll);
 }
 
 function updateScroll() {
     if (sidebarState.getPropertyValue("position") === "fixed") {
-        disableScroll();
+        disableScroll(html);
     } else {
-        enableScroll();
+        enableScroll(html);
     }
 }
 
@@ -54,16 +54,16 @@ window.addEventListener("resize", () => {
 });
 
 menuButton.addEventListener("click", () => {
-    isMenuOpen = true;
-    disableScroll();
     body.classList.add("unclicable");
+    isMenuOpen = true;
+    disableScroll(html);
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.toggle("toggle-sidebar");
 
     setTimeout(() => {
         sidebar.classList.add("full-opacity");
-    }, "100");
+    }, 100);
 
     setTimeout(() => {
         body.classList.remove("unclicable");
@@ -71,16 +71,16 @@ menuButton.addEventListener("click", () => {
 });
 
 menuCross.addEventListener("click", () => {
-    isMenuOpen = false;
-    enableScroll();
     body.classList.add("unclicable");
+    isMenuOpen = false;
+    enableScroll(html);
     menuButton.classList.toggle("toggle-menu-button");
     menuCross.classList.toggle("toggle-menu-cross");
     sidebar.classList.remove("full-opacity");
 
     setTimeout(() => {
-        body.classList.remove("unclicable");
         sidebar.classList.toggle("toggle-sidebar");
+        body.classList.remove("unclicable");
     }, menuTransitionMs);
 });
 
@@ -115,8 +115,8 @@ modeToggle.addEventListener("click", () => {
     html.classList.toggle("toggle-mode");
 
     setTimeout(() => {
-        body.classList.remove("unclicable");
         html.classList.toggle("toggle-mode");
+        body.classList.remove("unclicable");
     }, modeTransitionMs);
 });
 
@@ -182,6 +182,8 @@ let modalState = getComputedStyle(modal);
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
+// Loading indicator
+
 const modalLoading = body.querySelector(".modal-loading");
 const loadingIndicator = body.querySelector(".loading-indicator");
 
@@ -202,14 +204,26 @@ function loadingModal() {
 
 setInterval(loadingModal, 250);
 
+// Open and close modal
+
 function openModal(image) {
     image.addEventListener("click", () => {
         if (modalState.getPropertyValue("display") === "none") {
-            body.classList.add("unclicable");
-            modal.classList.add("show-modal");
-            modalLoading.classList.add("show-loading");
-            modalImage.classList.add("fit-content");
-            modalImage.src = image.src;
+
+            function setModal() {
+                body.classList.add("unclicable");
+                modal.classList.add("show-modal");
+                modalLoading.classList.add("show-loading");
+                disableScroll(body);
+                modalImage.classList.add("fit-content");
+                modalImage.src = image.src;
+            };
+
+            setModal();
+
+            setTimeout(() => {
+                modal.classList.add("full-opacity");
+            }, 100);
 
             function imageLoaded() {
                 modalImage.width /= window.devicePixelRatio;
@@ -217,9 +231,10 @@ function openModal(image) {
                 updateModal();
                 centerModal();
                 getScrollPosition();
+                enableScroll(body);
                 modalLoading.classList.remove("show-loading");
-                modalImage.classList.add("full-opacity");
                 modalButtons.classList.add("show-buttons");
+                modalImage.classList.add("full-opacity");
             };
 
             modalImage.addEventListener("load", () => {
@@ -229,13 +244,9 @@ function openModal(image) {
             });
 
             setTimeout(() => {
-                modal.classList.add("full-opacity");
-            }, "100");
-
-            setTimeout(() => {
-                body.classList.remove("unclicable");
-                page.classList.add("zero-opacity");
                 html.classList.add("hide-scroll");
+                page.classList.add("zero-opacity");
+                body.classList.remove("unclicable");
             }, modalTransitionMs);
         }
     });
@@ -243,18 +254,14 @@ function openModal(image) {
 
 function closeModal() {
     body.classList.add("unclicable");
-    page.classList.remove("zero-opacity");
     html.classList.remove("hide-scroll");
+    page.classList.remove("zero-opacity");
     modal.classList.remove("full-opacity");
 
     setTimeout(() => {
-        body.classList.remove("unclicable");
         modal.classList.remove("show-modal");
-        modalButtons.classList.remove("show-buttons");
-        modalImage.classList.remove("full-opacity");
         clearModal();
-        modalImage.removeAttribute("src");
-        modalImage.removeAttribute("width");
+        body.classList.remove("unclicable");
     }, modalTransitionMs);
 };
 
@@ -272,10 +279,12 @@ modalClose.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none") {
+    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none" && !body.classList.contains("unclicable")) {
         closeModal();
     }
 });
+
+// Pan image
 
 function panModal() {
     const startPoint = {
@@ -351,10 +360,14 @@ function updateModal() {
 };
 
 function clearModal() {
+    modalImage.removeAttribute("src");
+    modalImage.removeAttribute("width");
     modalImage.classList.remove("fit-size");
     modalImage.classList.remove("fit-width");
     modalImage.classList.remove("fit-height");
     modalImage.classList.remove("fit-content");
+    modalImage.classList.remove("full-opacity");
+    modalButtons.classList.remove("show-buttons");
 };
 
 function zoomModalOut() {
