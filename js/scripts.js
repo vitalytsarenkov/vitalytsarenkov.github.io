@@ -11,8 +11,8 @@ function test() {
 
 // Toggle menu
 
-const menuButton = body.querySelector(".menu-button");
-const menuCross = body.querySelector(".menu-cross");
+const menuOpen = body.querySelector(".menu-open");
+const menuClose = body.querySelector(".menu-close");
 const sidebar = body.querySelector(".sidebar");
 const main = body.querySelector(".main");
 
@@ -53,12 +53,12 @@ window.addEventListener("resize", () => {
     }
 });
 
-menuButton.addEventListener("click", () => {
+menuOpen.addEventListener("click", () => {
     body.classList.add("unclicable");
     isMenuOpen = true;
     disableScroll(html);
-    menuButton.classList.toggle("toggle-menu-button");
-    menuCross.classList.toggle("toggle-menu-cross");
+    menuOpen.classList.toggle("toggle-menu-open");
+    menuClose.classList.toggle("toggle-menu-close");
     sidebar.classList.toggle("toggle-sidebar");
 
     setTimeout(() => {
@@ -70,12 +70,12 @@ menuButton.addEventListener("click", () => {
     }, menuTransitionMs);
 });
 
-menuCross.addEventListener("click", () => {
+menuClose.addEventListener("click", () => {
     body.classList.add("unclicable");
     isMenuOpen = false;
     enableScroll(html);
-    menuButton.classList.toggle("toggle-menu-button");
-    menuCross.classList.toggle("toggle-menu-cross");
+    menuOpen.classList.toggle("toggle-menu-open");
+    menuClose.classList.toggle("toggle-menu-close");
     sidebar.classList.remove("full-opacity");
 
     setTimeout(() => {
@@ -206,48 +206,60 @@ setInterval(loadingModal, 250);
 
 // Open and close modal
 
-function openModal(image) {
-    image.addEventListener("click", () => {
-        if (modalState.getPropertyValue("display") === "none") {
+let activeElement;
 
-            function setModal() {
-                body.classList.add("unclicable");
-                modal.classList.add("show-modal");
-                modalLoading.classList.add("show-loading");
-                disableScroll(body);
-                modalImage.classList.add("fit-content");
-                modalImage.src = image.src;
-            };
+function openModal(image, eventType) {
+    image.addEventListener(eventType, (event) => {
+        if (eventType === "click" || eventType === "keydown" && event.key === "Enter") {
 
-            setModal();
+            if (modalState.getPropertyValue("display") === "none") {
 
-            setTimeout(() => {
-                modal.classList.add("full-opacity");
-            }, 100);
+                activeElement = document.activeElement;
 
-            function imageLoaded() {
-                modalImage.width /= window.devicePixelRatio;
-                getModal();
-                updateModal();
-                centerModal();
-                getScrollPosition();
-                enableScroll(body);
-                modalLoading.classList.remove("show-loading");
-                modalButtons.classList.add("show-buttons");
-                modalImage.classList.add("full-opacity");
-            };
+                function setModal() {
+                    body.classList.add("unclicable");
+                    modal.classList.add("show-modal");
+                    modalLoading.classList.add("show-loading");
+                    disableScroll(body);
+                    modalImage.classList.add("fit-content");
+                    modalImage.src = image.src;
+                };
 
-            modalImage.addEventListener("load", () => {
-                imageLoaded();
-            }, {
-                once: true
-            });
+                setModal();
 
-            setTimeout(() => {
-                html.classList.add("hide-scroll");
-                page.classList.add("zero-opacity");
-                body.classList.remove("unclicable");
-            }, modalTransitionMs);
+                setTimeout(() => {
+                    modal.classList.add("full-opacity");
+                }, 100);
+
+                function imageLoaded() {
+                    modalImage.width /= window.devicePixelRatio;
+                    getModal();
+                    updateModal();
+                    centerModal();
+                    getScrollPosition();
+                    enableScroll(body);
+                    modalLoading.classList.remove("show-loading");
+                    modalButtons.classList.add("show-buttons");
+                    modalImage.classList.add("full-opacity");
+                };
+
+                modalImage.addEventListener("load", () => {
+                    imageLoaded();
+                    if (eventType === "keydown") {
+                        setTimeout(() => {
+                            modal.focus();
+                        }, 100);
+                    }
+                }, {
+                    once: true
+                });
+
+                setTimeout(() => {
+                    html.classList.add("hide-scroll");
+                    page.classList.add("zero-opacity");
+                    body.classList.remove("unclicable");
+                }, modalTransitionMs);
+            }
         }
     });
 };
@@ -257,6 +269,7 @@ function closeModal() {
     html.classList.remove("hide-scroll");
     page.classList.remove("zero-opacity");
     modal.classList.remove("full-opacity");
+    activeElement.focus();
 
     setTimeout(() => {
         modal.classList.remove("show-modal");
@@ -279,7 +292,8 @@ function centerModal() {
 };
 
 for (let i = 0; i < images.length; i++) {
-    openModal(images[i]);
+    openModal(images[i], "click");
+    openModal(images[i], "keydown");
 };
 
 modalClose.addEventListener("click", () => {
@@ -400,6 +414,7 @@ function zoomModalOut() {
     modalImage.classList.remove("fit-content");
 
     disableZoom();
+    modalClose.focus();
 };
 
 function zoomModalIn() {
@@ -409,6 +424,7 @@ function zoomModalIn() {
     modalImage.classList.remove("fit-height");
     resetScrollPosition();
     disableZoom();
+    modal.focus();
 };
 
 function disableZoom() {
@@ -472,6 +488,27 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keydown", (event) => {
     if (event.key === "=" && modalState.getPropertyValue("display") !== "none") {
         zoomModalIn();
+    }
+});
+
+// Accessibility
+
+const topScrollLink = body.querySelector(".top-scroll-link a");
+
+topScrollLink.addEventListener("click", () => {
+    html.focus();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Tab" && modalState.getPropertyValue("display") !== "none") {
+        if (zoomIn.classList.contains("disable-zoom") && modalClose === document.activeElement) {
+            zoomOut.focus();
+            setTimeout(() => {
+                modal.focus();
+            }, 100);
+        } else if (zoomOut.classList.contains("disable-zoom") && zoomIn === document.activeElement) {
+            zoomOut.focus();
+        }
     }
 });
 

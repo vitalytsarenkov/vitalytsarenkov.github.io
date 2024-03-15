@@ -1,7 +1,7 @@
 :root {
     --padding: 1rem;
 
-    --header-size: calc(1rem + 2 * var(--padding) * 0.75 + 1px);
+    --header-size: calc(1rem + 2 * var(--padding) * 0.75);
 
     --menu-transition: 0.25s;
     --mode-transition: 0.25s;
@@ -35,27 +35,42 @@
     touch-action: manipulation;
 }
 
+*:focus {
+    outline: auto;
+}
+
+*:focus:not(:focus-visible) {
+    outline: none;
+}
+
+*:focus-visible {
+    outline: auto;
+}
+
 p,
 hr,
-img,
-.nav,
+nav,
+figure,
 .sidebar-footer,
 .main-header,
 .carousel {
     padding: var(--padding);
 }
 
-.menu-cross,
+.menu-close,
 .mode-toggle,
+.sidebar-footer,
 .a-icon,
+.left,
+.right,
 .modal-close,
 .zoom-out,
 .zoom-in {
     line-height: 0;
 }
 
-.menu-button,
-.menu-cross {
+.menu-open,
+.menu-close {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -70,6 +85,12 @@ img,
     width: 100%;
     min-height: calc(100dvh - var(--header-size));
     /*    -webkit-min-logical-height: calc(100vh - var(--header-size));*/
+}
+
+p,
+menu,
+figcaption {
+    line-height: 1.5;
 }
 
 /* Element rules */
@@ -94,7 +115,12 @@ h1 {
 }
 
 p {
-    max-width: 66ch;
+    max-width: 65ch;
+}
+
+ul,
+menu {
+    list-style: none;
 }
 
 a {
@@ -116,13 +142,15 @@ img {
     max-width: 100%;
     height: auto;
 
+    vertical-align: bottom;
+
     cursor: pointer;
 }
 
 figure {}
 
 figcaption {
-    padding-left: var(--padding);
+    padding-top: var(--padding);
 }
 
 address a {
@@ -154,6 +182,7 @@ hr {
     border-bottom: 1px dotted var(--icon-color);
 
     padding: calc(var(--padding) * 0.75) var(--padding);
+    padding-bottom: calc(var(--padding) * 0.75 - 1px);
 
     display: flex;
     justify-content: space-between;
@@ -172,7 +201,11 @@ hr {
     fill: var(--icon-color);
 }
 
-.menu-button {
+.skip-navigation {
+    display: none;
+}
+
+.menu-open {
     font-size: 1rem;
     color: var(--icon-color);
 
@@ -182,7 +215,7 @@ hr {
     line-height: 1rem;
 }
 
-.menu-cross {
+.menu-close {
     display: none;
 }
 
@@ -214,23 +247,40 @@ hr {
 }
 
 .menu {
-    list-style: none;
-
     text-align: center;
 
     margin: auto;
 }
 
-.menu a:hover {
+.menu a:hover,
+.menu a:focus {
     color: var(--hover-color);
 }
 
-.current-page a {
-    color: var(--inactive-color);
+.current-page {
+    color: var(--hover-color);
     pointer-events: none;
 }
 
-.sidebar-footer {}
+.sidebar-footer ul {
+    display: flex;
+}
+
+.sidebar-footer .icon:hover {
+    color: var(--hover-color);
+}
+
+.sidebar-footer a:focus {
+    color: var(--hover-color);
+}
+
+.x {
+    margin-left: 0.5rem;
+}
+
+.x .icon {
+    width: 22.2333px;
+}
 
 .main {
     display: flex;
@@ -244,7 +294,7 @@ hr {
     flex: 1;
 }
 
-.top-scroll {
+.top-scroll-link {
     padding: 2rem;
 
     align-self: center;
@@ -268,11 +318,11 @@ hr {
     overflow: hidden;
 }
 
-.toggle-menu-button {
+.toggle-menu-open {
     display: none;
 }
 
-.toggle-menu-cross {
+.toggle-menu-close {
     display: block;
 }
 
@@ -299,9 +349,10 @@ hr {
 
 .toggle-mode h1,
 .toggle-mode p,
+.toggle-mode span,
 .toggle-mode figcaption,
 .toggle-mode a,
-.toggle-mode .menu-button {
+.toggle-mode .menu-open {
     transition: color var(--mode-transition) linear;
 }
 
@@ -317,13 +368,9 @@ hr {
 }
 
 .carousel figcaption {
-    padding-left: 0;
+    /*    padding-top: 0;*/
 
     flex: 1;
-}
-
-.carousel-content img {
-    padding: 0;
 }
 
 .carousel-navigation {
@@ -344,17 +391,6 @@ hr {
     font-size: 0.75rem;
 }
 
-.carousel-content,
-.carousel-position {
-    list-style: none;
-}
-
-.carousel-content,
-.left,
-.right {
-    line-height: 0;
-}
-
 .carousel-content li,
 .carousel-position li {
     display: none;
@@ -368,8 +404,7 @@ hr {
 /* Modal images */
 
 .zoomtest img {
-    display: inline;
-    height: 100px;
+    height: 5rem;
 }
 
 .modal {
@@ -439,8 +474,6 @@ hr {
 }
 
 .modal-image {
-    padding: 0;
-
     margin: auto;
 
     opacity: 0;
@@ -484,11 +517,11 @@ hr {
 
 /* Animations */
 
-.top-scroll a {
+.top-scroll-link a {
     padding: 0.5rem;
 }
 
-.top-scroll svg {
+.top-scroll-link svg {
     animation: 1.5s ease-in-out 0s infinite alternate up-and-down;
 }
 
@@ -548,6 +581,19 @@ hr {
         position: static;
     }
 
+    .skip-navigation {
+        display: block;
+        position: absolute;
+        top: center;
+        left: 50%;
+        transform: translate(-50%, -10rem);
+    }
+
+    .skip-navigation:focus {
+        color: var(--hover-color);
+        transform: translate(-50%, 0);
+    }
+
     .menu-toggle {
         display: none;
     }
@@ -579,7 +625,7 @@ hr {
     }
 
     .menu {
-        width: 105px;
+        width: 120px;
 
         text-align: left;
 
@@ -593,6 +639,7 @@ hr {
     }
 
     .carousel figcaption {
+        padding-top: 0;
         padding-left: var(--padding);
     }
 
