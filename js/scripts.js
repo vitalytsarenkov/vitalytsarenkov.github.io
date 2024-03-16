@@ -125,15 +125,17 @@ modeToggle.addEventListener("click", () => {
 const carousels = body.querySelectorAll(".carousel");
 
 function carousel(carousel) {
+    const carouselContent = carousel.querySelector(".carousel-content");
     const images = carousel.querySelectorAll(".carousel-content li");
     const positions = carousel.querySelectorAll(".carousel-position li");
     const left = carousel.querySelector(".left");
     const right = carousel.querySelector(".right");
 
-    let counter = 0;
-    let amount = images.length;
-    let currentImage = images[0];
-    let currentPosition = positions[0];
+    let xSwipe,
+        counter = 0,
+        amount = images.length,
+        currentImage = images[0],
+        currentPosition = positions[0];
 
     function navigate(direction) {
         currentImage.classList.remove("shown");
@@ -162,6 +164,18 @@ function carousel(carousel) {
     });
 
     navigate(0);
+
+    carouselContent.addEventListener("touchstart", (event) => {
+        xSwipe = event.pageX;
+    });
+
+    carouselContent.addEventListener("touchend", (event) => {
+        if (event.pageX > xSwipe) {
+            navigate(-1);
+        } else {
+            navigate(1);
+        }
+    });
 };
 
 for (let i = 0; i < carousels.length; i++) {
