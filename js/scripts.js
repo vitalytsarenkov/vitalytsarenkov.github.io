@@ -175,7 +175,7 @@ function carousel(carousel) {
     carouselContent.addEventListener("pointerup", (event) => {
         swipeEnd = event.clientX;
         swipeDistance = Math.abs(swipeStart - swipeEnd);
-        if (swipeDistance > 25) {
+        if (swipeDistance > 5) {
             if (swipeEnd > swipeStart) {
                 navigate(-1);
             } else {
