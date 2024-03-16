@@ -29,14 +29,14 @@ function preventDefaultScroll(event) {
 
 function disableScroll(element) {
     element.classList.add("hide-scroll");
-    body.addEventListener('touchmove', preventDefaultScroll, {
+    body.addEventListener("touchmove", preventDefaultScroll, {
         passive: false
     });
 }
 
 function enableScroll(element) {
     element.classList.remove("hide-scroll");
-    body.removeEventListener('touchmove', preventDefaultScroll);
+    body.removeEventListener("touchmove", preventDefaultScroll);
 }
 
 function updateScroll() {
@@ -131,8 +131,7 @@ function carousel(carousel) {
     const left = carousel.querySelector(".left");
     const right = carousel.querySelector(".right");
 
-    let xSwipe,
-        counter = 0,
+    let counter = 0,
         amount = images.length,
         currentImage = images[0],
         currentPosition = positions[0];
@@ -165,15 +164,23 @@ function carousel(carousel) {
 
     navigate(0);
 
-    carouselContent.addEventListener("touchstart", (event) => {
-        xSwipe = event.pageX;
+    let swipeDistance,
+        swipeStart,
+        swipeEnd;
+
+    carouselContent.addEventListener("pointerdown", (event) => {
+        swipeStart = event.clientX;
     });
 
-    carouselContent.addEventListener("touchend", (event) => {
-        if (event.pageX > xSwipe) {
-            navigate(-1);
-        } else {
-            navigate(1);
+    carouselContent.addEventListener("pointerup", (event) => {
+        swipeEnd = event.clientX;
+        swipeDistance = Math.abs(swipeStart - swipeEnd);
+        if (swipeDistance > 25) {
+            if (swipeEnd > swipeStart) {
+                navigate(-1);
+            } else {
+                navigate(1);
+            }
         }
     });
 };
