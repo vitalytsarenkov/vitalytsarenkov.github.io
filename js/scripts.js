@@ -241,15 +241,11 @@ function openModal(image, eventType) {
                     modalLoading.classList.remove("show-loading");
                     modalButtons.classList.add("show-buttons");
                     modalImage.classList.add("full-opacity");
+                    modalImage.focus();
                 };
 
                 modalImage.addEventListener("load", () => {
                     imageLoaded();
-                    if (eventType === "keydown") {
-                        setTimeout(() => {
-                            modal.focus();
-                        }, 100);
-                    }
                 }, {
                     once: true
                 });
@@ -269,7 +265,9 @@ function closeModal() {
     html.classList.remove("hide-scroll");
     page.classList.remove("zero-opacity");
     modal.classList.remove("full-opacity");
-    activeElement.focus();
+    activeElement.focus({
+        preventScroll: true
+    });
 
     setTimeout(() => {
         modal.classList.remove("show-modal");
@@ -424,7 +422,7 @@ function zoomModalIn() {
     modalImage.classList.remove("fit-height");
     resetScrollPosition();
     disableZoom();
-    modal.focus();
+    modalImage.focus();
 };
 
 function disableZoom() {
@@ -499,15 +497,39 @@ topScrollLink.addEventListener("click", () => {
     html.focus();
 });
 
+function setFocus(element) {
+    event.preventDefault();
+    element.focus();
+};
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "Tab" && modalState.getPropertyValue("display") !== "none") {
-        if (zoomIn.classList.contains("disable-zoom") && modalClose === document.activeElement) {
-            zoomOut.focus();
-            setTimeout(() => {
-                modal.focus();
-            }, 100);
-        } else if (zoomOut.classList.contains("disable-zoom") && zoomIn === document.activeElement) {
-            zoomOut.focus();
+        if (zoomIn.classList.contains("disable-zoom")) {
+            if (modalImage === document.activeElement) {
+                if (event.shiftKey) {
+                    setFocus(modalClose);
+                } else {
+                    setFocus(zoomOut);
+                }
+            } else if (zoomOut === document.activeElement) {
+                if (event.shiftKey) {
+                    setFocus(modalImage);
+                } else {
+                    setFocus(modalClose);
+                }
+            } else if (modalClose === document.activeElement) {
+                if (event.shiftKey) {
+                    setFocus(zoomOut);
+                } else {
+                    setFocus(modalImage);
+                }
+            }
+        } else if (zoomOut.classList.contains("disable-zoom")) {
+            if (zoomIn === document.activeElement) {
+                setFocus(modalClose);
+            } else if (modalClose === document.activeElement && event.shiftKey) {
+                setFocus(zoomIn);
+            }
         }
     }
 });
