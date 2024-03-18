@@ -41,10 +41,10 @@
 <body>
     <div class="page">
         <header class="header">
-            <svg class="icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="5" width="7" viewBox="0 0 7 5">
+            <svg class="icon" id="logo" tabindex="-1" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" height="5" width="7" viewBox="0 0 7 5">
                 <path d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
             </svg>
-            <a class="skip-navigation" href="#skip">skip to main content</a>
+            <button class="skip-navigation">skip to main content</button>
             <div class="menu-toggle">
                 <button class="menu-open zero-opacity" aria-label="Open menu">MENU</button>
                 <button class="menu-close" aria-label="Close menu">
@@ -66,13 +66,14 @@
                         <li class="current-page"><span>about</span></li>
                         <li><br></li>
                         <li><a href="">paintings</a></li>
-                        <li><a href="">sculptures</a></li>
                         <li><a href="">murals</a></li>
+                        <li><a href="">sculptures</a></li>
                         <li><a href="">nfts</a></li>
                         <li><br></li>
-                        <li><a href="">biography</a></li>
-                        <li><a href="">cv</a></li>
+                        <li><a href="">bio</a></li>
                         <li><a href="">statement</a></li>
+                        <li><a href="">cv</a></li>
+                        <li><a href="">press</a></li>
                         <li><br></li>
                         <li><a href="./html/contact.html">contact</a></li>
                     </menu>
@@ -96,14 +97,14 @@
                     </ul>
                 </footer>
             </aside>
-            <main class="main" id="skip">
+            <main class="main">
                 <section class="content">
                     <header class="main-header">
                         <h1>About</h1>
                     </header>
 
                     <figure class="zoomtest">
-                        <img src="./img/zoom_horizontal.png" alt="A horizontal image." tabindex="0" role="button">
+                        <img id="skip" src="./img/zoom_horizontal.png" alt="A horizontal image." tabindex="0" role="button">
                         <img src="./img/zoom_square.png" alt="A square image." tabindex="0" role="button">
                         <img src="./img/zoom_vertical.png" alt="A vertical image." tabindex="0" role="button">
                     </figure>
@@ -173,13 +174,11 @@
                     </figure>
                     <!--                    <img sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 1000px, calc(100vw - 185px)" srcset="./img/500.png 500w, ./img/750.png 750w, ./img/1000.png 1000w, ./img/1500.png 1500w, ./img/2000.png 2000w, ./img/2500.png 2500w, ./img/3000.png 3000w" src="./img/3000.png" loading="lazy" alt="">-->
                 </section>
-                <div class="top-scroll-link">
-                    <a class="a-icon" aria-label="Scroll to the top" href="#top">
-                        <svg class="icon" aria-label="Top arrow icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
-                            <polygon fill="currentColor" points="5,0 10,10 0,10" />
-                        </svg>
-                    </a>
-                </div>
+                <button class="top-scroll-button" aria-label="Scroll to the top">
+                    <svg class="icon" aria-label="Top arrow icon" xmlns="http://www.w3.org/2000/svg" height="10" width="10" viewBox="0 0 10 10">
+                        <polygon points="5,0 10,10 0,10" />
+                    </svg>
+                </button>
                 <footer class="footer">
                     <p>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</p>
                 </footer>

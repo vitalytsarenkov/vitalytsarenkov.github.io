@@ -231,10 +231,10 @@ let activeElement;
 
 function openModal(image, eventType) {
     image.addEventListener(eventType, (event) => {
-        if (eventType === "click" || eventType === "keydown" && event.key === "Enter") {
+        if (modalState.getPropertyValue("display") === "none") {
+            if (eventType === "click" || eventType === "keydown" && event.key === "Enter" || event.key === " ") {
 
-            if (modalState.getPropertyValue("display") === "none") {
-
+                event.preventDefault();
                 activeElement = document.activeElement;
 
                 function setModal() {
@@ -512,10 +512,27 @@ document.addEventListener("keydown", (event) => {
 
 // Accessibility
 
-const topScrollLink = body.querySelector(".top-scroll-link a");
+const logo = document.getElementById("logo");
+const skipNavigation = body.querySelector(".skip-navigation");
+const skip = document.getElementById("skip");
+const topScrollButton = body.querySelector(".top-scroll-button");
 
-topScrollLink.addEventListener("click", () => {
-    html.focus();
+skipNavigation.addEventListener("click", () => {
+    skipNavigation.blur();
+    skip.focus();
+});
+
+topScrollButton.addEventListener("click", () => {
+    html.scrollTop = 0;
+    logo.focus({
+        preventScroll: true
+    });
+    logo.blur();
+});
+
+logo.addEventListener("pointerdown", (event) => {
+    event.preventDefault();
+    logo.blur();
 });
 
 function setFocus(element) {
