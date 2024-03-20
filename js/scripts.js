@@ -225,7 +225,7 @@ function loadingModal() {
 
 setInterval(loadingModal, 250);
 
-// Open and close modal
+// Open and close modal images
 
 let activeElement;
 
@@ -325,7 +325,7 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// Pan image
+// Pan modal images
 
 function panModal() {
     const startPoint = {
@@ -366,7 +366,7 @@ if (window.matchMedia("(pointer: fine)").matches) {
     panModal();
 };
 
-// Zoom image
+// Zoom modal images
 
 const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
@@ -519,7 +519,9 @@ const topScrollButton = body.querySelector(".top-scroll-button");
 
 skipNavigation.addEventListener("click", () => {
     skipNavigation.blur();
-    skip.focus();
+    skip.focus({
+        preventScroll: true
+    });
 });
 
 topScrollButton.addEventListener("click", () => {

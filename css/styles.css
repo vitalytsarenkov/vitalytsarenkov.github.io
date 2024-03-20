@@ -14,7 +14,7 @@
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
-    --inactive-color: grey;
+    --inactive-color: #ccc;
 }
 
 [data-theme="dark"] {
@@ -22,7 +22,7 @@
     --text-color: #ccc;
     --icon-color: white;
     --hover-color: yellow;
-    --inactive-color: grey;
+    --inactive-color: #333;
 }
 
 * {
@@ -52,20 +52,26 @@ button {
     font-family: Verdana, sans-serif;
 }
 
+h1,
 p,
 hr,
 nav,
 figure,
-.sidebar-footer,
-.main-header,
+footer,
 .carousel {
     padding: var(--padding);
+}
+
+h1,
+.menu-open,
+.footer {
+    line-height: 1;
 }
 
 .menu-close,
 .mode-toggle,
 .sidebar-footer,
-.a-icon,
+.social-media,
 .left,
 .right,
 .modal-close,
@@ -113,9 +119,7 @@ body {
 }
 
 h1 {
-    font-size: 1.5rem;
-
-    line-height: 1.5rem;
+    font-size: 1.25rem;
 }
 
 p {
@@ -166,16 +170,6 @@ address a {
 
 hr {
     border: 0;
-
-    /*
-    padding: 0;
-    margin: calc(var(--padding) * 2) var(--padding);
-
-    border-top: 1px solid #ccc;
-
-    width: 10rem;
-    align-self: center;
-*/
 }
 
 /* Class rules */
@@ -217,8 +211,6 @@ hr {
 
     opacity: 1;
     transition: opacity var(--page-transition);
-
-    line-height: 1rem;
 }
 
 .menu-close {
@@ -259,25 +251,19 @@ hr {
 }
 
 .menu a:hover,
-.menu a:focus {
+.menu a:focus,
+.current-page,
+.sidebar-footer a:hover,
+.sidebar-footer a:focus {
     color: var(--hover-color);
 }
 
 .current-page {
-    color: var(--hover-color);
     pointer-events: none;
 }
 
 .sidebar-footer ul {
     display: flex;
-}
-
-.sidebar-footer .icon:hover {
-    color: var(--hover-color);
-}
-
-.sidebar-footer a:focus {
-    color: var(--hover-color);
 }
 
 .x {
@@ -293,11 +279,8 @@ hr {
     flex-direction: column;
 }
 
-.content {
-    display: flex;
-    flex-direction: column;
-
-    flex: 1;
+.padding-bottom-zero {
+    padding-bottom: 0;
 }
 
 .top-scroll-button {
@@ -313,9 +296,10 @@ hr {
 
 .footer {
     align-self: center;
+    margin-top: auto;
 }
 
-.footer p {
+.footer span {
     font-size: 0.75rem;
 }
 
@@ -393,13 +377,15 @@ hr {
 }
 
 .left,
-.carousel-position p,
+.carousel-position span,
 .right {
     padding: 0.5rem;
 }
 
-.carousel-position p {
+.carousel-position span {
     font-size: 0.75rem;
+
+    display: block;
 }
 
 .carousel-content li,
@@ -591,7 +577,6 @@ hr {
     .skip-navigation {
         display: block;
         position: absolute;
-        top: center;
         left: 50%;
         transform: translate(-50%, -10rem);
     }
@@ -620,7 +605,7 @@ hr {
         display: flex;
         align-items: flex-start;
 
-        margin-top: calc(3.5 * var(--padding));
+        margin-top: calc(3.25 * var(--padding));
 
         opacity: 1;
     }
