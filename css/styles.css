@@ -1,7 +1,7 @@
 :root {
     --padding: 1rem;
 
-    --header-size: calc(1rem + 2 * var(--padding) * 0.75);
+    --header-height: calc(1rem + 2 * var(--padding) * 0.75);
 
     --menu-transition: 0.25s;
     --mode-transition: 0.25s;
@@ -47,11 +47,6 @@
     outline: auto;
 }
 
-body,
-button {
-    font-family: Verdana, sans-serif;
-}
-
 h1,
 p,
 hr,
@@ -92,17 +87,26 @@ h1,
 
 .sidebar,
 .main {
-    margin-top: var(--header-size);
-
     width: 100%;
-    min-height: calc(100dvh - var(--header-size));
-    /*    -webkit-min-logical-height: calc(100vh - var(--header-size));*/
+
+    margin-top: var(--header-height);
+
+    min-height: calc(100dvh - var(--header-height));
 }
 
 p,
 menu,
 figcaption {
     line-height: 1.5;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: inherit;
+    font-size: 1rem;
 }
 
 /* Element rules */
@@ -114,6 +118,8 @@ html {
 }
 
 body {
+    font-family: Verdana, sans-serif;
+
     color: var(--text-color);
     background-color: var(--page-color);
 }
@@ -132,20 +138,23 @@ menu {
 }
 
 a {
-    color: var(--icon-color);
+    color: var(--text-color);
+    background-color: transparent;
     text-decoration: none;
 
     display: inline-block;
 }
 
 button {
-    font-size: 1rem;
-
-    color: var(--icon-color);
+    color: var(--text-color);
     background-color: transparent;
     border: 0;
 
     cursor: pointer;
+}
+
+main {
+    display: block;
 }
 
 img {
@@ -155,6 +164,8 @@ img {
     vertical-align: bottom;
 
     cursor: pointer;
+
+    border-style: none;
 }
 
 figure {}
@@ -180,7 +191,7 @@ hr {
 
 .header {
     background-color: var(--page-color);
-    border-bottom: 1px dotted var(--icon-color);
+    border-bottom: 1px dotted var(--text-color);
 
     padding: calc(var(--padding) * 0.75) var(--padding);
     padding-bottom: calc(var(--padding) * 0.75 - 1px);
@@ -207,8 +218,6 @@ hr {
 }
 
 .menu-open {
-    color: var(--icon-color);
-
     opacity: 1;
     transition: opacity var(--page-transition);
 }
@@ -295,8 +304,9 @@ hr {
 }
 
 .footer {
-    align-self: center;
     margin-top: auto;
+
+    align-self: center;
 }
 
 .footer span {
@@ -554,6 +564,8 @@ hr {
     .sidebar,
     .main {
         margin-top: 0;
+
+        min-height: auto;
     }
 
     html {

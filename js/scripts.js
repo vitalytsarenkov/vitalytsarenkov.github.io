@@ -244,6 +244,7 @@ function openModal(image, eventType) {
                     disableScroll(body);
                     modalImage.classList.add("fit-content");
                     modalImage.src = image.src;
+                    modalImage.alt = image.alt;
                 };
 
                 setModal();
@@ -300,6 +301,7 @@ function closeModal() {
 
 function clearModal() {
     modalImage.removeAttribute("src");
+    modalImage.removeAttribute("alt");
     modalImage.removeAttribute("width");
     modalImage.classList.remove("full-opacity");
     modalButtons.classList.remove("show-buttons");
@@ -524,13 +526,15 @@ skipNavigation.addEventListener("click", () => {
     });
 });
 
-topScrollButton.addEventListener("click", () => {
-    html.scrollTop = 0;
-    logo.focus({
-        preventScroll: true
+if (topScrollButton) {
+    topScrollButton.addEventListener("click", () => {
+        html.scrollTop = 0;
+        logo.focus({
+            preventScroll: true
+        });
+        logo.blur();
     });
-    logo.blur();
-});
+}
 
 logo.addEventListener("pointerdown", (event) => {
     event.preventDefault();
