@@ -48,8 +48,8 @@
 }
 
 h1,
+h2,
 p,
-hr,
 nav,
 figure,
 footer,
@@ -95,6 +95,7 @@ h1,
 }
 
 p,
+h2,
 menu,
 figcaption {
     line-height: 1.5;
@@ -126,6 +127,11 @@ body {
 
 h1 {
     font-size: 1.25rem;
+}
+
+h2 {
+    font-size: 1rem;
+    font-weight: normal;
 }
 
 p {
@@ -172,6 +178,8 @@ figure {}
 
 figcaption {
     padding-top: var(--padding);
+
+    font-size: 0.9rem;
 }
 
 address a {
@@ -180,6 +188,7 @@ address a {
 }
 
 hr {
+    padding: 2rem;
     border: 0;
 }
 
@@ -211,6 +220,10 @@ hr {
     height: 1rem;
 
     fill: var(--icon-color);
+}
+
+.main .icon {
+    fill: var(--text-color);
 }
 
 .skip-navigation {
@@ -290,6 +303,12 @@ hr {
 
 .padding-bottom-zero {
     padding-bottom: 0;
+}
+
+.hr-line {
+    padding: 0;
+    margin: 3rem 0;
+    border-bottom: 1px dotted var(--text-color);
 }
 
 .top-scroll-button {
@@ -384,6 +403,8 @@ hr {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    /*    border-bottom: 1px dotted var(--text-color);*/
 }
 
 .left,
@@ -640,6 +661,10 @@ hr {
         padding-bottom: 0;
 
         flex-direction: row;
+    }
+
+    .carousel-navigation {
+        /*        border-bottom: 1px dotted var(--text-color);*/
     }
 
     .carousel figcaption {

@@ -500,6 +500,14 @@ zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
 
+modalImage.addEventListener("dblclick", () => {
+    if (modalImage.classList.contains("fit-content")) {
+        zoomModalOut();
+    } else {
+        zoomModalIn();
+    }
+});
+
 document.addEventListener("keydown", (event) => {
     if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
         zoomModalOut();
