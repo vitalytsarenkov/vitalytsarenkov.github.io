@@ -500,11 +500,21 @@ zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
 
-modalImage.addEventListener("dblclick", () => {
-    if (modalImage.classList.contains("fit-content")) {
-        zoomModalOut();
-    } else {
-        zoomModalIn();
+//modalImage.addEventListener("dblclick", () => {
+//    if (modalImage.classList.contains("fit-content")) {
+//        zoomModalOut();
+//    } else {
+//        zoomModalIn();
+//    }
+//});
+
+modalImage.addEventListener("click", (event) => {
+    if (event.detail === 2) {
+        if (modalImage.classList.contains("fit-content")) {
+            zoomModalOut();
+        } else {
+            zoomModalIn();
+        }
     }
 });
 
