@@ -52,6 +52,7 @@ h2,
 p,
 nav,
 figure,
+address,
 footer,
 .carousel {
     padding: var(--padding);
@@ -97,6 +98,7 @@ h1,
 p,
 h2,
 menu,
+address,
 figcaption {
     line-height: 1.5;
 }
@@ -188,7 +190,7 @@ address a {
 }
 
 hr {
-    padding: 2rem;
+    padding: 2rem 1rem;
     border: 0;
 }
 
@@ -301,8 +303,8 @@ hr {
     flex-direction: column;
 }
 
-.padding-bottom-zero {
-    padding-bottom: 0;
+.padding-bottom-correction {
+    padding-bottom: 0.5rem;
 }
 
 .hr-line {
@@ -657,10 +659,12 @@ hr {
         flex: 1;
     }
 
+    .carousel-figcaption {
+        flex: 1;
+    }
+
     .carousel figcaption {
-        padding-top: 0;
         margin-left: var(--padding);
-        flex: 0.95;
     }
 
     .modal-buttons {

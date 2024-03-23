@@ -209,17 +209,17 @@ const modalLoading = body.querySelector(".modal-loading");
 const loadingIndicator = body.querySelector(".loading-indicator");
 
 let loading = "loading",
-    counter = 0;
+    dotCounter = 0;
 
 function loadingModal() {
     loadingIndicator.innerHTML = loading;
 
-    if (counter < 3) {
+    if (dotCounter < 3) {
         loading = loading + ".";
-        counter++;
+        dotCounter++;
     } else {
         loading = "loading";
-        counter = 0;
+        dotCounter = 0;
     }
 };
 
@@ -500,22 +500,22 @@ zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
 
-//modalImage.addEventListener("dblclick", () => {
-//    if (modalImage.classList.contains("fit-content")) {
-//        zoomModalOut();
-//    } else {
-//        zoomModalIn();
-//    }
-//});
+let tapCounter = 0;
 
-modalImage.addEventListener("click", (event) => {
-    if (event.detail === 2) {
-        if (modalImage.classList.contains("fit-content")) {
-            zoomModalOut();
+modalImage.addEventListener("pointerdown", () => {
+    tapCounter++;
+    setTimeout(() => {
+        if (tapCounter === 2) {
+            if (modalImage.classList.contains("fit-content")) {
+                zoomModalOut();
+            } else {
+                zoomModalIn();
+            }
+            tapCounter = 0;
         } else {
-            zoomModalIn();
+            tapCounter = 0;
         }
-    }
+    }, 250);
 });
 
 document.addEventListener("keydown", (event) => {
