@@ -351,6 +351,7 @@ function panModal() {
         );
         if (modalImage.classList.contains("fit-content")) {
             modalImage.classList.add("grabbing");
+            tapCounter = 0;
         }
     };
 
@@ -500,24 +501,6 @@ zoomIn.addEventListener("click", () => {
     zoomModalIn();
 });
 
-let tapCounter = 0;
-
-modalImage.addEventListener("pointerdown", () => {
-    tapCounter++;
-    setTimeout(() => {
-        if (tapCounter === 2) {
-            if (modalImage.classList.contains("fit-content")) {
-                zoomModalOut();
-            } else {
-                zoomModalIn();
-            }
-            tapCounter = 0;
-        } else {
-            tapCounter = 0;
-        }
-    }, 250);
-});
-
 document.addEventListener("keydown", (event) => {
     if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
         zoomModalOut();
@@ -529,6 +512,46 @@ document.addEventListener("keydown", (event) => {
         zoomModalIn();
     }
 });
+
+let tapCounter = 0;
+
+function doubleTap() {
+    let tapDistanceX,
+        tapDistanceY,
+        tapStartX,
+        tapStartY,
+        tapEndX,
+        tapEndY;
+
+    modalImage.addEventListener("pointerdown", (event) => {
+        tapCounter++;
+
+        if (tapCounter === 1) {
+            tapStartX = event.clientX;
+            tapStartY = event.clientY;
+        }
+
+        if (tapCounter === 2) {
+            tapEndX = event.clientX;
+            tapEndY = event.clientY;
+            tapDistanceX = Math.abs(tapStartX - tapEndX);
+            tapDistanceY = Math.abs(tapStartY - tapEndY);
+        }
+
+        setTimeout(() => {
+            if (tapCounter === 2 && tapDistanceX < 5 && tapDistanceY < 5) {
+                if (modalImage.classList.contains("fit-content")) {
+                    zoomModalOut();
+                } else {
+                    zoomModalIn();
+                }
+            }
+            tapCounter = 0;
+        }, 250);
+    });
+};
+
+doubleTap();
 
 // Accessibility
 
