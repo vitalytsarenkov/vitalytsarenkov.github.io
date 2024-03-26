@@ -539,7 +539,7 @@ function doubleTap() {
         }
 
         setTimeout(() => {
-            if (tapCounter === 2 && tapDistanceX < 5 && tapDistanceY < 5) {
+            if (tapCounter === 2 && tapDistanceX < 10 && tapDistanceY < 10) {
                 if (modalImage.classList.contains("fit-content")) {
                     zoomModalOut();
                 } else {
@@ -547,7 +547,7 @@ function doubleTap() {
                 }
             }
             tapCounter = 0;
-        }, 250);
+        }, 333);
     });
 };
 

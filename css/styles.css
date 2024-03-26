@@ -132,8 +132,10 @@ h1 {
 }
 
 h2 {
+    padding-bottom: 0;
+
     font-size: 1rem;
-    font-weight: normal;
+    /*    font-weight: normal;*/
 }
 
 p {
@@ -239,6 +241,10 @@ hr {
 
 .menu-close {
     display: none;
+}
+
+.mode-toggle:active {
+    transform: scale(0.9);
 }
 
 .container {
@@ -374,6 +380,7 @@ hr {
 }
 
 .toggle-mode h1,
+.toggle-mode h2,
 .toggle-mode p,
 .toggle-mode span,
 .toggle-mode figcaption,
@@ -407,6 +414,14 @@ hr {
     font-size: 0.75rem;
 
     display: block;
+}
+
+.left:active {
+    transform: translateX(-1px);
+}
+
+.right:active {
+    transform: translateX(1px);
 }
 
 .carousel-content li,
