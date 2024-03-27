@@ -539,7 +539,7 @@ function doubleTap() {
         }
 
         setTimeout(() => {
-            if (tapCounter === 2 && tapDistanceX < 10 && tapDistanceY < 10) {
+            if (tapCounter === 2 && tapDistanceX < 15 && tapDistanceY < 15) {
                 if (modalImage.classList.contains("fit-content")) {
                     zoomModalOut();
                 } else {

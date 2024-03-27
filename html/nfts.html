@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <script>
+        function calculateMode({
+            localStorageMode,
+            systemDarkMode
+        }) {
+            if (localStorageMode !== null) {
+                return localStorageMode;
+            }
+
+            if (systemDarkMode.matches) {
+                return "dark";
+            }
+
+            return "light";
+        }
+
+        const localStorageMode = localStorage.getItem("mode");
+        const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+
+        let currentMode = calculateMode({
+            localStorageMode,
+            systemDarkMode
+        });
+
+        document.querySelector("html").setAttribute("data-theme", currentMode);
+
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="author" content="Vitaly Tsarenkov">
+    <meta name="description" content="Vitaly Tsarenkov's digital NFTs.">
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+    <title>Vitaly Tsarenkov — NFTs</title>
+</head>
+
+<body>
+    <div class="page">
+        <header class="header">
+            <svg class="icon" id="logo" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" aria-hidden="true" role="img" tabindex="-1">
+                <path d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
+            </svg>
+            <button class="skip-navigation">skip to main content</button>
+            <div class="menu-toggle">
+                <button class="menu-open zero-opacity" aria-label="Open menu">MENU</button>
+                <button class="menu-close" aria-label="Close menu">
+                    <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                        <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
+                    </svg>
+                </button>
+            </div>
+            <button class="mode-toggle" aria-label="">
+                <svg class="icon" aria-label="Switch icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                    <path d="m0 0h10v10h-10zm9 1h-8v8z" />
+                </svg>
+            </button>
+        </header>
+        <div class="container zero-opacity">
+            <aside class="sidebar">
+                <nav class="nav">
+                    <menu class="menu">
+                        <li><a href="../index.html">about</a></li>
+                        <li><br></li>
+                        <li><a href="./paintings.html">paintings</a></li>
+                        <li><a href="./murals.html">murals</a></li>
+                        <li><a href="./sculptures.html">sculptures</a></li>
+                        <li class="current-page"><span>nfts</span></li>
+                        <li><br></li>
+                        <li><a href="./bio.html">bio</a></li>
+                        <li><a href="./statement.html">statement</a></li>
+                        <li><a href="./cv.html">cv</a></li>
+                        <li><a href="./press.html">press</a></li>
+                        <li><br></li>
+                        <li><a href="./contact.html">contact</a></li>
+                    </menu>
+                </nav>
+                <footer class="sidebar-footer">
+                    <ul>
+                        <li>
+                            <a class="social-media" aria-label="Open Instagram in a new window" href="https://www.instagram.com/vitalytsarenkov" target="_blank" rel="noreferrer">
+                                <svg class="icon" aria-label="Instagram icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path fill="currentColor" d="M 5,0 C 5.83,0 6.67,0.02 7.06,0.03 7.87,0.08 8.58,0.26 9.16,0.84 9.75,1.43 9.93,2.14 9.97,2.94 9.98 3.36 10,4.18 10,5 10,5.83 9.98,6.67 9.97,7.06 9.93,7.87 9.75,8.58 9.16,9.16 8.58,9.75 7.87,9.93 7.06,9.97 6.67,9.98 5.83,10 5,10 4.18,10 3.36,9.98 2.94,9.97 2.14,9.93 1.43,9.75 0.84,9.16 0.26,8.58 0.08,7.87 0.03,7.06 0.02,6.67 0,5.83 0,5 0,4.18 0.02,3.36 0.03,2.94 0.08,2.14 0.26,1.43 0.84,0.84 1.43,0.26 2.14,0.08 2.94,0.03 3.36,0.02 4.18,0 5,0 Z M 5,0.9 C 4.28,0.9 2.72,0.85 2.05,1.1 1.62,1.29 1.29,1.62 1.1,2.05 0.85,2.72 0.9,4.28 0.9,5 0.9,5.73 0.85,7.3 1.1,7.95 1.29,8.39 1.62,8.73 2.05,8.9 2.72,9.17 4.28,9.1 5,9.1 5.73,9.1 7.3,9.17 7.95,8.9 8.39,8.73 8.73,8.39 8.9,7.95 9.17,7.3 9.1,5.73 9.1,5 9.1,4.28 9.17,2.72 8.9,2.05 8.73,1.62 8.39,1.29 7.95,1.1 7.3,0.85 5.73,0.9 5,0.9 Z M 5,2.44 C 6.43,2.44 7.56,3.59 7.56,5 7.56,6.43 6.43,7.56 5,7.56 3.59,7.56 2.44,6.43 2.44,5 2.44,3.59 3.59,2.44 5,2.44 Z M 5,3.33 C 4.09,3.33 3.33,4.09 3.33,5 3.33,5.93 4.09,6.67 5,6.67 5.93,6.67 6.67,5.93 6.67,5 6.67,4.09 5.93,3.33 5,3.33 Z M 7.67,1.73 C 8,1.73 8.27,2 8.27,2.33 8.27,2.67 8,2.93 7.67,2.93 7.34,2.93 7.07,2.67 7.07,2.33 7.07,2 7.34,1.73 7.67 1.73 Z" />
+                                </svg>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="social-media x" aria-label="Open X in a new window" href="https://twitter.com/vitalytsarenkov" target="_blank" rel="noreferrer">
+                                <svg class="icon" aria-label="X icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 9">
+                                    <path fill="currentColor" d="M0 0 L 3.2,0 L 5.3,2.9 L 7.9,0 L 9.4,0 L 6,3.8 L 10,9 L 6.9,9 L 4.5,5.9 L 1.7,9 L 0.2,9 L 3.8,4.9 M 1.8,0.9 L 7.3,8.1 L 8.2,8.1 L 2.7,0.9 Z" />
+                                </svg>
+                            </a>
+                        </li>
+                    </ul>
+                </footer>
+            </aside>
+            <main class="main">
+                <h1>NFTs</h1>
+
+                <h2>CRAZY DREAM series</h2>
+
+                <figure class="carousel">
+                    <div class="carousel-box">
+                        <ul class="carousel-content">
+                            <li>
+                                <img id="skip" src="../img/vitaly-tsarenkov_nft_crazy-dream-13.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_crazy-dream-10.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_crazy-dream-8.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_crazy-dream-7.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_crazy-dream-2.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                        </ul>
+                        <div class="carousel-navigation">
+                            <button class="left" aria-label="Show previous image">
+                                <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                </svg>
+                            </button>
+                            <ul class="carousel-position">
+                                <li><span>1/5</span></li>
+                                <li><span>2/5</span></li>
+                                <li><span>3/5</span></li>
+                                <li><span>4/5</span></li>
+                                <li><span>5/5</span></li>
+                            </ul>
+                            <button class="right" aria-label="Show next image">
+                                <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <div class="carousel-figcaption">
+                            GIF, 24 FPS, 1 second<br>
+                            1000 &#215; 1000 px<br>
+                            <br>
+                            Tezos blockchain<br>
+                            <br>
+                            2022–2023
+                        </div>
+                        <a class="nft-link" aria-label="Open link in a new window" href="https://teia.art/vitalytsarenkov" target="_blank" rel="noreferrer">View on the Teia marketplace</a>
+                    </figcaption>
+                </figure>
+
+                <hr>
+
+                <h2>SMOLSY series</h2>
+
+                <figure class="carousel">
+                    <div class="carousel-box">
+                        <ul class="carousel-content">
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_smolsy_1.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_smolsy_3.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_smolsy_9.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_smolsy_11.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                            <li>
+                                <img src="../img/vitaly-tsarenkov_nft_smolsy_15.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                            </li>
+                        </ul>
+                        <div class="carousel-navigation">
+                            <button class="left" aria-label="Show previous image">
+                                <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                </svg>
+                            </button>
+                            <ul class="carousel-position">
+                                <li><span>1/5</span></li>
+                                <li><span>2/5</span></li>
+                                <li><span>3/5</span></li>
+                                <li><span>4/5</span></li>
+                                <li><span>5/5</span></li>
+                            </ul>
+                            <button class="right" aria-label="Show next image">
+                                <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <div class="carousel-figcaption">
+                            On-chain pixel art<br>
+                            8 &#215; 8 px<br>
+                            <br>
+                            1/1 edition on the Tezos blockchain<br>
+                            <br>
+                            2022
+                        </div>
+                        <a class="nft-link" aria-label="Open link in a new window" href="https://www.8bidou.com/inventory/?addr=tz1igSccKdynLaSJB1TAfXqmjHZy7CgLpXJe" target="_blank" rel="noreferrer">View on the 8bidou marketplace</a>
+                    </figcaption>
+                </figure>
+
+                <hr>
+
+                <h2>The Arrow Of Life</h2>
+
+                <figure class="one-item add-margin-bottom">
+                    <div class="one-item-box">
+                        <video controls loop disablepictureinpicture poster="../mp4/vitaly-tsarenkov_nft_the-arrow-of-life_poster.png">
+                            <source src="../mp4/vitaly-tsarenkov_nft_the-arrow-of-life.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <figcaption>
+                        <div class="one-item-figcaption">
+                            MP4, 24 FPS, 12 seconds<br>
+                            1920 &#215; 1080 px<br>
+                            <br>
+                            1/1 edition on the Ethereum blockchain<br>
+                            <br>
+                            2022
+                        </div>
+                        <a class="nft-link" aria-label="Open link in a new window" href="https://auction.verticalcrypto.art/token/ethereum/0xF4398a4d8bf5e267abdA3D62C47F8eF5f43e8c34/45" target="_blank" rel="noreferrer">View on the VCA auction platform</a>
+                    </figcaption>
+                </figure>
+
+                <hr>
+
+                <h2>Interactive OBJKTs series</h2>
+
+                <figure class="carousel">
+                    <div class="carousel-box">
+                        <ul class="carousel-content">
+                            <li>
+                                <iframe src="../iframe/99397/index.html" title="Psychedelic Flower interactive NFT."></iframe>
+                            </li>
+                            <li>
+                                <iframe src="../iframe/112246/index.html" title="Toy Cars interactive NFT."></iframe>
+                            </li>
+                            <li>
+                                <iframe src="../iframe/192504/index.html" title="Undercover Agent interactive NFT."></iframe>
+                            </li>
+                            <li>
+                                <iframe src="../iframe/224396/index.html" title="Magic Mushrooms interactive NFT."></iframe>
+                            </li>
+                            <li>
+                                <iframe src="../iframe/391366/index.html" title="Rabbit Hole interactive NFT."></iframe>
+                            </li>
+                        </ul>
+                        <div class="carousel-navigation">
+                            <button class="left" aria-label="Show previous image">
+                                <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                </svg>
+                            </button>
+                            <ul class="carousel-position">
+                                <li><span>1/5</span></li>
+                                <li><span>2/5</span></li>
+                                <li><span>3/5</span></li>
+                                <li><span>4/5</span></li>
+                                <li><span>5/5</span></li>
+                            </ul>
+                            <button class="right" aria-label="Show next image">
+                                <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                                    <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    <figcaption>
+                        <div class="carousel-figcaption">
+                            Interactive web application<br>
+                            <br>
+                            Tezos blockchain<br>
+                            <br>
+                            2021
+                        </div>
+                        <a class="nft-link" aria-label="Open link in a new window" href="https://objkt.com/users/tz1YfHRkMmpvQs93VdLsf525S7iefijt7UBD" target="_blank" rel="noreferrer">View on the OBJKT marketplace</a>
+                    </figcaption>
+                </figure>
+
+                <hr>
+
+                <h2>The Infinite Metaverse</h2>
+
+                <figure class="one-item">
+                    <div class="one-item-box">
+                        <video controls loop disablepictureinpicture>
+                            <source src="../mp4/vitaly-tsarenkov_nft_the-infinite-metaverse.mp4" type="video/mp4" />
+                        </video>
+                    </div>
+                    <figcaption>
+                        <div class="one-item-figcaption">
+                            MP4, 24 FPS, 12 seconds<br>
+                            1080 &#215; 1080 px<br>
+                            <br>
+                            1/1 edition on the Ethereum blockchain<br>
+                            <br>
+                            2021
+                        </div>
+                        <a class="nft-link" aria-label="Open link in a new window" href="https://foundation.app/@vitalytsarenkov/foundation/28639" target="_blank" rel="noreferrer">View on the Foundation marketplace</a>
+                    </figcaption>
+                </figure>
+
+                <button class="top-scroll-button" aria-label="Scroll to the top">
+                    <svg class="icon" aria-label="Top arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                        <polygon points="5,0 10,10 0,10" />
+                    </svg>
+                </button>
+
+                <footer class="footer">
+                    <span>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</span>
+                </footer>
+            </main>
+        </div>
+    </div>
+
+    <div class="modal" aria-label="Modal window" role="dialog">
+        <div class="modal-loading">
+            <span class="loading-indicator"></span>
+        </div>
+        <div class="modal-buttons">
+            <button class="zoom-out" aria-label="Zoom out">
+                <svg class="icon" aria-label="Minus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                    <path d="m0 4.5h10v1h-10z" />
+                </svg>
+            </button>
+            <button class="modal-close" aria-label="Close image">
+                <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                    <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
+                </svg>
+            </button>
+            <button class="zoom-in" aria-label="Zoom in">
+                <svg class="icon" aria-label="Plus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
+                    <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
+                </svg>
+            </button>
+        </div>
+        <img class="modal-image" aria-label="High resolution image" role="scrollbar" tabindex="0">
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const button = document.body.querySelector(".menu-open");
+            const container = document.body.querySelector(".container");
+            button.classList.remove("zero-opacity");
+            container.classList.remove("zero-opacity");
+        });
+
+    </script>
+
+    <script src="../js/scripts.js"></script>
+
+</body>
+
+</html>

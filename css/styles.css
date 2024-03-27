@@ -60,6 +60,7 @@ footer,
 
 h1,
 .menu-open,
+.nft-link,
 .footer {
     line-height: 1;
 }
@@ -112,6 +113,15 @@ textarea {
     font-size: 1rem;
 }
 
+img,
+video,
+iframe {
+    max-width: 100%;
+    height: auto;
+
+    vertical-align: bottom;
+}
+
 /* Element rules */
 
 html {
@@ -132,10 +142,7 @@ h1 {
 }
 
 h2 {
-    padding-bottom: 0;
-
     font-size: 1rem;
-    /*    font-weight: normal;*/
 }
 
 p {
@@ -168,17 +175,18 @@ main {
 }
 
 img {
-    max-width: 100%;
-    height: auto;
-
-    vertical-align: bottom;
-
     cursor: pointer;
 
     border-style: none;
 }
 
-figure {}
+iframe {
+    width: 100%;
+
+    aspect-ratio: 1;
+
+    border: 0;
+}
 
 figcaption {
     padding-top: var(--padding);
@@ -416,14 +424,6 @@ hr {
     display: block;
 }
 
-.left:active {
-    transform: translateX(-1px);
-}
-
-.right:active {
-    transform: translateX(1px);
-}
-
 .carousel-content li,
 .carousel-position li {
     display: none;
@@ -434,15 +434,31 @@ hr {
     display: block;
 }
 
-.carousel figcaption {
-    padding-top: 0;
+.nft-link {
+    margin-top: calc(var(--padding) * 2);
+
+    width: fit-content;
+
+    font-size: 0.75rem;
+    color: var(--hover-color);
+}
+
+.nft-link:hover {
+    text-decoration: underline;
+}
+
+/* One item */
+
+.one-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.one-item figcaption {
+    padding-top: calc(var(--padding) * 2);
 }
 
 /* Modal images */
-
-.zoomtest img {
-    height: 5rem;
-}
 
 .modal {
     background-color: var(--page-color);
@@ -664,22 +680,40 @@ hr {
         margin: 0;
     }
 
-    .carousel {
-        padding-bottom: 0;
-
+    .carousel,
+    .one-item {
         flex-direction: row;
     }
 
-    .carousel-box {
+    .carousel-box,
+    .one-item-box {
         flex: 1;
     }
 
-    .carousel-figcaption {
+    .carousel figcaption,
+    .one-item figcaption {
         flex: 1;
+
+        padding-top: 0;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
 
-    .carousel figcaption {
-        margin-left: var(--padding);
+    .carousel .nft-link {
+        position: relative;
+        transform: translateY(-3rem);
+    }
+
+    .carousel-figcaption,
+    .one-item-figcaption,
+    .nft-link {
+        margin-left: calc(var(--padding) * 2);
+    }
+
+    .add-margin-bottom {
+        margin-bottom: calc(var(--padding) * 2);
     }
 
     .modal-buttons {
