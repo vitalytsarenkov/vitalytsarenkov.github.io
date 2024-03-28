@@ -60,7 +60,7 @@ footer,
 
 h1,
 .menu-open,
-.nft-link,
+.link,
 .footer {
     line-height: 1;
 }
@@ -234,6 +234,10 @@ hr {
     fill: var(--icon-color);
 }
 
+.logo {
+    width: 1.4rem;
+}
+
 .main .icon {
     fill: var(--text-color);
 }
@@ -397,6 +401,17 @@ hr {
     transition: color var(--mode-transition) linear;
 }
 
+/* One item */
+
+.one-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.one-item figcaption {
+    padding-top: calc(var(--padding) * 2);
+}
+
 /* Carousel */
 
 .carousel {
@@ -434,28 +449,22 @@ hr {
     display: block;
 }
 
-.nft-link {
-    margin-top: calc(var(--padding) * 2);
+/* Links */
 
+.link {
     width: fit-content;
 
     font-size: 0.75rem;
     color: var(--hover-color);
 }
 
-.nft-link:hover {
+.link:hover {
     text-decoration: underline;
 }
 
-/* One item */
-
-.one-item {
-    display: flex;
-    flex-direction: column;
-}
-
-.one-item figcaption {
-    padding-top: calc(var(--padding) * 2);
+.carousel .link,
+.one-item .link {
+    margin-top: calc(var(--padding) * 2);
 }
 
 /* Modal images */
@@ -584,6 +593,33 @@ hr {
     }
 }
 
+/* 404 */
+
+.four-zero-four {
+    width: 100%;
+    min-height: 100dvh;
+}
+
+.four-zero-four {
+    display: flex;
+}
+
+.four-zero-four div {
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.four-zero-four .icon {
+    margin-bottom: var(--padding);
+
+    width: 4.4rem;
+    height: 2rem;
+}
+
 /* Media queries */
 
 @media (prefers-color-scheme: dark) {
@@ -701,14 +737,15 @@ hr {
         justify-content: space-between;
     }
 
-    .carousel .nft-link {
+    .carousel .link {
         position: relative;
         transform: translateY(-3rem);
     }
 
     .carousel-figcaption,
     .one-item-figcaption,
-    .nft-link {
+    .carousel .link,
+    .one-item .link {
         margin-left: calc(var(--padding) * 2);
     }
 

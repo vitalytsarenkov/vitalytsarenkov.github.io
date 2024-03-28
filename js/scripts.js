@@ -555,7 +555,7 @@ doubleTap();
 
 // Accessibility
 
-const logo = document.getElementById("logo");
+const logo = body.querySelector(".logo");
 const skipNavigation = body.querySelector(".skip-navigation");
 const skip = document.getElementById("skip");
 const topScrollButton = body.querySelector(".top-scroll-button");
