@@ -127,7 +127,8 @@ const carousels = body.querySelectorAll(".carousel");
 function carousel(carousel) {
     const carouselContent = carousel.querySelector(".carousel-content");
     const titles = carousel.querySelectorAll(".carousel-title li");
-    const images = carousel.querySelectorAll(".carousel-content li");
+    const contents = carousel.querySelectorAll(".carousel-content li");
+    const skips = carousel.querySelectorAll(".carousel-content li *");
     const positions = carousel.querySelectorAll(".carousel-position li");
     const captions = carousel.querySelectorAll(".carousel-figcaption li");
     const links = carousel.querySelectorAll(".carousel-link li");
@@ -135,20 +136,24 @@ function carousel(carousel) {
     const right = carousel.querySelector(".right");
 
     let counter = 0,
-        amount = images.length,
+        amount = contents.length,
         currentTitle = titles[0],
-        currentImage = images[0],
+        currentContent = contents[0],
         currentPosition = positions[0],
         currentCaption = captions[0],
         currentLink = links[0];
 
     function navigate(direction) {
         currentTitle.classList.remove("shown");
-        currentImage.classList.remove("shown");
+        currentContent.classList.remove("shown");
         currentPosition.classList.remove("shown");
         currentCaption.classList.remove("shown");
         if (currentLink) {
             currentLink.classList.remove("shown");
+        }
+
+        if (carousel.classList.contains("skip")) {
+            skips[counter].removeAttribute("id");
         }
 
         counter = counter + direction;
@@ -158,7 +163,7 @@ function carousel(carousel) {
             counter = amount - 1;
         }
         if (direction === 1 &&
-            !images[counter]) {
+            !contents[counter]) {
             counter = 0;
         }
 
@@ -167,7 +172,7 @@ function carousel(carousel) {
         } else {
             currentTitle = titles[0];
         }
-        currentImage = images[counter];
+        currentContent = contents[counter];
         currentPosition = positions[counter];
         if (captions.length > 1) {
             currentCaption = captions[counter];
@@ -181,11 +186,15 @@ function carousel(carousel) {
         }
 
         currentTitle.classList.add("shown");
-        currentImage.classList.add("shown");
+        currentContent.classList.add("shown");
         currentPosition.classList.add("shown");
         currentCaption.classList.add("shown");
         if (currentLink) {
             currentLink.classList.add("shown");
+        }
+
+        if (carousel.classList.contains("skip")) {
+            skips[counter].setAttribute("id", "skip");
         }
     };
 
@@ -592,10 +601,10 @@ doubleTap();
 
 const logo = body.querySelector(".logo");
 const skipNavigation = body.querySelector(".skip-navigation");
-const skip = document.getElementById("skip");
 const topScrollButton = body.querySelector(".top-scroll-button");
 
 skipNavigation.addEventListener("click", () => {
+    const skip = document.getElementById("skip");
     skipNavigation.blur();
     skip.focus({
         preventScroll: true
