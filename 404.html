@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <script>
+        function calculateMode({
+            localStorageMode,
+            systemDarkMode
+        }) {
+            if (localStorageMode !== null) {
+                return localStorageMode;
+            }
+
+            if (systemDarkMode.matches) {
+                return "dark";
+            }
+
+            return "light";
+        }
+
+        const localStorageMode = localStorage.getItem("mode");
+        const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
+
+        let currentMode = calculateMode({
+            localStorageMode,
+            systemDarkMode
+        });
+
+        document.querySelector("html").setAttribute("data-theme", currentMode);
+
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light dark">
+    <meta name="author" content="Vitaly Tsarenkov">
+    <meta name="description" content="Vitaly Tsarenkov's 404 page.">
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg">
+    <title>Vitaly Tsarenkov — 404</title>
+</head>
+
+<body>
+    <div class="container four-zero-four zero-opacity">
+        <div>
+            <svg class="icon" xmlns="http://www.w3.org/2000/svg" width="11" height="5" viewBox="0 0 11 5" aria-hidden="true" role="img">
+                <path d="m0 0h1v2h1v-2h1v5h-1v-2h-2v-3zm4 0h3v5h-3v-5zm1 1v3h1v-3h-1zm3 -1h1v2h1v-2h1v5h-1v-2h-2v-3z" />
+            </svg>
+            <a class="link" aria-label="Go to the homepage" href="./index.html">Go to the homepage</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const container = document.body.querySelector(".container");
+            container.classList.remove("zero-opacity");
+        });
+
+    </script>
+</body>
+
+</html>

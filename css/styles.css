@@ -54,13 +54,15 @@ nav,
 figure,
 address,
 footer,
-.carousel {
+.carousel,
+.one-item {
     padding: var(--padding);
 }
 
 h1,
 .menu-open,
 .link,
+.carousel-link,
 .footer {
     line-height: 1;
 }
@@ -178,6 +180,8 @@ img {
     cursor: pointer;
 
     border-style: none;
+
+    font-size: 0.9rem;
 }
 
 iframe {
@@ -414,9 +418,27 @@ hr {
 
 /* Carousel */
 
-.carousel {
+.carousel,
+.one-item {
     display: flex;
     flex-direction: column;
+}
+
+.carousel h2,
+.one-item h2 {
+    padding: 0;
+    margin-bottom: calc(var(--padding) * 2);
+}
+
+.carousel-container,
+.one-item-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel figure,
+.one-item figure {
+    padding: 0;
 }
 
 .carousel-navigation {
@@ -439,13 +461,24 @@ hr {
     display: block;
 }
 
+.carousel-figcaption em,
+.one-item-figcaption em {
+    font-size: 0.75rem;
+}
+
+.carousel-title li,
 .carousel-content li,
-.carousel-position li {
+.carousel-position li,
+.carousel-figcaption li,
+.carousel-link li {
     display: none;
 }
 
+.carousel-title li.shown,
 .carousel-content li.shown,
-.carousel-position li.shown {
+.carousel-position li.shown,
+.carousel-figcaption li.shown,
+.carousel-link li.shown {
     display: block;
 }
 
@@ -716,8 +749,8 @@ hr {
         margin: 0;
     }
 
-    .carousel,
-    .one-item {
+    .carousel-container,
+    .one-item-container {
         flex-direction: row;
     }
 
@@ -740,6 +773,11 @@ hr {
     .carousel .link {
         position: relative;
         transform: translateY(-3rem);
+    }
+
+    .carousel .link,
+    .one-item .link {
+        margin-top: 0;
     }
 
     .carousel-figcaption,

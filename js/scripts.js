@@ -126,20 +126,33 @@ const carousels = body.querySelectorAll(".carousel");
 
 function carousel(carousel) {
     const carouselContent = carousel.querySelector(".carousel-content");
+    const titles = carousel.querySelectorAll(".carousel-title li");
     const images = carousel.querySelectorAll(".carousel-content li");
     const positions = carousel.querySelectorAll(".carousel-position li");
+    const captions = carousel.querySelectorAll(".carousel-figcaption li");
+    const links = carousel.querySelectorAll(".carousel-link li");
     const left = carousel.querySelector(".left");
     const right = carousel.querySelector(".right");
 
     let counter = 0,
         amount = images.length,
+        currentTitle = titles[0],
         currentImage = images[0],
-        currentPosition = positions[0];
+        currentPosition = positions[0],
+        currentCaption = captions[0],
+        currentLink = links[0];
 
     function navigate(direction) {
+        currentTitle.classList.remove("shown");
         currentImage.classList.remove("shown");
         currentPosition.classList.remove("shown");
+        currentCaption.classList.remove("shown");
+        if (currentLink) {
+            currentLink.classList.remove("shown");
+        }
+
         counter = counter + direction;
+
         if (direction === -1 &&
             counter < 0) {
             counter = amount - 1;
@@ -148,10 +161,32 @@ function carousel(carousel) {
             !images[counter]) {
             counter = 0;
         }
+
+        if (titles.length > 1) {
+            currentTitle = titles[counter];
+        } else {
+            currentTitle = titles[0];
+        }
         currentImage = images[counter];
         currentPosition = positions[counter];
+        if (captions.length > 1) {
+            currentCaption = captions[counter];
+        } else {
+            currentCaption = captions[0];
+        }
+        if (links.length > 1) {
+            currentLink = links[counter];
+        } else {
+            currentLink = links[0];
+        }
+
+        currentTitle.classList.add("shown");
         currentImage.classList.add("shown");
         currentPosition.classList.add("shown");
+        currentCaption.classList.add("shown");
+        if (currentLink) {
+            currentLink.classList.add("shown");
+        }
     };
 
     left.addEventListener("click", () => {
@@ -539,7 +574,7 @@ function doubleTap() {
         }
 
         setTimeout(() => {
-            if (tapCounter === 2 && tapDistanceX < 15 && tapDistanceY < 15) {
+            if (tapCounter === 2 && tapDistanceX < 20 && tapDistanceY < 20) {
                 if (modalImage.classList.contains("fit-content")) {
                     zoomModalOut();
                 } else {
