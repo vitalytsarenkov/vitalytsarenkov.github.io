@@ -597,6 +597,32 @@ function doubleTap() {
 
 doubleTap();
 
+// Iframes lazy-loading
+
+const iframes = body.getElementsByTagName("iframe");
+
+const handleIntersect = (entries, observer) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            const iframe = entry.target;
+            iframe.src = iframe.dataset.src;
+            iframeObserver.unobserve(iframe);
+        }
+    });
+};
+
+const options = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0
+};
+
+const iframeObserver = new IntersectionObserver(handleIntersect, options);
+
+for (let i = 0; i < iframes.length; i++) {
+    iframeObserver.observe(iframes[i]);
+};
+
 // Accessibility
 
 const logo = body.querySelector(".logo");
