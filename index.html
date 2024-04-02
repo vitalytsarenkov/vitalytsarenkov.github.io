@@ -43,9 +43,11 @@
 <body>
     <div class="page">
         <header class="header">
-            <svg class="icon logo" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" aria-hidden="true" role="img" tabindex="-1">
-                <path d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
-            </svg>
+            <a class="logo" aria-label="Go to the homepage" href="./index.html">
+                <svg class="icon" aria-label="Logo icon" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5">
+                    <path fill="currentColor" d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
+                </svg>
+            </a>
             <button class="skip-navigation">skip to main content</button>
             <div class="menu-toggle">
                 <button class="menu-open zero-opacity" aria-label="Open menu">MENU</button>
@@ -160,9 +162,14 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const button = document.body.querySelector(".menu-open");
+            const logo = body.querySelector(".logo");
+            logo.focus({
+                preventScroll: true
+            });
+            logo.blur();
+            const menuOpen = document.body.querySelector(".menu-open");
             const container = document.body.querySelector(".container");
-            button.classList.remove("zero-opacity");
+            menuOpen.classList.remove("zero-opacity");
             container.classList.remove("zero-opacity");
         });
 

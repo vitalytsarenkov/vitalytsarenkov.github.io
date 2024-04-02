@@ -67,6 +67,7 @@ h1,
     line-height: 1;
 }
 
+.logo,
 .menu-close,
 .mode-toggle,
 .sidebar-footer,
@@ -240,6 +241,8 @@ hr {
 
 .logo {
     width: 1.4rem;
+
+    color: var(--icon-color);
 }
 
 .main .icon {
@@ -772,7 +775,7 @@ hr {
 
     .carousel .link,
     .one-item .link {
-        margin-top: 0;
+        margin-top: var(--padding);
     }
 
     .carousel-figcaption,

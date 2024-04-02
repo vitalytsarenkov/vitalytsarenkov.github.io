@@ -52,9 +52,11 @@
 
     <div class="page">
         <header class="header">
-            <svg class="icon logo" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5" aria-hidden="true" role="img" tabindex="-1">
-                <path d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
-            </svg>
+            <a class="logo" aria-label="Go to the homepage" href="../index.html">
+                <svg class="icon" aria-label="Logo icon" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5">
+                    <path fill="currentColor" d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
+                </svg>
+            </a>
             <button class="skip-navigation">skip to main content</button>
             <div class="menu-toggle">
                 <button class="menu-open zero-opacity" aria-label="Open menu">MENU</button>
@@ -111,7 +113,30 @@
             <main class="main">
                 <h1>NFTs</h1>
 
-                <section class="carousel skip">
+                <section class="one-item add-margin-bottom">
+                    <h2>The Great Revelation</h2>
+                    <figure class="one-item-container">
+                        <div class="one-item-box">
+                            <img id="skip" src="../img/vitaly-tsarenkov_nft_the-great-revelation.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
+                        </div>
+                        <figcaption>
+                            <div class="one-item-figcaption">
+                                GIF, 24 frames, 1 second<br>
+                                1000 &#215; 1000 px<br>
+                                <br>
+                                1/1 edition<br>
+                                Ethereum blockchain<br>
+                                <br>
+                                2022
+                            </div>
+                            <a class="link" aria-label="Open link in a new tab" href="https://opensea.io/assets/ethereum/0xd693220863b8cc1b74846d67e3d32ab38a807721/98540127211770920495480833" target="_blank" rel="noreferrer">View on Opensea marketplace</a>
+                        </figcaption>
+                    </figure>
+                </section>
+
+                <hr>
+
+                <section class="carousel">
                     <ul class="carousel-title">
                         <li>
                             <h2>SMOLSY #1</h2>
@@ -133,7 +158,7 @@
                         <div class="carousel-box">
                             <ul class="carousel-content">
                                 <li>
-                                    <img src="../img/vitaly-tsarenkov_nft_smolsy_1.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
+                                    <img src="../img/vitaly-tsarenkov_nft_smolsy_1.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0" loading="lazy">
                                 </li>
                                 <li>
                                     <img src="../img/vitaly-tsarenkov_nft_smolsy_3.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0" loading="lazy">
@@ -556,9 +581,14 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            const button = document.body.querySelector(".menu-open");
+            const logo = body.querySelector(".logo");
+            logo.focus({
+                preventScroll: true
+            });
+            logo.blur();
+            const menuOpen = document.body.querySelector(".menu-open");
             const container = document.body.querySelector(".container");
-            button.classList.remove("zero-opacity");
+            menuOpen.classList.remove("zero-opacity");
             container.classList.remove("zero-opacity");
         });
 
