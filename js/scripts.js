@@ -632,9 +632,7 @@ const topScrollButton = body.querySelector(".top-scroll-button");
 skipNavigation.addEventListener("click", () => {
     const skip = document.getElementById("skip");
     skipNavigation.blur();
-    skip.focus({
-        preventScroll: true
-    });
+    skip.focus();
 });
 
 if (topScrollButton) {
