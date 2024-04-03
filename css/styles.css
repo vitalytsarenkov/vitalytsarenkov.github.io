@@ -54,6 +54,7 @@ nav,
 figure,
 address,
 footer,
+.block-link,
 .carousel,
 .one-item {
     padding: var(--padding);
@@ -72,6 +73,7 @@ h1,
 .mode-toggle,
 .sidebar-footer,
 .social-media,
+.block-link,
 .left,
 .right,
 .modal-close,
@@ -149,6 +151,8 @@ h2 {
 }
 
 p {
+    padding-bottom: 0.5rem;
+
     max-width: 65ch;
 }
 
@@ -329,7 +333,7 @@ hr {
 }
 
 .padding-bottom-correction {
-    padding-bottom: 0.5rem;
+    padding-bottom: var(--padding);
 }
 
 .hr-line {
@@ -768,13 +772,13 @@ hr {
         justify-content: space-between;
     }
 
-    .carousel .link {
+    .carousel-link {
         position: relative;
         transform: translateY(-3rem);
     }
 
-    .carousel .link,
-    .one-item .link {
+    .carousel .link.margin-top-correction,
+    .one-item .link.margin-top-correction {
         margin-top: var(--padding);
     }
 
