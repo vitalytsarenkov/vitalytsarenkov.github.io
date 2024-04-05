@@ -169,11 +169,15 @@ menu {
 }
 
 a {
-    color: var(--text-color);
+    color: var(--hover-color);
     background-color: transparent;
     text-decoration: none;
 
     display: inline-block;
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 button {
@@ -321,6 +325,14 @@ td {
 
     opacity: 0;
     transition: opacity var(--menu-transition);
+}
+
+.sidebar a {
+    color: var(--text-color);
+}
+
+.sidebar a:hover {
+    text-decoration: none;
 }
 
 .nav {
@@ -523,11 +535,6 @@ td {
     width: fit-content;
 
     font-size: 0.75rem;
-    color: var(--hover-color);
-}
-
-.link:hover {
-    text-decoration: underline;
 }
 
 .carousel .link,
@@ -799,15 +806,17 @@ td {
         flex: 1;
 
         padding-top: 0;
+    }
 
+    .carousel figcaption div,
+    .one-item figcaption {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
     }
 
-    .carousel-link {
-        position: relative;
-        transform: translateY(-3rem);
+    .carousel figcaption div {
+        height: calc(100% - 3rem);
     }
 
     .one-item {
