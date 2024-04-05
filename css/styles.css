@@ -216,11 +216,6 @@ figcaption {
 
 address a {
     font-style: normal;
-    color: var(--hover-color);
-}
-
-address a:hover {
-    text-decoration: underline;
 }
 
 hr {
@@ -276,17 +271,13 @@ td {
     width: auto;
     height: 1rem;
 
-    fill: var(--icon-color);
+    fill: var(--text-color);
 }
 
 .logo {
     width: 1.4rem;
 
     color: var(--icon-color);
-}
-
-.main .icon {
-    fill: var(--text-color);
 }
 
 .skip-navigation {
@@ -300,6 +291,10 @@ td {
 
 .menu-close {
     display: none;
+}
+
+.mode-toggle .icon {
+    fill: var(--icon-color);
 }
 
 .mode-toggle:active {
@@ -378,12 +373,6 @@ td {
 
 .padding-bottom-correction {
     padding-bottom: var(--padding);
-}
-
-.hr-line {
-    padding: 0;
-    margin: 3rem 0;
-    border-bottom: 1px dotted var(--text-color);
 }
 
 .top-scroll-button {
