@@ -431,7 +431,7 @@ function getModal() {
 function updateModal() {
     if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
         modalImage.classList.add("fit-size");
-    } else if (originalWidth === window.innerWidth || originalHeight === window.innerHeight) {
+    } else if (originalWidth === window.innerWidth && originalHeight < window.innerHeight || originalWidth < window.innerWidth && originalHeight === window.innerHeight) {
         modalImage.classList.add("fit-size");
     } else {
         modalImage.classList.remove("fit-size");
