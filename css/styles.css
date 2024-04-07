@@ -63,8 +63,9 @@ footer,
 
 h1,
 .menu-open,
-.link,
 .carousel-link,
+.one-item-link,
+.block-link,
 .footer {
     line-height: 1;
 }
@@ -74,7 +75,6 @@ h1,
 .mode-toggle,
 .sidebar-footer,
 .social-media,
-.block-link,
 .left,
 .right,
 .modal-close,
@@ -172,8 +172,6 @@ a {
     color: var(--hover-color);
     background-color: transparent;
     text-decoration: none;
-
-    display: inline-block;
 }
 
 a:hover {
@@ -520,15 +518,15 @@ td {
 
 /* Links */
 
-.link {
-    width: fit-content;
-
+.carousel-link,
+.one-item-link,
+.block-link {
     font-size: 0.75rem;
 }
 
-.carousel .link,
-.one-item .link {
-    margin-top: calc(var(--padding) * 2);
+.carousel-link,
+.one-item-link {
+    margin-top: calc(var(--padding) * 1.5);
 }
 
 /* Modal images */
@@ -797,15 +795,15 @@ td {
         padding-top: 0;
     }
 
+    .carousel figcaption div {
+        height: calc(100% - 3rem);
+    }
+
     .carousel figcaption div,
     .one-item figcaption {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-    }
-
-    .carousel figcaption div {
-        height: calc(100% - 3rem);
     }
 
     .one-item {
@@ -816,15 +814,10 @@ td {
         margin-bottom: 0;
     }
 
-    .carousel .link.margin-top-correction,
-    .one-item .link.margin-top-correction {
-        margin-top: var(--padding);
-    }
-
     .carousel-figcaption,
     .one-item-figcaption,
-    .carousel .link,
-    .one-item .link {
+    .carousel-link,
+    .one-item-link {
         margin-left: calc(var(--padding) * 2);
     }
 
