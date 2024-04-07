@@ -63,8 +63,6 @@ footer,
 
 h1,
 .menu-open,
-.carousel-link,
-.one-item-link,
 .block-link,
 .footer {
     line-height: 1;
@@ -108,7 +106,9 @@ th,
 td,
 menu,
 address,
-figcaption {
+figcaption,
+.carousel-link,
+.one-item-link {
     line-height: 1.5;
 }
 
@@ -812,6 +812,11 @@ td {
 
     .margin-bottom-correction {
         margin-bottom: 0;
+    }
+
+    .carousel-link,
+    .one-item-link {
+        line-height: 1;
     }
 
     .carousel-figcaption,
