@@ -146,6 +146,8 @@ body {
 }
 
 h1 {
+    margin-top: var(--padding);
+
     font-size: 1.25rem;
 }
 
@@ -715,6 +717,10 @@ td {
 
     html {
         overflow-y: scroll;
+    }
+
+    h1 {
+        margin-top: 0;
     }
 
     .page {
