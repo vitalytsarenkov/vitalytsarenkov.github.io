@@ -108,7 +108,8 @@ menu,
 address,
 figcaption,
 .carousel-link,
-.one-item-link {
+.one-item-link,
+.cv-list li {
     line-height: 1.5;
 }
 
@@ -157,12 +158,20 @@ th {
 }
 
 p {
-    max-width: 65ch;
+    max-width: 70ch;
 }
 
 h2,
 p {
     padding-bottom: 0.5rem;
+}
+
+sup {
+    font-size: 80%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+    top: -0.5em;
 }
 
 ul,
@@ -238,6 +247,10 @@ tbody tr td:nth-child(1) {
 
 th {
     padding-bottom: calc(var(--padding) * 1.5);
+}
+
+tbody li {
+    margin-bottom: calc(var(--padding) * 1.5);
 }
 
 td {
@@ -373,6 +386,14 @@ td {
 
 .padding-bottom-correction {
     padding-bottom: var(--padding);
+}
+
+.margin-bottom-cancellation li:last-child {
+    margin-bottom: 0;
+}
+
+.cv-list {
+    padding: var(--padding);
 }
 
 .top-scroll-button {
