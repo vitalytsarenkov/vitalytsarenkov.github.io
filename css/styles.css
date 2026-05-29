@@ -249,7 +249,8 @@ th {
     padding-bottom: calc(var(--padding) * 1.5);
 }
 
-tbody li {
+tbody li,
+.carousel-figcaption > li ul li {
     margin-bottom: calc(var(--padding) * 1.5);
 }
 
@@ -388,12 +389,17 @@ td {
     padding-bottom: var(--padding);
 }
 
-.margin-bottom-cancellation li:last-child {
+.cv-list {
+    padding: var(--padding);
+}
+
+tbody li:last-child,
+.carousel-figcaption > li ul li:last-child {
     margin-bottom: 0;
 }
 
-.cv-list {
-    padding: var(--padding);
+.carousel-figcaption > li ul li.section-end {
+    margin-bottom: calc(var(--padding) * 4.35);
 }
 
 .top-scroll-button {
@@ -526,7 +532,7 @@ td {
 .carousel-title li,
 .carousel-content li,
 .carousel-position li,
-.carousel-figcaption li,
+.carousel-figcaption > li,
 .carousel-link li {
     display: none;
 }
@@ -534,7 +540,7 @@ td {
 .carousel-title li.shown,
 .carousel-content li.shown,
 .carousel-position li.shown,
-.carousel-figcaption li.shown,
+.carousel-figcaption > li.shown,
 .carousel-link li.shown {
     display: block;
 }

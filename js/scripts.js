@@ -130,7 +130,7 @@ function carousel(carousel) {
     const contents = carousel.querySelectorAll(".carousel-content li");
     const skips = carousel.querySelectorAll(".carousel-content li *");
     const positions = carousel.querySelectorAll(".carousel-position li");
-    const captions = carousel.querySelectorAll(".carousel-figcaption li");
+    const captions = carousel.querySelectorAll(".carousel-figcaption > li");
     const links = carousel.querySelectorAll(".carousel-link li");
     const left = carousel.querySelector(".left");
     const right = carousel.querySelector(".right");
