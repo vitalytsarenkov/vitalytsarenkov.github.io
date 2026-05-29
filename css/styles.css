@@ -393,7 +393,7 @@ td {
     padding: var(--padding);
 }
 
-tbody li:last-child,
+tbody tr:last-child li:last-child,
 .carousel-figcaption > li ul li:last-child {
     margin-bottom: 0;
 }
