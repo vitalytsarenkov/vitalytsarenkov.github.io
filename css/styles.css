@@ -218,7 +218,7 @@ iframe {
 }
 
 figcaption {
-    padding-top: var(--padding);
+    margin-top: var(--padding);
 
     font-size: 0.9rem;
 }
@@ -249,9 +249,12 @@ th {
     padding-bottom: calc(var(--padding) * 1.5);
 }
 
-tbody li,
-.carousel-figcaption > li ul li {
+tbody li {
     margin-bottom: calc(var(--padding) * 1.5);
+}
+
+.carousel-figcaption > li ul li {
+    margin-bottom: calc(var(--padding) * 1.5 * 0.9);
 }
 
 td {
@@ -399,7 +402,20 @@ tbody tr:last-child li:last-child,
 }
 
 .carousel-figcaption > li ul li.section-end {
-    margin-bottom: calc(var(--padding) * 4.35);
+    margin-bottom: calc(var(--padding) * 4.05);
+}
+
+.carousel-description {
+    margin-top: var(--padding);
+}
+
+.carousel p {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.carousel p:last-child {
+    padding-bottom: 0;
 }
 
 .top-scroll-button {
@@ -481,7 +497,7 @@ tbody tr:last-child li:last-child,
 }
 
 .one-item figcaption {
-    padding-top: calc(var(--padding) * 2);
+    margin-top: calc(var(--padding) * 2);
 }
 
 /* Carousel */
@@ -822,7 +838,7 @@ tbody tr:last-child li:last-child,
     .one-item figcaption {
         flex: 1;
 
-        padding-top: 0;
+        margin-top: 0;
     }
 
     .carousel figcaption div {
@@ -854,6 +870,10 @@ tbody tr:last-child li:last-child,
     .carousel-link,
     .one-item-link {
         margin-left: calc(var(--padding) * 2);
+    }
+
+    .carousel-description {
+        margin-top: 0;
     }
 
     .modal-buttons {
