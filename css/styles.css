@@ -55,17 +55,17 @@ figure,
 table,
 address,
 footer,
-.block-link,
 .carousel,
-.one-item {
+.one-item,
+.download-link {
     padding: var(--padding);
 }
 
 h1,
 .menu-open,
-.block-link,
 .carousel-link,
 .one-item-link,
+.download-link,
 .footer {
     line-height: 1;
 }
@@ -569,7 +569,7 @@ tbody tr:last-child li:last-child,
 
 .carousel-link,
 .one-item-link,
-.block-link,
+.download-link,
 .four-zero-four {
     font-size: 0.75rem;
 }
