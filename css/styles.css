@@ -64,10 +64,13 @@ footer,
 h1,
 .menu-open,
 .block-link,
+.carousel-link,
+.one-item-link,
 .footer {
     line-height: 1;
 }
 
+sup,
 .logo,
 .menu-close,
 .mode-toggle,
@@ -106,11 +109,12 @@ th,
 td,
 menu,
 address,
-figcaption,
-.carousel-link,
-.one-item-link,
 .cv-list li {
     line-height: 1.5;
+}
+
+figcaption {
+    line-height: 1.2;
 }
 
 button,
@@ -168,7 +172,6 @@ p {
 
 sup {
     font-size: 80%;
-    line-height: 0;
     position: relative;
     vertical-align: baseline;
     top: -0.5em;
@@ -253,8 +256,9 @@ tbody li {
     margin-bottom: calc(var(--padding) * 1.5);
 }
 
-.carousel-figcaption > li ul li {
-    margin-bottom: calc(var(--padding) * 1.5 * 0.9);
+.carousel-figcaption > li ul li,
+.one-item-figcaption li {
+    margin-bottom: calc(var(--padding) * 1.2 * 0.9);
 }
 
 td {
@@ -397,24 +401,24 @@ td {
 }
 
 tbody tr:last-child li:last-child,
-.carousel-figcaption > li ul li:last-child {
+.carousel-figcaption > li ul li:last-child,
+.one-item-figcaption li:last-child {
     margin-bottom: 0;
 }
 
-.carousel-figcaption > li ul li.section-end {
-    margin-bottom: calc(var(--padding) * 4.05);
-}
-
-.carousel-description {
+.carousel-description,
+.one-item-description {
     margin-top: var(--padding);
 }
 
-.carousel-description p {
+.carousel-description p,
+.one-item-description p {
     padding-left: 0;
     padding-right: 0;
 }
 
-.carousel-description p:last-child {
+.carousel-description p:last-child,
+.one-item-description p:last-child {
     padding-bottom: 0;
 }
 
@@ -572,7 +576,7 @@ tbody tr:last-child li:last-child,
 
 .carousel-link,
 .one-item-link {
-    margin-top: calc(var(--padding) * 1.5);
+    margin-top: calc(var(--padding) * 2);
 }
 
 /* Modal images */
@@ -862,7 +866,7 @@ tbody tr:last-child li:last-child,
 
     .carousel-link,
     .one-item-link {
-        line-height: 1;
+        margin-top: 0;
     }
 
     .carousel-figcaption,
