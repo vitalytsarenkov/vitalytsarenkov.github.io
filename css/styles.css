@@ -221,8 +221,6 @@ iframe {
 }
 
 figcaption {
-    margin-top: var(--padding);
-
     font-size: 0.9rem;
 }
 
@@ -409,7 +407,7 @@ tbody tr:last-child li:last-child,
 
 .carousel-description,
 .one-item-description {
-    margin-top: var(--padding);
+    margin-top: calc(var(--padding) - 0.25em);
 }
 
 .carousel-description p,
@@ -502,7 +500,7 @@ tbody tr:last-child li:last-child,
 }
 
 .one-item figcaption {
-    margin-top: calc(var(--padding) * 2);
+    margin-top: calc(var(--padding) * 2 - 0.1em);
 }
 
 /* Carousel */
@@ -550,6 +548,10 @@ tbody tr:last-child li:last-child,
     display: block;
 }
 
+.carousel figcaption {
+    margin-top: calc(var(--padding) - 0.1em);
+}
+
 .carousel-title li,
 .carousel-content li,
 .carousel-position li,
@@ -575,9 +577,8 @@ tbody tr:last-child li:last-child,
     font-size: 0.75rem;
 }
 
-.carousel-link,
-.one-item-link {
-    margin-top: calc(var(--padding) * 2);
+.margin-bottom-link {
+    margin-bottom: calc(var(--padding) * 2 - 0.1em);
 }
 
 /* Modal images */
