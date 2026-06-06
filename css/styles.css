@@ -579,7 +579,9 @@ tbody tr:last-child li:last-child,
 
 .carousel-link a,
 .one-item-link a {
-    display: inline-block;
+    display: block;
+    width: max-content;
+    max-width: 100%;
 }
 
 .margin-bottom-link {
@@ -751,7 +753,6 @@ tbody tr:last-child li:last-child,
     .one-item-description p {
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
-
         text-box: trim-both cap alphabetic;
     }
 
