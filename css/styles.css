@@ -577,6 +577,11 @@ tbody tr:last-child li:last-child,
     font-size: 0.75rem;
 }
 
+.carousel-link a,
+.one-item-link a {
+        display: inline-block;
+    }
+
 .margin-bottom-link {
     margin-bottom: calc(var(--padding) * 2 - 0.1em);
 }
@@ -736,7 +741,7 @@ tbody tr:last-child li:last-child,
 
 /* Text box trim */
 
-@supports (text-box-trim: both) or (-webkit-text-box-trim: both) {
+@supports (text-box-trim: trim-both) or (text-box: trim-both cap alphabetic) {
 
     .carousel figcaption li,
     .one-item figcaption li,
@@ -744,10 +749,10 @@ tbody tr:last-child li:last-child,
     .one-item-link a,
     .carousel-description p,
     .one-item-description p {
-        -webkit-text-box-trim: both;
-        text-box-trim: both;
-        -webkit-text-box-edge: cap alphabetic;
+        text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
+
+        text-box: trim-both cap alphabetic;
     }
 
     .carousel figcaption {
