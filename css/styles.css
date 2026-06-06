@@ -577,11 +577,6 @@ tbody tr:last-child li:last-child,
     font-size: 0.75rem;
 }
 
-.carousel-link a,
-.one-item-link a {
-        display: inline-block;
-    }
-
 .margin-bottom-link {
     margin-bottom: calc(var(--padding) * 2 - 0.1em);
 }
@@ -765,6 +760,12 @@ tbody tr:last-child li:last-child,
 
     .margin-bottom-link {
         margin-bottom: calc(var(--padding) * 2);
+    }
+
+    .carousel-link a,
+    .one-item-link a {
+        display: inline-flex;
+        align-items: baseline;
     }
 
     .carousel-description,
