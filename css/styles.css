@@ -7,6 +7,8 @@
     --mode-transition: 0.25s;
     --page-transition: 0.5s;
     --modal-transition: 0.25s;
+
+    --verdana-cap-air: 0.135em;
 }
 
 [data-theme="light"] {
@@ -407,7 +409,7 @@ tbody tr:last-child li:last-child,
 
 .carousel-description,
 .one-item-description {
-    margin-top: calc(var(--padding) - 0.25em);
+    margin-top: calc(var(--padding) - 0.25em - var(--verdana-cap-air) - 2px);
 }
 
 .carousel-description p,
@@ -500,7 +502,7 @@ tbody tr:last-child li:last-child,
 }
 
 .one-item figcaption {
-    margin-top: calc(var(--padding) * 2 - 0.1em);
+    margin-top: calc(var(--padding) * 2 - 0.1em - var(--verdana-cap-air) - 1px);
 }
 
 /* Carousel */
@@ -549,7 +551,7 @@ tbody tr:last-child li:last-child,
 }
 
 .carousel figcaption {
-    margin-top: calc(var(--padding) - 0.1em);
+    margin-top: calc(var(--padding) - 0.1em - var(--verdana-cap-air) - 1px);
 }
 
 .carousel-title li,
@@ -585,7 +587,7 @@ tbody tr:last-child li:last-child,
 }
 
 .margin-bottom-link {
-    margin-bottom: calc(var(--padding) * 2 - 0.1em);
+    margin-bottom: calc(var(--padding) * 2 - 0.1em - var(--verdana-cap-air));
 }
 
 /* Modal images */
