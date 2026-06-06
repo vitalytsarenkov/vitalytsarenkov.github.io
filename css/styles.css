@@ -738,11 +738,12 @@ tbody tr:last-child li:last-child,
 
 @supports (text-box-trim: both) or (-webkit-text-box-trim: both) {
 
-    .carousel figcaption,
-    .one-item figcaption,
-    .margin-bottom-link,
-    .carousel-description,
-    .one-item-description {
+    .carousel figcaption li,
+    .one-item figcaption li,
+    .carousel-link a,
+    .one-item-link a,
+    .carousel-description p,
+    .one-item-description p {
         -webkit-text-box-trim: both;
         text-box-trim: both;
         -webkit-text-box-edge: cap alphabetic;
