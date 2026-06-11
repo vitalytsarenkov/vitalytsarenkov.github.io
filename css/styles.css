@@ -1,14 +1,10 @@
 :root {
-    --padding: 1rem;
-
-    --header-height: calc(1rem + 2 * var(--padding) * 0.75);
+    --header-height: 2.5rem;
 
     --menu-transition: 0.25s;
     --mode-transition: 0.25s;
     --page-transition: 0.5s;
     --modal-transition: 0.25s;
-
-    --verdana-cap-air: 0.135em;
 }
 
 [data-theme="light"] {
@@ -49,29 +45,6 @@
     outline: auto;
 }
 
-h1,
-h2,
-p,
-nav,
-figure,
-table,
-address,
-footer,
-.carousel,
-.one-item,
-.download-link {
-    padding: var(--padding);
-}
-
-h1,
-.menu-open,
-.carousel-link,
-.one-item-link,
-.download-link,
-.footer {
-    line-height: 1;
-}
-
 sup,
 .logo,
 .menu-close,
@@ -87,6 +60,28 @@ sup,
     line-height: 0;
 }
 
+h1,
+.menu-open,
+.carousel-link,
+.one-item-link,
+.download-link,
+.footer {
+    line-height: 1;
+}
+
+figcaption {
+    line-height: 1.2;
+}
+
+p,
+h2,
+td,
+menu,
+address,
+.list-main li {
+    line-height: 1.5;
+}
+
 .menu-open,
 .menu-close {
     position: absolute;
@@ -94,29 +89,6 @@ sup,
     left: 50%;
 
     transform: translate(-50%, -50%);
-}
-
-.sidebar,
-.main {
-    width: 100%;
-
-    margin-top: var(--header-height);
-
-    min-height: calc(100dvh - var(--header-height));
-}
-
-p,
-h2,
-th,
-td,
-menu,
-address,
-.cv-list li {
-    line-height: 1.5;
-}
-
-figcaption {
-    line-height: 1.2;
 }
 
 button,
@@ -153,23 +125,15 @@ body {
 }
 
 h1 {
-    margin-top: var(--padding);
-
     font-size: 1.25rem;
 }
 
-h2,
-th {
+h2 {
     font-size: 1rem;
 }
 
 p {
     max-width: 70ch;
-}
-
-h2,
-p {
-    padding-bottom: 0.5rem;
 }
 
 sup {
@@ -231,7 +195,7 @@ address a {
 }
 
 hr {
-    padding: 2rem 1rem;
+    padding: 1rem 0;
     border: 0;
 }
 
@@ -239,27 +203,8 @@ table {
     border-spacing: 0;
 }
 
-thead,
 tr {
     display: block;
-}
-
-tbody tr td:nth-child(1) {
-    padding-right: calc(var(--padding) * 2);
-}
-
-th {
-    padding-bottom: calc(var(--padding) * 1.5);
-}
-
-tbody li,
-.section-end {
-    margin-bottom: calc(var(--padding) * 1.5);
-}
-
-.carousel-figcaption > li ul li,
-.one-item-figcaption li {
-    margin-bottom: calc(var(--padding) * 1.2 * 0.9);
 }
 
 td {
@@ -272,12 +217,25 @@ td {
     max-width: 100%;
 }
 
+.header,
+.sidebar,
+.main {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.sidebar,
+.main {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
 .header {
     background-color: var(--page-color);
     border-bottom: 1px dotted var(--text-color);
 
-    padding: calc(var(--padding) * 0.75) var(--padding);
-    padding-bottom: calc(var(--padding) * 0.75 - 1px);
+    padding-top: 0.75rem;
+    padding-bottom: calc(0.75rem - 1px);
 
     display: flex;
     justify-content: space-between;
@@ -330,6 +288,19 @@ td {
     transition: opacity var(--page-transition);
 }
 
+.sidebar,
+.main {
+    width: 100%;
+}
+
+.sidebar {
+    min-height: calc(100dvh - var(--header-height));
+}
+
+.main {
+    min-height: calc(100dvh - var(--header-height) - 1rem);
+}
+
 .sidebar {
     background-color: var(--page-color);
 
@@ -354,7 +325,6 @@ td {
 
 .nav {
     display: flex;
-
     flex: 1;
 }
 
@@ -380,10 +350,6 @@ td {
     display: flex;
 }
 
-.x {
-    margin-left: 0.5rem;
-}
-
 .x .icon {
     width: 22.2333px;
 }
@@ -393,39 +359,15 @@ td {
     flex-direction: column;
 }
 
-.padding-bottom-correction {
-    padding-bottom: var(--padding);
+.table-main caption {
+    text-align: left;
 }
 
-.cv-list {
-    padding: var(--padding);
-}
-
-tbody tr:last-child li:last-child,
-.carousel-figcaption > li ul li:last-child,
-.one-item-figcaption li:last-child {
-    margin-bottom: 0;
-}
-
-.carousel-description,
-.one-item-description {
-    margin-top: calc(var(--padding) - 0.25em - var(--verdana-cap-air) - 2px);
-}
-
-.carousel-description p,
-.one-item-description p {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.carousel-description p:last-child,
-.one-item-description p:last-child {
-    padding-bottom: 0;
+.table-main tr td:nth-child(1) {
+    padding-right: 2rem;
 }
 
 .top-scroll-button {
-    margin: 2rem;
-
     align-self: center;
 }
 
@@ -501,10 +443,6 @@ tbody tr:last-child li:last-child,
     flex-direction: column;
 }
 
-.one-item figcaption {
-    margin-top: calc(var(--padding) * 2 - 0.1em - var(--verdana-cap-air) - 1px);
-}
-
 /* Carousel */
 
 .carousel,
@@ -513,33 +451,19 @@ tbody tr:last-child li:last-child,
     flex-direction: column;
 }
 
-.carousel h2,
-.one-item h2 {
-    padding: 0;
-    margin-bottom: calc(var(--padding) * 2);
-}
-
 .carousel-container,
 .one-item-container {
     display: flex;
     flex-direction: column;
 }
 
-.carousel figure,
-.one-item figure {
-    padding: 0;
-}
-
 .carousel-navigation {
-    padding: 0.5rem 0;
-
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .left,
-.carousel-position span,
 .right {
     padding: 0.5rem;
 }
@@ -548,10 +472,6 @@ tbody tr:last-child li:last-child,
     font-size: 0.75rem;
 
     display: block;
-}
-
-.carousel figcaption {
-    margin-top: calc(var(--padding) - 0.1em - var(--verdana-cap-air) - 1px);
 }
 
 .carousel-title li,
@@ -579,15 +499,13 @@ tbody tr:last-child li:last-child,
     font-size: 0.75rem;
 }
 
+.social-media,
 .carousel-link a,
-.one-item-link a {
+.one-item-link a,
+.download-link a {
     display: block;
     width: max-content;
     max-width: 100%;
-}
-
-.margin-bottom-link {
-    margin-bottom: calc(var(--padding) * 2 - 0.1em - var(--verdana-cap-air));
 }
 
 /* Modal images */
@@ -737,44 +655,210 @@ tbody tr:last-child li:last-child,
 }
 
 .four-zero-four .icon {
-    margin-bottom: var(--padding);
-
     width: 4.4rem;
     height: 2rem;
 }
 
 /* Text box trim */
 
+.footer span {
+    display: block;
+}
+
+h1::before,
+.carousel-link::before,
+.one-item-link::before,
+.download-link::before,
+.footer span::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top: -0.17em;
+}
+
+h1::after,
+.carousel-link::after,
+.one-item-link::after,
+.download-link::after,
+.footer span::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-bottom: -0.1em;
+}
+
+h2::before,
+tr:first-child::before,
+.menu::before,
+.text-main::before,
+.list-main::before,
+.carousel-description::before,
+.one-item-description::before,
+address::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top: calc((0.25em + 0.17em) * -1);
+}
+
+h2::after,
+tr:last-child::after,
+.menu::after,
+.text-main::after,
+.list-main::after,
+.carousel-description::after,
+.one-item-description::after,
+address::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-bottom: calc((0.25em + 0.1em) * -1);
+}
+
+.carousel-figcaption::before,
+.one-item-figcaption::before {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-top: calc((0.1em + 0.17em) * -1);
+}
+
+.carousel-figcaption::after,
+.one-item-figcaption::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 0;
+    margin-bottom: calc((0.1em + 0.1em) * -1);
+}
+
 @supports (text-box-trim: trim-both) or (text-box: trim-both cap alphabetic) {
 
-    .carousel figcaption li,
-    .one-item figcaption li,
-    .carousel-link a,
-    .one-item-link a,
-    .carousel-description p,
-    .one-item-description p {
+    h1::before,
+    h1::after,
+    h2::before,
+    h2::after,
+    tr:first-child::before,
+    tr:first-child::after,
+    .menu::before,
+    .menu::after,
+    .text-main::before,
+    .text-main::after,
+    .list-main::before,
+    .list-main::after,
+    .carousel-figcaption::before,
+    .carousel-figcaption::after,
+    .one-item-figcaption::before,
+    .one-item-figcaption::after,
+    .carousel-description::before,
+    .carousel-description::after,
+    .one-item-description::before,
+    .one-item-description::after,
+    .carousel-link::before,
+    .carousel-link::after,
+    .one-item-link::before,
+    .one-item-link::after,
+    .download-link::before,
+    .download-link::after,
+    address::before,
+    address::after,
+    .footer span::before,
+    .footer span::after {
+        display: none !important;
+    }
+
+    h1,
+    h2,
+    tr,
+    p,
+    li,
+    address,
+    .one-item-link,
+    .download-link,
+    .footer span {
         text-box-trim: trim-both;
         text-box-edge: cap alphabetic;
         text-box: trim-both cap alphabetic;
     }
+}
 
-    .carousel figcaption {
-        margin-top: calc(var(--padding));
-    }
+/* Margins */
 
-    .one-item figcaption {
-        margin-top: calc(var(--padding) * 2);
-    }
+.container {
+    margin-top: var(--header-height);
+}
 
-    .margin-bottom-link {
-        margin-bottom: calc(var(--padding) * 2);
-    }
+.main {
+    margin-top: 1rem;
+}
 
-    .carousel-description,
-    .one-item-description {
-        margin-top: var(--padding);
-    }
+.sidebar-footer li,
+.left,
+.carousel-position {
+    margin-right: 0.5rem;
+}
 
+.carousel-content {
+    margin-bottom: 0.5rem;
+}
+
+.nav,
+.four-zero-four .icon {
+    margin-bottom: 1rem;
+}
+
+.carousel-figcaption > li ul li,
+.one-item-figcaption li {
+    margin-bottom: 1.2em;
+}
+
+.carousel-navigation {
+    margin-bottom: 1.5rem;
+}
+
+.section-end,
+.text-main p,
+.carousel-description p,
+.one-item-description p,
+.table-main li {
+    margin-bottom: 1.5em;
+}
+
+.sidebar-footer li:last-child {
+    margin-right: 0;
+}
+
+.carousel-figcaption > li ul li:last-child,
+.one-item-figcaption li:last-child,
+.text-main p:last-child,
+.carousel-description p:last-child,
+.one-item-description p:last-child,
+.table-main tr:last-child li:last-child {
+    margin-bottom: 0;
+}
+
+h1,
+h2,
+hr,
+address,
+.carousel-figcaption,
+.one-item-figcaption,
+.carousel-link,
+.one-item-link,
+.carousel-description,
+.one-item-description,
+.one-item-box,
+.text-main,
+.list-main,
+.table-main,
+.download-link,
+.top-scroll-button {
+    margin-bottom: 2rem;
 }
 
 /* Media queries */
@@ -799,13 +883,6 @@ tbody tr:last-child li:last-child,
 }
 
 @media only screen and (orientation: landscape) {
-
-    .sidebar,
-    .main {
-        margin-top: 0;
-
-        min-height: auto;
-    }
 
     html {
         overflow-y: scroll;
@@ -841,57 +918,37 @@ tbody tr:last-child li:last-child,
 
     .container {
         flex-direction: row;
+        align-items: flex-start;
     }
 
     .sidebar {
         background-color: transparent;
 
         width: initial;
-        min-height: 0;
+        min-height: auto;
 
         position: static;
 
         display: flex;
         align-items: flex-start;
 
-        margin-top: calc(4.25 * var(--padding));
-
         opacity: 1;
     }
 
     .nav {
-        display: block;
+        width: 120px;
 
+        display: block;
         flex: 0;
     }
 
     .menu {
-        width: 120px;
-
         text-align: left;
-
-        margin: 0;
     }
 
     .carousel-container,
     .one-item-container {
         flex-direction: row;
-    }
-
-    .carousel-box,
-    .one-item-box {
-        flex: 1;
-    }
-
-    .carousel figcaption,
-    .one-item figcaption {
-        flex: 1;
-
-        margin-top: 0;
-    }
-
-    .carousel figcaption div {
-        height: calc(100% - 3rem);
     }
 
     .carousel figcaption div,
@@ -901,28 +958,23 @@ tbody tr:last-child li:last-child,
         justify-content: space-between;
     }
 
-    .one-item {
-        margin-bottom: calc(var(--padding) * 2);
+    /* Carousel */
+
+    .carousel-box,
+    .one-item-box {
+        flex: 0 0 50%;
     }
 
-    .margin-bottom-correction {
-        margin-bottom: 0;
+    .carousel figcaption,
+    .one-item figcaption {
+        flex: 1;
     }
 
-    .carousel-figcaption,
-    .one-item-figcaption,
-    .carousel-link,
-    .one-item-link {
-        margin-left: calc(var(--padding) * 2);
+    .carousel figcaption div {
+        min-height: calc(100% - 2.5rem);
     }
 
-    .margin-bottom-link {
-        margin-bottom: 0;
-    }
-
-    .carousel-description {
-        margin-top: 0;
-    }
+    /* Modal images */
 
     .modal-buttons {
         flex-direction: column;
@@ -930,5 +982,44 @@ tbody tr:last-child li:last-child,
         top: 50%;
         left: 0;
         transform: translateY(-50%);
+    }
+
+    /* Margins */
+
+    .container {
+        margin-top: 0;
+    }
+
+    .sidebar {
+        margin-top: 3.9rem;
+    }
+
+    .nav {
+        margin-bottom: 2.25rem;
+    }
+
+    .carousel-container {
+        margin-bottom: 1.5rem;
+    }
+
+    .one-item-container {
+        margin-bottom: 2rem;
+    }
+
+    .carousel-navigation,
+    .one-item-box,
+    .carousel-link,
+    .one-item-link {
+        margin-bottom: 0;
+    }
+
+    .carousel-box,
+    .one-item-box {
+        margin-right: 2rem;
+    }
+
+    .carousel-figcaption,
+    .one-item-figcaption {
+        margin-bottom: 1.08rem;
     }
 }
