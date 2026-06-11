@@ -737,6 +737,7 @@ address::after {
     margin-bottom: calc((0.1em + 0.1em) * -1);
 }
 
+/*
 @supports (text-box-trim: trim-both) or (text-box: trim-both cap alphabetic) {
 
     h1::before,
@@ -786,6 +787,7 @@ address::after {
         text-box: trim-both cap alphabetic;
     }
 }
+*/
 
 /* Margins */
 
