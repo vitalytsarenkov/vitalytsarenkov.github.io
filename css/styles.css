@@ -495,7 +495,11 @@ td {
     font-size: 0.75rem;
 }
 
-.social-media,
+.social-media {
+    display: block;
+}
+
+/*.social-media,
 .carousel-link a,
 .one-item-link a {
     display: block;
@@ -505,7 +509,7 @@ td {
 .one-item-link a {
     width: fit-content;
     max-width: 100%;
-}
+}*/
 
 /* Modal images */
 
@@ -739,10 +743,6 @@ tbody::after,
 /*
 @supports (text-box: trim-both cap alphabetic) {
 
-    .footer span {
-        display: inline;
-    }
-
     h1::before,
     h1::after,
     h2::before,
@@ -778,35 +778,28 @@ tbody::after,
 
     h1,
     h2,
-    .carousel-link > li > a,
-    .one-item-link > a,
-    .download-link > a,
-    .email > a,
-    .footer > span {
+    .menu,
+    .text-main,
+    .list-main,
+    .carousel-figcaption,
+    .one-item-figcaption,
+    .carousel-description,
+    .one-item-description,
+    .carousel-link,
+    .one-item-link,
+    .download-link,
+    .email,
+    .footer {
         text-box: trim-both cap alphabetic;
     }
 
-    tbody > tr:first-child > td:first-child > time,
-    tbody > tr:first-child > td:last-child > ul > li:first-child,
-    .menu > li:first-child > a,
-    .text-main > p:first-child,
-    .list-main > li:first-child,
-    .carousel-figcaption > li > ul > li:first-child,
-    .one-item-figcaption > li:first-child,
-    .carousel-description > p:first-child,
-    .one-item-description > p:first-child {
+    tbody > tr:first-child > td:first-child,
+    tbody > tr:first-child > td:last-child {
         text-box: trim-start cap alphabetic;
     }
 
-    tbody > tr:last-child > td:first-child > time,
-    tbody > tr:last-child > td:last-child > ul > li:last-child,
-    .menu > li:last-child > a,
-    .text-main > p:last-child,
-    .list-main > li:last-child,
-    .carousel-figcaption > li > ul > li:last-child,
-    .one-item-figcaption > li:last-child,
-    .carousel-description > p:last-child,
-    .one-item-description > p:last-child {
+    tbody > tr:last-child > td:first-child,
+    tbody > tr:last-child > td:last-child {
         text-box: trim-end cap alphabetic;
     }
 }
@@ -1016,7 +1009,7 @@ address,
     }
 
     .sidebar {
-        margin-top: 3.9rem;
+        margin-top: calc(1rem + 1.25rem * 0.727 + 2rem);
     }
 
     .nav {

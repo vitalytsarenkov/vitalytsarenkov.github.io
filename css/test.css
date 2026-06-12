@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-    --page-color: white;
+    --page-color: lightgray;
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
@@ -664,35 +664,28 @@ td {
 
     h1,
     h2,
-    .carousel-link > li > a,
-    .one-item-link > a,
-    .download-link > a,
-    .email > a,
-    .footer > span {
+    .menu,
+    .text-main,
+    .list-main,
+    .carousel-figcaption,
+    .one-item-figcaption,
+    .carousel-description,
+    .one-item-description,
+    .carousel-link,
+    .one-item-link,
+    .download-link,
+    .email,
+    .footer {
         text-box: trim-both cap alphabetic;
     }
 
-    tbody > tr:first-child > td:first-child > time,
-    tbody > tr:first-child > td:last-child > ul > li:first-child,
-    .menu > li:first-child > a,
-    .text-main > p:first-child,
-    .list-main > li:first-child,
-    .carousel-figcaption > li > ul > li:first-child,
-    .one-item-figcaption > li:first-child,
-    .carousel-description > p:first-child,
-    .one-item-description > p:first-child {
+    tbody > tr:first-child > td:first-child,
+    tbody > tr:first-child > td:last-child {
         text-box: trim-start cap alphabetic;
     }
 
-    tbody > tr:last-child > td:first-child > time,
-    tbody > tr:last-child > td:last-child > ul > li:last-child,
-    .menu > li:last-child > a,
-    .text-main > p:last-child,
-    .list-main > li:last-child,
-    .carousel-figcaption > li > ul > li:last-child,
-    .one-item-figcaption > li:last-child,
-    .carousel-description > p:last-child,
-    .one-item-description > p:last-child {
+    tbody > tr:last-child > td:first-child,
+    tbody > tr:last-child > td:last-child {
         text-box: trim-end cap alphabetic;
     }
 }
