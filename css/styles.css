@@ -336,14 +336,10 @@ td {
 
 .menu a:hover,
 .menu a:focus,
-.current-page,
+.current-page a,
 .sidebar-footer a:hover,
 .sidebar-footer a:focus {
     color: var(--hover-color);
-}
-
-.current-page {
-    pointer-events: none;
 }
 
 .sidebar-footer ul {
@@ -501,10 +497,13 @@ td {
 
 .social-media,
 .carousel-link a,
-.one-item-link a,
-.download-link a {
+.one-item-link a {
     display: block;
-    width: max-content;
+}
+
+.carousel-link a,
+.one-item-link a {
+    width: fit-content;
     max-width: 100%;
 }
 
@@ -690,13 +689,13 @@ h1::after,
 }
 
 h2::before,
-tr:first-child::before,
+tbody::before,
 .menu::before,
 .text-main::before,
 .list-main::before,
 .carousel-description::before,
 .one-item-description::before,
-address::before {
+.email::before {
     content: "";
     display: block;
     width: 0;
@@ -705,13 +704,13 @@ address::before {
 }
 
 h2::after,
-tr:last-child::after,
+tbody::after,
 .menu::after,
 .text-main::after,
 .list-main::after,
 .carousel-description::after,
 .one-item-description::after,
-address::after {
+.email::after {
     content: "";
     display: block;
     width: 0;
@@ -738,14 +737,18 @@ address::after {
 }
 
 /*
-@supports (text-box-trim: trim-both) or (text-box: trim-both cap alphabetic) {
+@supports (text-box: trim-both cap alphabetic) {
+
+    .footer span {
+        display: inline;
+    }
 
     h1::before,
     h1::after,
     h2::before,
     h2::after,
-    tr:first-child::before,
-    tr:first-child::after,
+    tbody::before,
+    tbody::after,
     .menu::before,
     .menu::after,
     .text-main::before,
@@ -766,8 +769,8 @@ address::after {
     .one-item-link::after,
     .download-link::before,
     .download-link::after,
-    address::before,
-    address::after,
+    .email::before,
+    .email::after,
     .footer span::before,
     .footer span::after {
         display: none !important;
@@ -775,16 +778,36 @@ address::after {
 
     h1,
     h2,
-    tr,
-    p,
-    li,
-    address,
-    .one-item-link,
-    .download-link,
-    .footer span {
-        text-box-trim: trim-both;
-        text-box-edge: cap alphabetic;
+    .carousel-link > li > a,
+    .one-item-link > a,
+    .download-link > a,
+    .email > a,
+    .footer > span {
         text-box: trim-both cap alphabetic;
+    }
+
+    tbody > tr:first-child > td:first-child > time,
+    tbody > tr:first-child > td:last-child > ul > li:first-child,
+    .menu > li:first-child > a,
+    .text-main > p:first-child,
+    .list-main > li:first-child,
+    .carousel-figcaption > li > ul > li:first-child,
+    .one-item-figcaption > li:first-child,
+    .carousel-description > p:first-child,
+    .one-item-description > p:first-child {
+        text-box: trim-start cap alphabetic;
+    }
+
+    tbody > tr:last-child > td:first-child > time,
+    tbody > tr:last-child > td:last-child > ul > li:last-child,
+    .menu > li:last-child > a,
+    .text-main > p:last-child,
+    .list-main > li:last-child,
+    .carousel-figcaption > li > ul > li:last-child,
+    .one-item-figcaption > li:last-child,
+    .carousel-description > p:last-child,
+    .one-item-description > p:last-child {
+        text-box: trim-end cap alphabetic;
     }
 }
 */
