@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-    --page-color: lightgray;
+    --page-color: yellow;
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
@@ -662,10 +662,6 @@ td {
 
 @supports (text-box: trim-both cap alphabetic) {
 
-    .footer span::before {
-        content: "© ";
-    }
-
     h1,
     h2,
     .menu,
@@ -679,7 +675,7 @@ td {
     .one-item-link,
     .download-link,
     .email,
-    .footer span {
+    .footer {
         text-box: trim-both cap alphabetic;
     }
 

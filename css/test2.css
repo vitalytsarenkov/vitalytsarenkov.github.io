@@ -8,7 +8,7 @@
 }
 
 [data-theme="light"] {
-    --page-color: lightgray;
+    --page-color: yellow;
     --text-color: #333;
     --icon-color: black;
     --hover-color: blue;
@@ -378,7 +378,7 @@ td {
     align-self: center;
 }
 
-.footer span {
+.footer p {
     font-size: 0.75rem;
 }
 
@@ -675,7 +675,7 @@ td {
     .one-item-link,
     .download-link,
     .email,
-    .footer span {
+    .footer {
         text-box: trim-both cap alphabetic;
     }
 

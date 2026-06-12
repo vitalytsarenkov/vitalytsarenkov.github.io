@@ -789,7 +789,7 @@ tbody::after,
     .one-item-link,
     .download-link,
     .email,
-    .footer span {
+    .footer {
         text-box: trim-both cap alphabetic;
     }
 
