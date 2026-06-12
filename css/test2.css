@@ -662,10 +662,6 @@ td {
 
 @supports (text-box: trim-both cap alphabetic) {
 
-    .footer span::before {
-        content: "© ";
-    }
-
     h1,
     h2,
     .menu,
