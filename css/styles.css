@@ -789,7 +789,7 @@ tbody::after,
     .one-item-link,
     .download-link,
     .email,
-    .footer {
+    .footer span {
         text-box: trim-both cap alphabetic;
     }
 
@@ -847,19 +847,6 @@ tbody::after,
     margin-bottom: 1.5em;
 }
 
-.sidebar-footer li:last-child {
-    margin-right: 0;
-}
-
-.carousel-figcaption > li ul li:last-child,
-.one-item-figcaption li:last-child,
-.text-main p:last-child,
-.carousel-description p:last-child,
-.one-item-description p:last-child,
-.table-main tr:last-child li:last-child {
-    margin-bottom: 0;
-}
-
 h1,
 h2,
 hr,
@@ -877,6 +864,19 @@ address,
 .download-link,
 .top-scroll-button {
     margin-bottom: 2rem;
+}
+
+.sidebar-footer li:last-child {
+    margin-right: 0;
+}
+
+.carousel-figcaption > li ul li:last-child,
+.one-item-figcaption li:last-child,
+.text-main p:last-child,
+.carousel-description p:last-child,
+.one-item-description p:last-child,
+.table-main tr:last-child li:last-child {
+    margin-bottom: 0;
 }
 
 /* Media queries */
@@ -1008,12 +1008,18 @@ address,
         margin-top: 0;
     }
 
+    .carousel-link,
+    .one-item-link {
+        margin-top: 2rem;
+    }
+
     .sidebar {
         margin-top: calc(1rem + 1.25rem * 0.727 + 2rem);
     }
 
-    .nav {
-        margin-bottom: 2.25rem;
+    .carousel-box,
+    .one-item-box {
+        margin-right: 2rem;
     }
 
     .carousel-container {
@@ -1024,6 +1030,10 @@ address,
         margin-bottom: 2rem;
     }
 
+    .nav {
+        margin-bottom: 2.25rem;
+    }
+
     .carousel-navigation,
     .one-item-box,
     .carousel-link,
@@ -1031,13 +1041,8 @@ address,
         margin-bottom: 0;
     }
 
-    .carousel-box,
-    .one-item-box {
-        margin-right: 2rem;
-    }
-
     .carousel-figcaption,
     .one-item-figcaption {
-        margin-bottom: 1.08rem;
+        margin-bottom: 0;
     }
 }
