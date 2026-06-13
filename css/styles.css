@@ -66,16 +66,16 @@ h1,
 .carousel-link,
 .one-item-link,
 .download-link,
-.footer {
+.footer p {
     line-height: 1;
 }
 
 figcaption {
-    line-height: 1.2;
+    line-height: 1.25;
 }
 
-p,
 h2,
+p,
 td,
 menu,
 address,
@@ -198,7 +198,7 @@ address a {
 }
 
 hr {
-    padding: 1rem 0;
+    padding: 0.75rem 0;
     border: 0;
 }
 
@@ -650,6 +650,8 @@ td {
 
 /* Text box trim */
 
+/*
+
 h1::before,
 .carousel-link::before,
 .one-item-link::before,
@@ -785,14 +787,29 @@ tbody::after,
     }
 }
 
+*/
+
 /* Margins */
+
+.carousel-figcaption > li ul li,
+.one-item-figcaption li {
+    margin-bottom: 1.25em;
+}
+
+.section-end,
+.text-main p,
+.carousel-description p,
+.one-item-description p,
+.table-main li {
+    margin-bottom: 1.5em;
+}
 
 .container {
     margin-top: var(--header-height);
 }
 
 h1 {
-    margin-top: 1rem;
+    margin-top: 0.75rem;
 }
 
 .sidebar-footer li,
@@ -806,25 +823,9 @@ h1 {
 }
 
 .nav,
+.carousel-navigation,
 .four-zero-four .icon {
     margin-bottom: 1rem;
-}
-
-.carousel-figcaption > li ul li,
-.one-item-figcaption li {
-    margin-bottom: 1.2em;
-}
-
-.carousel-navigation {
-    margin-bottom: 1.5rem;
-}
-
-.section-end,
-.text-main p,
-.carousel-description p,
-.one-item-description p,
-.table-main li {
-    margin-bottom: 1.5em;
 }
 
 h1,
@@ -843,7 +844,7 @@ address,
 .table-main,
 .download-link,
 .top-scroll-button {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .sidebar-footer li:last-child {
@@ -858,6 +859,10 @@ hr:last-child,
 .one-item-description p:last-child,
 .table-main tr:last-child li:last-child {
     margin-bottom: 0;
+}
+
+hr:last-child {
+    padding: 0.5rem 0;
 }
 
 /* Media queries */
@@ -992,11 +997,11 @@ hr:last-child,
 
     .carousel-link,
     .one-item-link {
-        margin-top: 2rem;
+        margin-top: 1.3rem;
     }
 
     .nav {
-        margin-top: calc(1rem + 1.25rem * 0.727 + 2rem);
+        margin-top: calc(0.75rem + 1.25rem + 1.5rem);
     }
 
     .footer {
@@ -1009,15 +1014,15 @@ hr:last-child,
     }
 
     .carousel-container {
-        margin-bottom: 1.5rem;
+        margin-bottom: 1rem;
     }
 
     .one-item-container {
-        margin-bottom: 2rem;
+        margin-bottom: 1.5rem;
     }
 
     .nav {
-        margin-bottom: 2.25rem;
+        margin-bottom: 2rem;
     }
 
     .carousel-navigation,
