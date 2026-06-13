@@ -97,6 +97,8 @@ input,
 optgroup,
 select,
 textarea {
+    max-width: 100%;
+
     font-family: inherit;
     font-size: 1rem;
 }
@@ -295,14 +297,15 @@ td {
 }
 
 .sidebar {
-    min-height: calc(100dvh - var(--header-height));
-}
-
-.sidebar {
     background-color: var(--page-color);
 
     position: fixed;
     z-index: 100;
+
+    top: var(--header-height);
+    bottom: 0;
+
+    overflow-y: auto;
 
     display: none;
     flex-direction: column;
@@ -921,9 +924,10 @@ hr:last-child,
         background-color: transparent;
 
         width: initial;
-        min-height: auto;
 
         position: static;
+
+        overflow-y: visible;
 
         display: flex;
         align-items: flex-start;
