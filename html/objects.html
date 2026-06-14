@@ -353,6 +353,15 @@
         <footer class="footer">
             <p>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</p>
         </footer>
+        <script>
+            (() => {
+                const year = new Date().getFullYear();
+                const time = document.querySelector("footer time");
+                time.textContent = year;
+                time.setAttribute("datetime", year);
+            })();
+
+        </script>
     </div>
 
     <div class="modal" aria-label="Modal window" role="dialog">

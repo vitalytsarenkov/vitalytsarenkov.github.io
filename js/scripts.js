@@ -623,13 +623,6 @@ for (let i = 0; i < iframes.length; i++) {
     iframeObserver.observe(iframes[i]);
 };
 
-// Update year
-
-const year = new Date().getFullYear();
-const time = document.querySelector("footer time");
-time.textContent = year;
-time.setAttribute("datetime", year);
-
 // Accessibility
 
 const logo = body.querySelector(".logo");
