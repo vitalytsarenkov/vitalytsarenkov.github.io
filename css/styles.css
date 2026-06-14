@@ -74,15 +74,6 @@ figcaption {
     line-height: 1.25;
 }
 
-h2,
-p,
-td,
-menu,
-address,
-.list-main li {
-    line-height: 1.5;
-}
-
 .menu-open,
 .menu-close {
     position: absolute;
@@ -122,6 +113,8 @@ html {
 
 body {
     font-family: Verdana, sans-serif;
+
+    line-height: 1.5;
 
     color: var(--text-color);
     background-color: var(--page-color);

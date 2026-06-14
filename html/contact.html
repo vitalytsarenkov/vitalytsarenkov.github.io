@@ -153,8 +153,9 @@
         </footer>
         <script>
             (() => {
+                const footer = document.currentScript.previousElementSibling;
+                const time = footer.querySelector("time");
                 const year = new Date().getFullYear();
-                const time = document.querySelector("footer time");
                 time.textContent = year;
                 time.setAttribute("datetime", year);
             })();
