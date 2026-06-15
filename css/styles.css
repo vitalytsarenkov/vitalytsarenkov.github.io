@@ -66,7 +66,8 @@ h1,
 .carousel-link,
 .one-item-link,
 .download-link,
-.footer p {
+.footer p,
+.four-zero-four a {
     line-height: 1;
 }
 
@@ -444,6 +445,8 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding: 0.5rem 0;
 }
 
 .left,
@@ -675,15 +678,11 @@ td {
 }
 
 .carousel-container > div + figcaption {
-    margin-top: 1rem;
+    margin-top: 0.5rem;
 }
 
 .one-item-container > div + figcaption {
     margin-top: 1.5rem;
-}
-
-.carousel-navigation {
-    margin-top: 0.5rem;
 }
 
 .carousel-navigation > * + * {
@@ -824,7 +823,7 @@ td {
     }
 
     .carousel figcaption div {
-        min-height: calc(100% - 2.5rem);
+        min-height: calc(100% - 3rem);
     }
 
     /* Modal images */
@@ -858,7 +857,7 @@ td {
     }
 
     .main > .carousel.no-description + * {
-        margin-top: 4rem;
+        margin-top: 3.5rem;
     }
 
     .carousel.has-link > .carousel-description,
@@ -867,9 +866,8 @@ td {
     }
 
     .carousel-description {
-        margin-top: 1rem;
+        margin-top: 0.5rem;
     }
-
 
     .carousel-link,
     .one-item-link {
