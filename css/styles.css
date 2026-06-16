@@ -353,6 +353,18 @@ td {
     width: 100%;
 }
 
+.plus {
+    align-self: center;
+
+    width: 2rem;
+    height: 2rem;
+
+    stroke: var(--inactive-color);
+    stroke-width: 1px;
+
+    shape-rendering: crispEdges;
+}
+
 .top-scroll-button {
     align-self: center;
 }
@@ -620,6 +632,8 @@ td {
 .four-zero-four {
     width: 100%;
     min-height: 100dvh;
+
+    padding: 1rem;
 }
 
 .four-zero-four {
@@ -660,6 +674,12 @@ td {
 
 .main > * + * {
     margin-top: 4.5rem;
+}
+
+.main > * + .plus,
+.main > .plus + *,
+.main > * + .top-scroll-button {
+    margin-top: 3.5rem;
 }
 
 .main > *:first-child + *,
@@ -706,6 +726,10 @@ td {
 
 .main > *:last-child {
     margin-bottom: 2.5rem;
+}
+
+.main > .top-scroll-button {
+    margin-bottom: 1.5rem;
 }
 
 .four-zero-four a {
@@ -856,8 +880,13 @@ td {
         margin-left: 2rem;
     }
 
-    .main > .carousel.no-description + * {
-        margin-top: 3.5rem;
+    .carousel-link,
+    .one-item-link {
+        margin-top: 1.3rem;
+    }
+
+    .carousel-description {
+        margin-top: 0.5rem;
     }
 
     .carousel.has-link > .carousel-description,
@@ -865,13 +894,13 @@ td {
         margin-top: 1.5rem;
     }
 
-    .carousel-description {
-        margin-top: 0.5rem;
+    .main > .carousel.no-description + * {
+        margin-top: 3.5rem;
     }
 
-    .carousel-link,
-    .one-item-link {
-        margin-top: 1.3rem;
+    .main > .carousel.no-description + .plus,
+    .main > .carousel.no-description + .top-scroll-button {
+        margin-top: 2.5rem;
     }
 
     .footer {
