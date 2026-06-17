@@ -406,12 +406,13 @@ td {
 
 /* Toggle dark and light modes */
 
+.toggle-mode body,
 .toggle-mode * {
     transition: color var(--mode-transition) linear,
         background-color var(--mode-transition) linear,
         border-color var(--mode-transition) linear,
         fill var(--mode-transition) linear,
-        stroke var(--mode-transition) linear;
+        stroke var(--mode-transition) linear !important;
 }
 
 /* One item */
