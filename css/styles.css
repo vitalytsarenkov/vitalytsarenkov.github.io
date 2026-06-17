@@ -470,10 +470,8 @@ td {
     padding: 0.5rem;
 }
 
-.carousel-position span {
+.carousel-position {
     font-size: 0.75rem;
-
-    display: block;
 }
 
 .carousel-title li,
