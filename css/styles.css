@@ -421,6 +421,10 @@ td {
     transition: fill var(--mode-transition) linear;
 }
 
+.toggle-mode .plus {
+    transition: stroke var(--mode-transition) linear;
+}
+
 .toggle-mode h1,
 .toggle-mode h2,
 .toggle-mode p,
