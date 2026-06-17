@@ -429,9 +429,8 @@ td {
 .toggle-mode h2,
 .toggle-mode p,
 .toggle-mode li,
-.toggle-mode figcaption,
 .toggle-mode a,
-.toggle-mode tr,
+.toggle-mode td,
 .toggle-mode .menu-open {
     transition: color var(--mode-transition) linear;
 }
