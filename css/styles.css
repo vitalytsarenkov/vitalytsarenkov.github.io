@@ -428,10 +428,11 @@ td {
 .toggle-mode h1,
 .toggle-mode h2,
 .toggle-mode p,
-.toggle-mode li,
+.toggle-mode figcaption,
+.toggle-mode tr,
 .toggle-mode a,
-.toggle-mode td,
-.toggle-mode .menu-open {
+.toggle-mode .menu-open,
+.toggle-mode .carousel-position {
     transition: color var(--mode-transition) linear;
 }
 
