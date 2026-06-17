@@ -406,34 +406,12 @@ td {
 
 /* Toggle dark and light modes */
 
-.toggle-mode body,
-.toggle-mode .sidebar {
-    transition: background-color var(--mode-transition) linear;
-}
-
-.toggle-mode .header {
-    transition-property: background-color, border;
-    transition-duration: var(--mode-transition);
-    transition-timing-function: linear;
-}
-
-.toggle-mode .icon {
-    transition: fill var(--mode-transition) linear;
-}
-
-.toggle-mode .plus {
-    transition: stroke var(--mode-transition) linear;
-}
-
-.toggle-mode h1,
-.toggle-mode h2,
-.toggle-mode p,
-.toggle-mode figcaption,
-.toggle-mode tr,
-.toggle-mode a,
-.toggle-mode .menu-open,
-.toggle-mode .carousel-position {
-    transition: color var(--mode-transition) linear;
+.toggle-mode * {
+    transition: color var(--mode-transition) linear,
+        background-color var(--mode-transition) linear,
+        border-color var(--mode-transition) linear,
+        fill var(--mode-transition) linear,
+        stroke var(--mode-transition) linear;
 }
 
 /* One item */
