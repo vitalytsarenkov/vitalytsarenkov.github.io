@@ -433,6 +433,13 @@ td {
     transition: color var(--mode-transition) linear;
 }
 
+h1,
+h2,
+time,
+li {
+    color: var(--text-color);
+}
+
 /* One item */
 
 .one-item {
