@@ -3,7 +3,7 @@
     --nav-width: 120px;
 
     --menu-transition: 0.25s;
-    --mode-transition: 0.25s;
+    --mode-transition: 1s;
     --page-transition: 0.5s;
     --modal-transition: 0.25s;
 }
@@ -407,12 +407,30 @@ td {
 /* Toggle dark and light modes */
 
 .toggle-mode body,
-.toggle-mode * {
-    transition: color var(--mode-transition) linear,
-        background-color var(--mode-transition) linear,
-        border-color var(--mode-transition) linear,
-        fill var(--mode-transition) linear,
-        stroke var(--mode-transition) linear !important;
+.toggle-mode .sidebar {
+    transition: background-color var(--mode-transition) linear;
+}
+
+.toggle-mode .header {
+    transition-property: background-color, border-color;
+    transition-duration: var(--mode-transition);
+    transition-timing-function: linear;
+}
+
+.toggle-mode path,
+.toggle-mode polygon {
+    transition: fill var(--mode-transition) linear,
+        stroke var(--mode-transition) linear;
+}
+
+.toggle-mode h1,
+.toggle-mode h2,
+.toggle-mode p,
+.toggle-mode time,
+.toggle-mode li,
+.toggle-mode a,
+.toggle-mode button {
+    transition: color var(--mode-transition) linear;
 }
 
 /* One item */
