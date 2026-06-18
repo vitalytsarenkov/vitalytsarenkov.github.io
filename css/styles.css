@@ -251,11 +251,6 @@ td {
     display: none;
 }
 
-.menu-open {
-    opacity: 1;
-    transition: opacity var(--page-transition);
-}
-
 .menu-close {
     display: none;
 }

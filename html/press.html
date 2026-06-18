@@ -92,7 +92,7 @@
             </a>
             <button class="skip-navigation">skip to main content</button>
             <div class="menu-toggle">
-                <button class="menu-open zero-opacity" aria-label="Open menu">MENU</button>
+                <button class="menu-open" aria-label="Open menu">MENU</button>
                 <button class="menu-close" aria-label="Close menu">
                     <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
                         <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
@@ -399,9 +399,7 @@
                 preventScroll: true
             });
             logo.blur();
-            const menuOpen = document.body.querySelector(".menu-open");
             const container = document.body.querySelector(".container");
-            menuOpen.classList.remove("zero-opacity");
             container.classList.remove("zero-opacity");
         });
 
