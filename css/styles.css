@@ -3,7 +3,7 @@
     --nav-width: 120px;
 
     --menu-transition: 0.25s;
-    --mode-transition: 1s;
+    --mode-transition: 0.25s;
     --page-transition: 0.5s;
     --modal-transition: 0.25s;
 }
@@ -419,8 +419,11 @@ td {
 
 .toggle-mode path,
 .toggle-mode polygon {
-    transition: fill var(--mode-transition) linear,
-        stroke var(--mode-transition) linear;
+    transition: fill var(--mode-transition) linear;
+}
+
+.toggle-mode .plus path {
+    transition: stroke var(--mode-transition) linear;
 }
 
 .toggle-mode h1,
