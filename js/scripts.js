@@ -630,6 +630,24 @@ for (let i = 0; i < iframes.length; i++) {
     iframeObserver.observe(iframes[i]);
 };
 
+// Top scroll button visibility control
+
+function checkScroll() {
+    const pageHeight = Math.max(
+        document.body.scrollHeight,
+        document.documentElement.scrollHeight
+    );
+
+    if (pageHeight > window.innerHeight) {
+        document.body.classList.add("has-scroll");
+    } else {
+        document.body.classList.remove("has-scroll");
+    }
+};
+
+window.addEventListener("DOMContentLoaded", checkScroll);
+window.addEventListener("resize", checkScroll);
+
 // Accessibility
 
 const logo = body.querySelector(".logo");
