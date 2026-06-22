@@ -75,10 +75,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="light dark">
+
     <meta name="author" content="Vitaly Tsarenkov">
     <meta name="description" content="Vitaly Tsarenkov’s short bio.">
+
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
     <title>Vitaly Tsarenkov — Bio</title>
 </head>
 
@@ -109,11 +112,11 @@
             <aside class="sidebar">
                 <nav class="nav">
                     <menu class="menu">
-                        <li class="section-end"><a href="/">about</a></li>
+                        <li class="section-end"><a href="/">home</a></li>
                         <li><a href="/en/paintings.html">paintings</a></li>
                         <li><a href="/en/murals.html">murals</a></li>
                         <li><a href="/en/objects.html">objects</a></li>
-                        <li class="section-end"><a href="/en/nfts.html">nfts</a></li>
+                        <li class="section-end"><a href="/en/digital.html">digital</a></li>
                         <li class="current-page"><a aria-current="page">bio</a></li>
                         <li><a href="/en/statement.html">statement</a></li>
                         <li><a href="/en/cv.html">cv</a></li>
@@ -183,9 +186,9 @@
         </script>
     </div>
 
-    <div class="modal" aria-label="Modal window" role="dialog">
+    <div class="modal" aria-label="View image" aria-modal="true" role="dialog">
         <div class="modal-loading">
-            <span class="loading-indicator"></span>
+            <span class="loading-text" aria-live="polite">loading</span><span class="loading-dots" aria-hidden="true"></span>
         </div>
         <div class="modal-buttons">
             <button class="zoom-out" aria-label="Zoom out">

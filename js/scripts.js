@@ -250,19 +250,19 @@ const modalTransitionMs = parseFloat(modalTransition) * 1000;
 // Loading indicator
 
 const modalLoading = body.querySelector(".modal-loading");
-const loadingIndicator = body.querySelector(".loading-indicator");
+const loadingDots = body.querySelector(".loading-dots");
 
-let loading = "loading",
+let dots = "",
     dotCounter = 0;
 
 function loadingModal() {
-    loadingIndicator.innerHTML = loading;
+    loadingDots.innerHTML = dots;
 
     if (dotCounter < 3) {
-        loading = loading + ".";
+        dots = dots + ".";
         dotCounter++;
     } else {
-        loading = "loading";
+        dots = "";
         dotCounter = 0;
     }
 };
