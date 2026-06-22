@@ -253,7 +253,8 @@ const modalLoading = body.querySelector(".modal-loading");
 const loadingDots = body.querySelector(".loading-dots");
 
 let dots = "",
-    dotCounter = 0;
+    dotCounter = 0,
+    loadingIntervalId = null;
 
 function loadingModal() {
     loadingDots.innerHTML = dots;
@@ -267,8 +268,6 @@ function loadingModal() {
     }
 };
 
-setInterval(loadingModal, 250);
-
 // Open and close modal images
 
 let activeElement;
@@ -280,6 +279,12 @@ function openModal(image, eventType) {
 
                 event.preventDefault();
                 activeElement = document.activeElement;
+
+                clearInterval(loadingIntervalId);
+                dots = "";
+                dotCounter = 0;
+                loadingDots.innerHTML = dots;
+                loadingIntervalId = setInterval(loadingModal, 250);
 
                 function setModal() {
                     body.classList.add("unclicable");
@@ -298,6 +303,7 @@ function openModal(image, eventType) {
                 }, 100);
 
                 function imageLoaded() {
+                    clearInterval(loadingIntervalId);
                     modalImage.width /= window.devicePixelRatio;
                     getModal();
                     updateModal();
@@ -327,6 +333,7 @@ function openModal(image, eventType) {
 };
 
 function closeModal() {
+    clearInterval(loadingIntervalId);
     body.classList.add("unclicable");
     html.classList.remove("hide-scroll");
     page.classList.remove("zero-opacity");
