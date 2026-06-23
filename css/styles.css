@@ -288,6 +288,9 @@ td {
     overflow-y: auto;
 
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 
     opacity: 0;
     transition: opacity var(--menu-transition);
@@ -307,15 +310,16 @@ td {
     color: var(--hover-color);
 }
 
+.lang-switcher {
+    display: flex;
+}
+
 .lang-switcher .lang-active,
 .lang-switcher .lang-active:hover {
     color: var(--inactive-color);
 }
 
-.nav {
-    margin: auto;
-}
-
+.nav,
 .menu {
     display: flex;
     flex-direction: column;
@@ -672,8 +676,16 @@ li {
 
 /* Margins */
 
-.lang-switcher a + a {
+.lang-switcher > li + li {
     margin-left: 0.5rem;
+}
+
+.nav > * + .menu {
+    margin-top: 1.75rem;
+}
+
+.social-media-icons {
+    margin-top: 2rem;
 }
 
 .social-media-icons li + li {
@@ -711,14 +723,6 @@ li {
 .carousel-description > p + p,
 .one-item-description > p + p {
     margin-top: 1.5em;
-}
-
-.menu > .lang-switcher + li {
-    margin-top: 1.75rem;
-}
-
-.menu > li + .social-media-icons {
-    margin-top: 2rem;
 }
 
 .carousel-container > div + figcaption {
@@ -829,12 +833,15 @@ li {
 
         overflow-y: visible;
 
-        display: block;
+        display: flex;
+        align-items: flex-start;
 
         opacity: 1;
     }
 
     .nav {
+        align-items: flex-start;
+
         width: var(--nav-width);
     }
 
