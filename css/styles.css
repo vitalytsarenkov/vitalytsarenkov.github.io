@@ -711,6 +711,7 @@ li {
 }
 
 .main > *:first-child + *,
+.main > h2 + *,
 .carousel > * + *,
 .one-item > * + * {
     margin-top: 1.5rem;
