@@ -238,6 +238,7 @@ for (let i = 0; i < carousels.length; i++) {
 const images = document.images;
 const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
+const modalImageContainer = body.querySelector(".modal-image-container");
 const modalButtons = body.querySelector(".modal-buttons");
 const modalClose = body.querySelector(".modal-close");
 const modalImage = body.querySelector(".modal-image");
@@ -359,8 +360,8 @@ function clearModal() {
 };
 
 function centerModal() {
-    modal.scrollLeft = (modal.scrollWidth - window.innerWidth) / 2;
-    modal.scrollTop = (modal.scrollHeight - window.innerHeight) / 2;
+    modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - window.innerWidth) / 2;
+    modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - window.innerHeight) / 2;
 };
 
 for (let i = 0; i < images.length; i++) {
@@ -390,13 +391,13 @@ function panModal() {
     const panStart = (event) => {
         event.preventDefault();
         panning = true;
-        startPoint.x = modal.scrollLeft + event.clientX;
-        startPoint.y = modal.scrollTop + event.clientY;
+        startPoint.x = modalImageContainer.scrollLeft + event.clientX;
+        startPoint.y = modalImageContainer.scrollTop + event.clientY;
     };
 
     const panMove = (event) => {
         if (!panning) return;
-        modal.scrollTo(
+        modalImageContainer.scrollTo(
             startPoint.x - event.clientX,
             startPoint.y - event.clientY
         );
@@ -515,13 +516,13 @@ function disableZoom() {
 
 function getScrollPosition() {
     if (modalImage.classList.contains("fit-content")) {
-        modalScrollLeft = modal.scrollLeft + window.innerWidth / 2;
-        modalScrollTop = modal.scrollTop + window.innerHeight / 2;
+        modalScrollLeft = modalImageContainer.scrollLeft + window.innerWidth / 2;
+        modalScrollTop = modalImageContainer.scrollTop + window.innerHeight / 2;
     }
 };
 
 function resetScrollPosition() {
-    modal.scrollTo({
+    modalImageContainer.scrollTo({
         left: modalScrollLeft - window.innerWidth / 2,
         top: modalScrollTop - window.innerHeight / 2
     });

@@ -536,22 +536,29 @@ li {
 
     z-index: 10000;
 
-    overflow: auto;
-
     opacity: 0;
     transition: opacity var(--modal-transition);
 }
 
 .modal-buttons {
     background-color: var(--page-color);
+    border-bottom: 1px dotted var(--text-color);
+
+    padding-top: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    padding-bottom: calc(0.25rem - 1px);
 
     display: none;
-    flex-direction: row;
+    justify-content: space-between;
 
     position: fixed;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    width: 100%;
+}
+
+.modal-zoom-buttons {
+    display: flex;
 }
 
 .show-modal,
@@ -567,11 +574,11 @@ li {
     fill: var(--inactive-color);
 }
 
-.zoom-out,
 .modal-close,
+.zoom-out,
 .zoom-in {
-    width: 2.5rem;
-    height: 2.5rem;
+    width: 2rem;
+    height: 2rem;
 }
 
 .modal-loading {
@@ -587,6 +594,16 @@ li {
 
 .show-loading {
     display: block;
+}
+
+.modal-image-container {
+    display: flex;
+
+    width: 100%;
+
+    overflow: auto;
+
+    margin-top: var(--header-height);
 }
 
 .modal-image {
@@ -881,11 +898,19 @@ li {
     /* Modal images */
 
     .modal-buttons {
-        flex-direction: column;
+        border-bottom: none;
 
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
+        padding: 0.25rem;
+
+        width: auto;
+    }
+
+    .modal-zoom-buttons {
+        display: none;
+    }
+
+    .modal-image-container {
+        margin-top: 0;
     }
 
     /* Margins */
