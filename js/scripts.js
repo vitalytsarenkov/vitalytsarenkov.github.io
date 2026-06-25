@@ -544,15 +544,6 @@ modalImage.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
-/*window.addEventListener("resize", () => {
-    if (modalState.getPropertyValue("display") !== "none") {
-        if (!modalImage.classList.contains("fit-content")) {
-            resetModal();
-        }
-        updateModal();
-    }
-});*/
-
 window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (modalImage.classList.contains("fit-content")) {
@@ -562,15 +553,14 @@ window.addEventListener("resize", () => {
 });
 
 const modalObserver = new ResizeObserver(() => {
-    requestAnimationFrame(() => {
-        if (modalState.getPropertyValue("display") !== "none") {
-            if (modalImage.classList.contains("fit-content")) {
-                return;
-            }
-            resetModal();
-            updateModal();
+    if (modalState.getPropertyValue("display") !== "none") {
+        if (!modalImage.classList.contains("fit-content")) {
+            requestAnimationFrame(() => {
+                resetModal();
+                updateModal();
+            });
         }
-    });
+    }
 });
 
 zoomOut.addEventListener("click", () => {
