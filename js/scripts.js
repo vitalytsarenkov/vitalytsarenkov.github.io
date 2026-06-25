@@ -308,9 +308,9 @@ function openModal(image, eventType) {
                     modalImage.width /= window.devicePixelRatio;
                     getModal();
                     updateModal();
+                    enableScroll(body);
                     centerModal();
                     getScrollPosition();
-                    enableScroll(body);
                     modalLoading.classList.remove("show-loading");
                     modalButtons.classList.add("show-buttons");
                     modalImage.classList.add("full-opacity");
@@ -359,9 +359,15 @@ function clearModal() {
     modalButtons.classList.remove("show-buttons");
 };
 
+function getPortraitOffset() {
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
+    return isPortrait ? (2.5 * rem) : 0;
+}
+
 function centerModal() {
     modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - window.innerWidth) / 2;
-    modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - window.innerHeight) / 2;
+    modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - window.innerHeight) / 2 + (getPortraitOffset() / 2);
 };
 
 for (let i = 0; i < images.length; i++) {
@@ -517,14 +523,14 @@ function disableZoom() {
 function getScrollPosition() {
     if (modalImage.classList.contains("fit-content")) {
         modalScrollLeft = modalImageContainer.scrollLeft + window.innerWidth / 2;
-        modalScrollTop = modalImageContainer.scrollTop + window.innerHeight / 2;
+        modalScrollTop = modalImageContainer.scrollTop + window.innerHeight / 2 - (getPortraitOffset() / 2);
     }
 };
 
 function resetScrollPosition() {
     modalImageContainer.scrollTo({
         left: modalScrollLeft - window.innerWidth / 2,
-        top: modalScrollTop - window.innerHeight / 2
+        top: modalScrollTop - window.innerHeight / 2 + (getPortraitOffset() / 2)
     });
 };
 
