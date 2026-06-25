@@ -235,6 +235,8 @@ for (let i = 0; i < carousels.length; i++) {
 
 // Modal images
 
+let isRotating = false;
+
 const images = document.images;
 const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
@@ -418,6 +420,7 @@ function panModal() {
     const panEnd = () => {
         panning = false;
         modalImage.classList.remove("grabbing");
+        getScrollPosition();
     };
 
     modalImage.addEventListener("pointerdown", panStart);
@@ -523,31 +526,43 @@ function disableZoom() {
 };
 
 function getScrollPosition() {
+    if (isRotating) return;
+
     if (modalImage.classList.contains("fit-content")) {
-        modalScrollLeft = modalImageContainer.scrollLeft + window.innerWidth / 2;
-        modalScrollTop = modalImageContainer.scrollTop + window.innerHeight / 2 - (getPortraitOffset() / 2);
+        const maxScrollLeft = modalImageContainer.scrollWidth - window.innerWidth;
+        const maxScrollTop = modalImageContainer.scrollHeight - window.innerHeight + getPortraitOffset();
+
+        modalScrollLeft = maxScrollLeft > 0 ? (modalImageContainer.scrollLeft / maxScrollLeft) : 0;
+        modalScrollTop = maxScrollTop > 0 ? (modalImageContainer.scrollTop / maxScrollTop) : 0;
     }
-};
+}
 
 function resetScrollPosition() {
+    const maxScrollLeft = modalImageContainer.scrollWidth - window.innerWidth;
+    const maxScrollTop = modalImageContainer.scrollHeight - window.innerHeight + getPortraitOffset();
+
+    let targetLeft = modalScrollLeft * maxScrollLeft;
+    let targetTop = modalScrollTop * maxScrollTop;
+
+    targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
+    targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
+
     modalImageContainer.scrollTo({
-        left: modalScrollLeft - window.innerWidth / 2,
-        top: modalScrollTop - window.innerHeight / 2 + (getPortraitOffset() / 2)
+        left: targetLeft,
+        top: targetTop
     });
-};
-
-modalImage.addEventListener("click", () => {
-    getScrollPosition();
-});
-
-modalImage.addEventListener("touchend", () => {
-    getScrollPosition();
-});
+}
 
 window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (modalImage.classList.contains("fit-content")) {
+            isRotating = true;
+
             updateModal();
+
+            requestAnimationFrame(() => {
+                isRotating = false;
+            });
         }
     }
 });

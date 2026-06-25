@@ -536,6 +536,8 @@ li {
 
     z-index: 10000;
 
+    touch-action: none;
+
     opacity: 0;
     transition: opacity var(--modal-transition);
 }
