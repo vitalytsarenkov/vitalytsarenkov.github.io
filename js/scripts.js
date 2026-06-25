@@ -311,6 +311,7 @@ function openModal(image, eventType) {
                     enableScroll(body);
                     centerModal();
                     getScrollPosition();
+                    modalObserver.observe(modalImageContainer);
                     modalLoading.classList.remove("show-loading");
                     modalButtons.classList.add("show-buttons");
                     modalImage.classList.add("full-opacity");
@@ -335,6 +336,7 @@ function openModal(image, eventType) {
 
 function closeModal() {
     clearInterval(loadingIntervalId);
+    modalObserver.disconnect();
     body.classList.add("unclicable");
     html.classList.remove("hide-scroll");
     page.classList.remove("zero-opacity");
@@ -542,13 +544,33 @@ modalImage.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
-window.addEventListener("resize", () => {
+/*window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (!modalImage.classList.contains("fit-content")) {
             resetModal();
         }
         updateModal();
     }
+});*/
+
+window.addEventListener("resize", () => {
+    if (modalState.getPropertyValue("display") !== "none") {
+        if (modalImage.classList.contains("fit-content")) {
+            updateModal();
+        }
+    }
+});
+
+const modalObserver = new ResizeObserver(() => {
+    requestAnimationFrame(() => {
+        if (modalState.getPropertyValue("display") !== "none") {
+            if (modalImage.classList.contains("fit-content")) {
+                return;
+            }
+            resetModal();
+            updateModal();
+        }
+    });
 });
 
 zoomOut.addEventListener("click", () => {
