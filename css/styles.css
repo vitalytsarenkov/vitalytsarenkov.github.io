@@ -603,8 +603,6 @@ li {
 
     overflow: auto;
 
-    touch-action: none;
-
     margin-top: var(--header-height);
 }
 
