@@ -363,16 +363,21 @@ function clearModal() {
     modalButtons.classList.remove("show-buttons");
 };
 
-function getPortraitOffset() {
+/*function getPortraitOffset() {
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
     const isPortrait = window.matchMedia("(orientation: portrait)").matches;
     return isPortrait ? (2.5 * rem) : 0;
-}
+}*/
 
-function centerModal() {
+/*function centerModal() {
     modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - window.innerWidth) / 2;
     modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - window.innerHeight) / 2 + (getPortraitOffset() / 2);
-};
+};*/
+
+function centerModal() {
+    modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
+    modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
+}
 
 for (let i = 0; i < images.length; i++) {
     openModal(images[i], "click");
@@ -525,7 +530,7 @@ function disableZoom() {
     }
 };
 
-function getScrollPosition() {
+/*function getScrollPosition() {
     if (isRotating) return;
 
     if (modalImage.classList.contains("fit-content")) {
@@ -540,6 +545,34 @@ function getScrollPosition() {
 function resetScrollPosition() {
     const maxScrollLeft = modalImageContainer.scrollWidth - window.innerWidth;
     const maxScrollTop = modalImageContainer.scrollHeight - window.innerHeight + getPortraitOffset();
+
+    let targetLeft = modalScrollLeft * maxScrollLeft;
+    let targetTop = modalScrollTop * maxScrollTop;
+
+    targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
+    targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
+
+    modalImageContainer.scrollTo({
+        left: targetLeft,
+        top: targetTop
+    });
+}*/
+
+function getScrollPosition() {
+    if (isRotating) return;
+
+    if (modalImage.classList.contains("fit-content")) {
+        const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
+        const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+
+        modalScrollLeft = maxScrollLeft > 0 ? (modalImageContainer.scrollLeft / maxScrollLeft) : 0;
+        modalScrollTop = maxScrollTop > 0 ? (modalImageContainer.scrollTop / maxScrollTop) : 0;
+    }
+}
+
+function resetScrollPosition() {
+    const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
+    const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
     let targetLeft = modalScrollLeft * maxScrollLeft;
     let targetTop = modalScrollTop * maxScrollTop;
