@@ -553,6 +553,14 @@ function resetScrollPosition() {
     });
 }
 
+modalImage.addEventListener("click", () => {
+    getScrollPosition();
+});
+
+modalImage.addEventListener("touchend", () => {
+    getScrollPosition();
+});
+
 window.addEventListener("resize", () => {
     if (modalState.getPropertyValue("display") !== "none") {
         if (modalImage.classList.contains("fit-content")) {

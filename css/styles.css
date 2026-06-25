@@ -536,8 +536,6 @@ li {
 
     z-index: 10000;
 
-    touch-action: none;
-
     opacity: 0;
     transition: opacity var(--modal-transition);
 }
@@ -604,6 +602,8 @@ li {
     width: 100%;
 
     overflow: auto;
+
+    touch-action: none;
 
     margin-top: var(--header-height);
 }
