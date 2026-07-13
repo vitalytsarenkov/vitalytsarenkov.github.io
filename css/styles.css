@@ -609,6 +609,7 @@ li {
     margin: auto;
 
     opacity: 0;
+    transition: opacity var(--modal-transition);
 }
 
 .modal-image:not(.full-opacity) {
