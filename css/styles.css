@@ -530,6 +530,7 @@ li {
     height: 100%;
 
     display: none;
+    flex-direction: column;
 
     position: fixed;
     top: 0;
@@ -538,6 +539,10 @@ li {
 
     opacity: 0;
     transition: opacity var(--modal-transition);
+}
+
+.show-modal {
+    display: flex;
 }
 
 .modal-buttons {
@@ -549,21 +554,19 @@ li {
     padding-right: 0.5rem;
     padding-bottom: calc(0.25rem - 1px);
 
-    display: none;
+    display: flex;
     justify-content: space-between;
-
-    position: fixed;
-    top: 0;
-    width: 100%;
 }
 
 .modal-zoom-buttons {
     display: flex;
 }
 
-.show-modal,
-.show-buttons {
-    display: flex;
+.modal-close,
+.zoom-out,
+.zoom-in {
+    width: 2rem;
+    height: 2rem;
 }
 
 .disable-zoom {
@@ -574,11 +577,21 @@ li {
     fill: var(--inactive-color);
 }
 
-.modal-close,
-.zoom-out,
-.zoom-in {
-    width: 2rem;
-    height: 2rem;
+.modal-image-container {
+    display: flex;
+    flex: 1;
+
+    position: relative;
+
+    overflow: auto;
+}
+
+.modal-image-container.show-loading {
+    pointer-events: none;
+}
+
+.modal-image-container.show-loading .modal-loading {
+    display: block;
 }
 
 .modal-loading {
@@ -586,30 +599,20 @@ li {
 
     display: none;
 
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-3ch, -50%);
-}
-
-.show-loading {
-    display: block;
-}
-
-.modal-image-container {
-    display: flex;
-
-    width: 100%;
-
-    overflow: auto;
-
-    margin-top: var(--header-height);
 }
 
 .modal-image {
     margin: auto;
 
     opacity: 0;
+}
+
+.modal-image:not(.full-opacity) {
+    cursor: default !important;
 }
 
 .fit-content {
@@ -902,7 +905,9 @@ li {
 
         padding: 0;
 
-        width: auto;
+        position: fixed;
+        top: 0;
+        z-index: 100;
     }
 
     .modal-close {
@@ -912,10 +917,6 @@ li {
 
     .modal-zoom-buttons {
         display: none;
-    }
-
-    .modal-image-container {
-        margin-top: 0;
     }
 
     /* Margins */

@@ -327,9 +327,6 @@
     </div>
 
     <div class="modal" aria-label="View image" aria-modal="true" role="dialog">
-        <div class="modal-loading">
-            <span class="loading-text" aria-live="polite">loading</span><span class="loading-dots" aria-hidden="true"></span>
-        </div>
         <div class="modal-buttons">
             <button class="modal-close" aria-label="Close image">
                 <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
@@ -350,7 +347,10 @@
             </div>
         </div>
         <div class="modal-image-container">
-            <img class="modal-image" aria-label="High resolution image" role="scrollbar" tabindex="0">
+            <div class="modal-loading">
+                <span class="loading-text" aria-live="polite">loading</span><span class="loading-dots" aria-hidden="true"></span>
+            </div>
+            <img class="modal-image" aria-label="High resolution image" role="region" tabindex="0">
         </div>
     </div>
 

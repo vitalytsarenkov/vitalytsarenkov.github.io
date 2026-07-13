@@ -241,7 +241,6 @@ const images = document.images;
 const page = body.querySelector(".page");
 const modal = body.querySelector(".modal");
 const modalImageContainer = body.querySelector(".modal-image-container");
-const modalButtons = body.querySelector(".modal-buttons");
 const modalClose = body.querySelector(".modal-close");
 const modalImage = body.querySelector(".modal-image");
 
@@ -278,7 +277,7 @@ let activeElement;
 function openModal(image, eventType) {
     image.addEventListener(eventType, (event) => {
         if (modalState.getPropertyValue("display") === "none") {
-            if (eventType === "click" || eventType === "keydown" && event.key === "Enter" || event.key === " ") {
+            if (eventType === "click" || (eventType === "keydown" && (event.key === "Enter" || event.key === " "))) {
 
                 event.preventDefault();
                 activeElement = document.activeElement;
@@ -291,10 +290,20 @@ function openModal(image, eventType) {
 
                 function setModal() {
                     body.classList.add("unclicable");
-                    modal.classList.add("show-modal");
-                    modalLoading.classList.add("show-loading");
                     disableScroll(body);
+
+                    modal.classList.add("show-modal");
+                    modalImageContainer.classList.add("show-loading");
+
+                    zoomIn.classList.add("disable-zoom");
+                    zoomOut.classList.add("disable-zoom");
+
                     modalImage.classList.add("fit-content");
+
+                    modalImage.addEventListener("load", imageLoaded, {
+                        once: true
+                    });
+
                     modalImage.src = image.src;
                     modalImage.alt = image.alt;
                 };
@@ -304,27 +313,6 @@ function openModal(image, eventType) {
                 setTimeout(() => {
                     modal.classList.add("full-opacity");
                 }, 100);
-
-                function imageLoaded() {
-                    clearInterval(loadingIntervalId);
-                    modalImage.width /= window.devicePixelRatio;
-                    getModal();
-                    updateModal();
-                    enableScroll(body);
-                    centerModal();
-                    getScrollPosition();
-                    modalObserver.observe(modalImageContainer);
-                    modalLoading.classList.remove("show-loading");
-                    modalButtons.classList.add("show-buttons");
-                    modalImage.classList.add("full-opacity");
-                    modalImage.focus();
-                };
-
-                modalImage.addEventListener("load", () => {
-                    imageLoaded();
-                }, {
-                    once: true
-                });
 
                 setTimeout(() => {
                     html.classList.add("hide-scroll");
@@ -336,43 +324,61 @@ function openModal(image, eventType) {
     });
 };
 
+function imageLoaded() {
+    clearInterval(loadingIntervalId);
+    modalImage.width /= window.devicePixelRatio;
+
+    getModal();
+    updateModal();
+    centerModal();
+    getScrollPosition();
+    enableScroll(body);
+    disableZoom();
+
+    modalObserver.observe(modalImageContainer);
+    modalImageContainer.classList.remove("show-loading");
+
+    modalImage.classList.add("full-opacity");
+    modalImage.focus();
+};
+
 function closeModal() {
+    if (body.classList.contains("unclicable")) return;
+
     clearInterval(loadingIntervalId);
     modalObserver.disconnect();
+
     body.classList.add("unclicable");
-    html.classList.remove("hide-scroll");
-    page.classList.remove("zero-opacity");
-    modal.classList.remove("full-opacity");
     activeElement.focus({
         preventScroll: true
     });
 
+    html.classList.remove("hide-scroll");
+    page.classList.remove("zero-opacity");
+    modal.classList.remove("full-opacity");
+
+    enableScroll(body);
+    clearModal();
+
     setTimeout(() => {
         modal.classList.remove("show-modal");
         resetModal();
-        clearModal();
         body.classList.remove("unclicable");
     }, modalTransitionMs);
 };
 
 function clearModal() {
-    modalImage.removeAttribute("src");
+    zoomIn.classList.add("disable-zoom");
+    zoomOut.classList.add("disable-zoom");
+
+    modalImageContainer.classList.remove("show-loading");
+
+    modalImage.removeEventListener("load", imageLoaded);
+    modalImage.src = "";
     modalImage.removeAttribute("alt");
     modalImage.removeAttribute("width");
     modalImage.classList.remove("full-opacity");
-    modalButtons.classList.remove("show-buttons");
 };
-
-/*function getPortraitOffset() {
-    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize);
-    const isPortrait = window.matchMedia("(orientation: portrait)").matches;
-    return isPortrait ? (2.5 * rem) : 0;
-}*/
-
-/*function centerModal() {
-    modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - window.innerWidth) / 2;
-    modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - window.innerHeight) / 2 + (getPortraitOffset() / 2);
-};*/
 
 function centerModal() {
     modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
@@ -529,34 +535,6 @@ function disableZoom() {
         zoomOut.classList.add("disable-zoom");
     }
 };
-
-/*function getScrollPosition() {
-    if (isRotating) return;
-
-    if (modalImage.classList.contains("fit-content")) {
-        const maxScrollLeft = modalImageContainer.scrollWidth - window.innerWidth;
-        const maxScrollTop = modalImageContainer.scrollHeight - window.innerHeight + getPortraitOffset();
-
-        modalScrollLeft = maxScrollLeft > 0 ? (modalImageContainer.scrollLeft / maxScrollLeft) : 0;
-        modalScrollTop = maxScrollTop > 0 ? (modalImageContainer.scrollTop / maxScrollTop) : 0;
-    }
-}
-
-function resetScrollPosition() {
-    const maxScrollLeft = modalImageContainer.scrollWidth - window.innerWidth;
-    const maxScrollTop = modalImageContainer.scrollHeight - window.innerHeight + getPortraitOffset();
-
-    let targetLeft = modalScrollLeft * maxScrollLeft;
-    let targetTop = modalScrollTop * maxScrollTop;
-
-    targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
-    targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
-
-    modalImageContainer.scrollTo({
-        left: targetLeft,
-        top: targetTop
-    });
-}*/
 
 function getScrollPosition() {
     if (isRotating) return;

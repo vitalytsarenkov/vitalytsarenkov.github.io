@@ -116,7 +116,7 @@
                     <h2>Виталий Царенков</h2>
                     <figure class="one-item-container">
                         <div class="one-item-box">
-                            <img id="skip" sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 800px, calc(100vw - 200px)" srcset="/img/500.png 500w, /img/750.png 750w, /img/1000.png 1000w, /img/1500.png 1500w, /img/2000.png 2000w, /img/2500.png 2500w, /img/3000.png 3000w" src="/img/3000.png" width="3000" height="4500" alt="Портрет художника." aria-label="Показать в высоком разрешении" role="button" tabindex="0" fetchpriority="high">
+                            <img id="skip" sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 200px) / 2)" srcset="/img/500.png 500w, /img/750.png 750w, /img/1000.png 1000w, /img/1500.png 1500w, /img/2000.png 2000w, /img/2500.png 2500w, /img/3000.png 3000w" src="/img/3000.png" width="3000" height="4500" alt="Портрет художника." aria-label="Показать в высоком разрешении" role="button" tabindex="0" fetchpriority="high">
                         </div>
                         <figcaption>
                             <ul class="one-item-figcaption">
@@ -166,9 +166,6 @@
     </div>
 
     <div class="modal" aria-label="Просмотр изображения" aria-modal="true" role="dialog">
-        <div class="modal-loading">
-            <span class="loading-text" aria-live="polite">загрузка</span><span class="loading-dots" aria-hidden="true"></span>
-        </div>
         <div class="modal-buttons">
             <button class="modal-close" aria-label="Закрыть изображение">
                 <svg class="icon" aria-label="Иконка крестика" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
@@ -189,7 +186,10 @@
             </div>
         </div>
         <div class="modal-image-container">
-            <img class="modal-image" aria-label="Изображение в высоком разрешении" role="scrollbar" tabindex="0">
+            <div class="modal-loading">
+                <span class="loading-text" aria-live="polite">загрузка</span><span class="loading-dots" aria-hidden="true"></span>
+            </div>
+            <img class="modal-image" aria-label="Изображение в высоком разрешении" role="region" tabindex="0">
         </div>
     </div>
 
