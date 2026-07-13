@@ -338,12 +338,8 @@ function imageLoaded() {
     modalObserver.observe(modalImageContainer);
     modalImageContainer.classList.remove("show-loading");
 
-    requestAnimationFrame(() => {
-        requestAnimationFrame(() => {
-            modalImage.classList.add("full-opacity");
-            modalImage.focus();
-        });
-    });
+    modalImage.classList.add("full-opacity");
+    modalImage.focus();
 };
 
 function closeModal() {
