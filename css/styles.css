@@ -608,17 +608,7 @@ li {
 .modal-image {
     margin: auto;
 
-    visibility: hidden;
     opacity: 0;
-
-    transition: visibility var(--modal-transition), opacity var(--modal-transition);
-}
-
-@starting-style {
-    .modal-image.full-opacity {
-        visibility: hidden;
-        opacity: 0;
-    }
 }
 
 .modal-image:not(.full-opacity) {
@@ -658,7 +648,6 @@ li {
 }
 
 .full-opacity {
-    visibility: visible;
     opacity: 1;
 }
 
