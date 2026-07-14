@@ -282,30 +282,33 @@ function openModal(image, eventType) {
                 event.preventDefault();
                 activeElement = document.activeElement;
 
-                clearInterval(loadingIntervalId);
-                dots = "";
-                dotCounter = 0;
-                loadingDots.innerHTML = dots;
-                loadingIntervalId = setInterval(loadingModal, 250);
-
                 function setModal() {
                     body.classList.add("unclicable");
                     disableScroll(body);
 
                     modal.classList.add("show-modal");
-                    modalImageContainer.classList.add("show-loading");
-
-                    zoomIn.classList.add("disable-zoom");
                     zoomOut.classList.add("disable-zoom");
-
+                    zoomIn.classList.add("disable-zoom");
                     modalImage.classList.add("fit-content");
-
-                    modalImage.addEventListener("load", imageLoaded, {
-                        once: true
-                    });
 
                     modalImage.src = image.src;
                     modalImage.alt = image.alt;
+
+                    if (modalImage.complete) {
+                        imageLoaded();
+                    } else {
+                        modalImage.addEventListener("load", imageLoaded, {
+                            once: true
+                        });
+
+                        clearInterval(loadingIntervalId);
+                        dots = "";
+                        dotCounter = 0;
+                        loadingDots.innerHTML = dots;
+                        loadingIntervalId = setInterval(loadingModal, 250);
+
+                        modalImageContainer.classList.add("show-loading");
+                    }
                 };
 
                 setModal();
@@ -364,8 +367,8 @@ function closeModal() {
 };
 
 function clearModal() {
-    zoomIn.classList.add("disable-zoom");
     zoomOut.classList.add("disable-zoom");
+    zoomIn.classList.add("disable-zoom");
 
     modalImageContainer.classList.remove("show-loading");
 
@@ -521,14 +524,14 @@ function zoomModalIn() {
 
 function disableZoom() {
     if (modalImage.classList.contains("fit-size")) {
-        zoomIn.classList.add("disable-zoom");
         zoomOut.classList.add("disable-zoom");
+        zoomIn.classList.add("disable-zoom");
     } else if (modalImage.classList.contains("fit-content")) {
-        zoomIn.classList.add("disable-zoom");
         zoomOut.classList.remove("disable-zoom");
+        zoomIn.classList.add("disable-zoom");
     } else {
-        zoomIn.classList.remove("disable-zoom");
         zoomOut.classList.add("disable-zoom");
+        zoomIn.classList.remove("disable-zoom");
     }
 };
 
