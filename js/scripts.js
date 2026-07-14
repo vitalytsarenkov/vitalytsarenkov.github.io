@@ -295,6 +295,7 @@ function openModal(image, eventType) {
                     modalImage.alt = image.alt;
 
                     if (modalImage.complete) {
+                        modalImage.classList.add("instant-full-opacity");
                         imageLoaded();
                     } else {
                         modalImage.addEventListener("load", imageLoaded, {
@@ -337,9 +338,10 @@ function imageLoaded() {
     modalObserver.observe(modalImageContainer);
     modalImageContainer.classList.remove("show-loading");
 
-    void modalImage.offsetWidth;
+    if (!modalImage.classList.contains("instant-full-opacity")) {
+        modalImage.classList.add("full-opacity");
+    }
 
-    modalImage.classList.add("full-opacity");
     modalImage.focus();
 };
 
@@ -483,6 +485,7 @@ function resetModal() {
     modalImage.classList.remove("fit-width");
     modalImage.classList.remove("fit-height");
     modalImage.classList.remove("fit-content");
+    modalImage.classList.remove("instant-full-opacity");
 };
 
 function zoomModalOut() {

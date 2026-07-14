@@ -627,6 +627,11 @@ li {
     cursor: default !important;
 }
 
+.instant-full-opacity {
+    opacity: 1;
+    transition: none;
+}
+
 .fit-content {
     max-width: fit-content;
     height: auto;
