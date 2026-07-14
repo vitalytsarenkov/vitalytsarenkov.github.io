@@ -295,7 +295,6 @@ function openModal(image, eventType) {
                     modalImage.alt = image.alt;
 
                     if (modalImage.complete) {
-                        modalImage.classList.add("instant-full-opacity");
                         imageLoaded();
                     } else {
                         modalImage.addEventListener("load", imageLoaded, {
@@ -336,12 +335,23 @@ function imageLoaded() {
     disableZoom();
 
     modalObserver.observe(modalImageContainer);
-    modalImageContainer.classList.remove("show-loading");
 
-    if (!modalImage.classList.contains("instant-full-opacity")) {
-        modalImage.classList.add("full-opacity");
+    if (modalImageContainer.classList.contains("show-loading")) {
+        modalImageContainer.classList.remove("show-loading");
+
+        modalImage.animate(
+            [{
+                opacity: 0
+            }, {
+                opacity: 1
+            }], {
+                duration: modalTransitionMs,
+                easing: "ease"
+            }
+        );
     }
 
+    modalImage.classList.add("full-opacity");
     modalImage.focus();
 };
 
@@ -358,12 +368,12 @@ function closeModal() {
 
     html.classList.remove("hide-scroll");
     page.classList.remove("zero-opacity");
-    modal.classList.remove("full-opacity");
+    modal.classList.remove("show-modal");
+    modalImage.classList.remove("full-opacity");
 
     enableScroll(body);
 
     setTimeout(() => {
-        modal.classList.remove("show-modal");
         clearModal();
         resetModal();
         body.classList.remove("unclicable");
@@ -380,7 +390,6 @@ function clearModal() {
     modalImage.src = "";
     modalImage.removeAttribute("alt");
     modalImage.removeAttribute("width");
-    modalImage.classList.remove("full-opacity");
 };
 
 function centerModal() {
@@ -485,7 +494,6 @@ function resetModal() {
     modalImage.classList.remove("fit-width");
     modalImage.classList.remove("fit-height");
     modalImage.classList.remove("fit-content");
-    modalImage.classList.remove("instant-full-opacity");
 };
 
 function zoomModalOut() {
