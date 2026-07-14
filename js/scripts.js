@@ -335,21 +335,7 @@ function imageLoaded() {
     disableZoom();
 
     modalObserver.observe(modalImageContainer);
-
-    if (modalImageContainer.classList.contains("show-loading")) {
-        modalImageContainer.classList.remove("show-loading");
-
-        modalImage.animate(
-            [{
-                opacity: 0
-            }, {
-                opacity: 1
-            }], {
-                duration: modalTransitionMs,
-                easing: "ease"
-            }
-        );
-    }
+    modalImageContainer.classList.remove("show-loading");
 
     modalImage.classList.add("full-opacity");
     modalImage.focus();
