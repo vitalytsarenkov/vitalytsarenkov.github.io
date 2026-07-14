@@ -291,16 +291,17 @@ function openModal(image, eventType) {
                     zoomIn.classList.add("disable-zoom");
                     modalImage.classList.add("fit-content");
 
+                    modalImage.addEventListener("load", imageLoaded, {
+                        once: true
+                    });
+
                     modalImage.src = image.src;
                     modalImage.alt = image.alt;
 
                     if (modalImage.complete) {
+                        modalImage.removeEventListener("load", imageLoaded);
                         imageLoaded();
                     } else {
-                        modalImage.addEventListener("load", imageLoaded, {
-                            once: true
-                        });
-
                         clearInterval(loadingIntervalId);
                         dots = "";
                         dotCounter = 0;
