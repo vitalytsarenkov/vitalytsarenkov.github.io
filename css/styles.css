@@ -597,6 +597,8 @@ li {
 
 .modal-image-container.show-loading .modal-loading {
     display: block;
+
+    opacity: 1;
 }
 
 .modal-loading {
@@ -608,6 +610,9 @@ li {
     top: 50%;
     left: 50%;
     transform: translate(-3ch, -50%);
+
+    opacity: 0;
+    transition: opacity var(--modal-transition);
 }
 
 .modal-image {
