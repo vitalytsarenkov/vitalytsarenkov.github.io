@@ -276,7 +276,7 @@ let activeElement;
 
 function openModal(image, eventType) {
     image.addEventListener(eventType, (event) => {
-        if (modalState.getPropertyValue("display") === "none") {
+        if (!modal.classList.contains("show-modal")) {
             if (eventType === "click" || (eventType === "keydown" && (event.key === "Enter" || event.key === " "))) {
 
                 event.preventDefault();
@@ -309,10 +309,6 @@ function openModal(image, eventType) {
                 };
 
                 setModal();
-
-                setTimeout(() => {
-                    modal.classList.add("full-opacity");
-                }, 100);
 
                 setTimeout(() => {
                     html.classList.add("hide-scroll");
@@ -358,10 +354,10 @@ function closeModal() {
     modal.classList.remove("full-opacity");
 
     enableScroll(body);
-    clearModal();
 
     setTimeout(() => {
         modal.classList.remove("show-modal");
+        clearModal();
         resetModal();
         body.classList.remove("unclicable");
     }, modalTransitionMs);
@@ -395,7 +391,7 @@ modalClose.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && modalState.getPropertyValue("display") !== "none" && !body.classList.contains("unclicable")) {
+    if (event.key === "Escape" && modal.classList.contains("show-modal") && !body.classList.contains("unclicable")) {
         closeModal();
     }
 });
@@ -573,7 +569,7 @@ modalImage.addEventListener("touchend", () => {
 });
 
 window.addEventListener("resize", () => {
-    if (modalState.getPropertyValue("display") !== "none") {
+    if (modal.classList.contains("show-modal")) {
         if (modalImage.classList.contains("fit-content")) {
             isRotating = true;
 
@@ -587,7 +583,7 @@ window.addEventListener("resize", () => {
 });
 
 const modalObserver = new ResizeObserver(() => {
-    if (modalState.getPropertyValue("display") !== "none") {
+    if (modal.classList.contains("show-modal")) {
         if (!modalImage.classList.contains("fit-content")) {
             requestAnimationFrame(() => {
                 resetModal();
@@ -606,13 +602,13 @@ zoomIn.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "-" && modalState.getPropertyValue("display") !== "none") {
+    if (event.key === "-" && modal.classList.contains("show-modal")) {
         zoomModalOut();
     }
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "=" && modalState.getPropertyValue("display") !== "none") {
+    if (event.key === "=" && modal.classList.contains("show-modal")) {
         zoomModalIn();
     }
 });
@@ -734,7 +730,7 @@ function setFocus(element) {
 };
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Tab" && modalState.getPropertyValue("display") !== "none") {
+    if (event.key === "Tab" && modal.classList.contains("show-modal")) {
         if (zoomIn.classList.contains("disable-zoom")) {
             if (modalImage === document.activeElement) {
                 if (event.shiftKey) {

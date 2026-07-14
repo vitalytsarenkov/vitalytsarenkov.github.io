@@ -529,7 +529,7 @@ li {
     width: 100vw;
     height: 100%;
 
-    display: none;
+    display: flex;
     flex-direction: column;
 
     position: fixed;
@@ -538,11 +538,16 @@ li {
     z-index: 10000;
 
     opacity: 0;
-    transition: opacity var(--modal-transition);
+    visibility: hidden;
+    pointer-events: none;
+
+    transition: opacity var(--modal-transition), visibility var(--modal-transition);
 }
 
 .show-modal {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .modal-buttons {
@@ -609,6 +614,8 @@ li {
     margin: auto;
 
     opacity: 0;
+
+    transition: opacity var(--modal-transition);
 }
 
 .modal-image:not(.full-opacity) {
