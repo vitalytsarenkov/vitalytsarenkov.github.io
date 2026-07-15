@@ -574,19 +574,19 @@ modalImage.addEventListener("touchend", () => {
 const modalObserver = new ResizeObserver((_) => {
     if (!modal.classList.contains("show-modal")) return;
 
+    isRotating = true;
+
     requestAnimationFrame(() => {
         if (modalImage.classList.contains("fit-content")) {
-            isRotating = true;
-
             updateModal();
-
-            requestAnimationFrame(() => {
-                isRotating = false;
-            });
         } else {
             resetModal();
             updateModal();
         }
+
+        requestAnimationFrame(() => {
+            isRotating = false;
+        });
     });
 });
 
