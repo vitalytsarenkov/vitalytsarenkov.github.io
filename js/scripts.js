@@ -650,6 +650,23 @@ function doubleTap() {
 
 doubleTap();
 
+// Srcset reload on orientation change
+
+const adaptiveImagesObserver = new ResizeObserver((entries) => {
+    for (let entry of entries) {
+        const img = entry.target;
+
+        requestAnimationFrame(() => {
+            const currentSrcset = img.getAttribute("srcset");
+            img.setAttribute("srcset", currentSrcset);
+        });
+    }
+});
+
+document.querySelectorAll("img[srcset]").forEach(img => {
+    adaptiveImagesObserver.observe(img);
+});
+
 // Iframes lazy-loading
 
 const iframes = body.getElementsByTagName("iframe");
