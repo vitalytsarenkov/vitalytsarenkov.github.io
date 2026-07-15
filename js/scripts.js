@@ -571,7 +571,7 @@ modalImage.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
-const modalObserver = new ResizeObserver((entries) => {
+const modalObserver = new ResizeObserver((_) => {
     if (!modal.classList.contains("show-modal")) return;
 
     requestAnimationFrame(() => {
@@ -655,8 +655,13 @@ doubleTap();
 const adaptiveImagesObserver = new ResizeObserver((entries) => {
     for (let entry of entries) {
         const img = entry.target;
+        const realWidth = entry.contentRect.width;
+
+        if (realWidth <= 0) continue;
 
         requestAnimationFrame(() => {
+            img.setAttribute("sizes", Math.round(realWidth) + "px");
+
             const currentSrcset = img.getAttribute("srcset");
             img.setAttribute("srcset", currentSrcset);
         });
