@@ -571,8 +571,10 @@ modalImage.addEventListener("touchend", () => {
     getScrollPosition();
 });
 
-window.addEventListener("resize", () => {
-    if (modal.classList.contains("show-modal")) {
+const modalObserver = new ResizeObserver((entries) => {
+    if (!modal.classList.contains("show-modal")) return;
+
+    requestAnimationFrame(() => {
         if (modalImage.classList.contains("fit-content")) {
             isRotating = true;
 
@@ -581,19 +583,11 @@ window.addEventListener("resize", () => {
             requestAnimationFrame(() => {
                 isRotating = false;
             });
+        } else {
+            resetModal();
+            updateModal();
         }
-    }
-});
-
-const modalObserver = new ResizeObserver(() => {
-    if (modal.classList.contains("show-modal")) {
-        if (!modalImage.classList.contains("fit-content")) {
-            requestAnimationFrame(() => {
-                resetModal();
-                updateModal();
-            });
-        }
-    }
+    });
 });
 
 zoomOut.addEventListener("click", () => {

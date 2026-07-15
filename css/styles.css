@@ -2,10 +2,10 @@
     --header-height: 2.5rem;
     --nav-width: 120px;
 
-    --menu-transition: 0.25s;
-    --mode-transition: 0.25s;
-    --page-transition: 0.5s;
-    --modal-transition: 0.25s;
+    --menu-transition: 0.2s;
+    --mode-transition: 0.2s;
+    --page-transition: 0.4s;
+    --modal-transition: 0.2s;
 }
 
 [data-theme="light"] {
