@@ -768,7 +768,7 @@ topScrollButton?.addEventListener("click", (event) => {
         preventScroll: true
     });
 
-    if (event.pointerType !== "mouse") {
+    if (event.pointerType === "mouse") {
         logo.blur();
     }
 });
