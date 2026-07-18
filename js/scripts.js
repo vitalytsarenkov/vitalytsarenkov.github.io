@@ -102,8 +102,8 @@ function setAriaLabel() {
 setAriaLabel();
 
 modeToggle.addEventListener("click", () => {
-    let newMode = currentMode === "dark" ? "light" : "dark",
-        newAriaLabel = newMode === "dark" ? "Change to light mode" : "Change to dark mode";
+    let newMode = currentMode === "dark" ? "light" : "dark";
+    let newAriaLabel = newMode === "dark" ? "Change to light mode" : "Change to dark mode";
 
     modeToggle.setAttribute("aria-label", newAriaLabel);
     html.setAttribute("data-theme", newMode);
@@ -135,13 +135,13 @@ function carousel(carousel) {
     const left = carousel.querySelector(".left");
     const right = carousel.querySelector(".right");
 
-    let counter = 0,
-        amount = contents.length,
-        currentTitle = titles[0],
-        currentContent = contents[0],
-        currentPosition = positions[0],
-        currentCaption = captions[0],
-        currentLink = links[0];
+    let counter = 0;
+    let amount = contents.length;
+    let currentTitle = titles[0];
+    let currentContent = contents[0];
+    let currentPosition = positions[0];
+    let currentCaption = captions[0];
+    let currentLink = links[0];
 
     function navigate(direction) {
         currentTitle.classList.remove("shown");
@@ -208,9 +208,9 @@ function carousel(carousel) {
 
     navigate(0);
 
-    let swipeDistance,
-        swipeStart,
-        swipeEnd;
+    let swipeDistance;
+    let swipeStart;
+    let swipeEnd;
 
     carouselContent.addEventListener("pointerdown", (event) => {
         swipeStart = event.clientX;
@@ -244,8 +244,6 @@ const modalImageContainer = body.querySelector(".modal-image-container");
 const modalClose = body.querySelector(".modal-close");
 const modalImage = body.querySelector(".modal-image");
 
-let modalState = getComputedStyle(modal);
-
 const modalTransition = getComputedStyle(html).getPropertyValue("--modal-transition");
 const modalTransitionMs = parseFloat(modalTransition) * 1000;
 
@@ -254,9 +252,9 @@ const modalTransitionMs = parseFloat(modalTransition) * 1000;
 const modalLoading = body.querySelector(".modal-loading");
 const loadingDots = body.querySelector(".loading-dots");
 
-let dots = "",
-    dotCounter = 0,
-    loadingIntervalId = null;
+let dots = "";
+let dotCounter = 0;
+let loadingIntervalId = null;
 
 function loadingModal() {
     loadingDots.innerHTML = dots;
@@ -450,7 +448,6 @@ function panModal() {
         );
         if (modalImage.classList.contains("fit-content")) {
             modalImage.classList.add("grabbing");
-            tapCounter = 0;
         }
     };
 
@@ -474,10 +471,10 @@ if (window.matchMedia("(pointer: fine)").matches) {
 const zoomOut = body.querySelector(".zoom-out");
 const zoomIn = body.querySelector(".zoom-in");
 
-let originalWidth,
-    originalHeight,
-    modalScrollLeft,
-    modalScrollTop;
+let originalWidth;
+let originalHeight;
+let modalScrollLeft;
+let modalScrollTop;
 
 function getModal() {
     originalWidth = modalImage.width;
@@ -762,13 +759,18 @@ skipNavigation.addEventListener("click", () => {
     document.getElementById("skip")?.focus();
 });
 
-topScrollButton?.addEventListener("click", () => {
+topScrollButton?.addEventListener("click", (event) => {
     window.scrollTo({
         top: 0
     });
+
     logo.focus({
         preventScroll: true
     });
+
+    if (event.pointerType !== "mouse") {
+        logo.blur();
+    }
 });
 
 // Focus trap
