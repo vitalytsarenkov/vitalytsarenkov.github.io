@@ -274,6 +274,10 @@ function loadingModal() {
 
 let activeElement;
 
+function checkPortrait() {
+    return (window.innerWidth / window.innerHeight) <= 1;
+}
+
 function openModal(image, eventType) {
     image.addEventListener(eventType, (event) => {
         if (!modal.classList.contains("show-modal")) {
@@ -339,7 +343,16 @@ function imageLoaded() {
     modalImageContainer.classList.remove("show-loading");
 
     modalImage.classList.add("full-opacity");
-    modalImage.focus();
+
+    if (!modalImage.classList.contains("fit-size")) {
+        modalImageContainer.focus();
+    } else {
+        modalClose.focus();
+    }
+
+    if (!checkPortrait() && !modalImage.classList.contains("fit-size")) {
+        zoomModalOut();
+    }
 };
 
 function closeModal() {
@@ -373,6 +386,9 @@ function clearModal() {
 
     modalImageContainer.classList.remove("show-loading");
 
+    modalScrollLeft = 0;
+    modalScrollTop = 0;
+
     modalImage.removeEventListener("load", imageLoaded);
     modalImage.src = "";
     modalImage.removeAttribute("alt");
@@ -401,6 +417,8 @@ document.addEventListener("keydown", (event) => {
 
 // Pan modal images
 
+let isDragging = false;
+
 function panModal() {
     const startPoint = {
         x: 0,
@@ -409,14 +427,23 @@ function panModal() {
     let panning = false;
 
     const panStart = (event) => {
-        event.preventDefault();
+        if (modalImage.classList.contains("fit-size")) return;
+
+        if (event.pointerType === "mouse" && modalImage.classList.contains("fit-content")) {
+            event.preventDefault();
+        }
+
         panning = true;
+        isDragging = false;
         startPoint.x = modalImageContainer.scrollLeft + event.clientX;
         startPoint.y = modalImageContainer.scrollTop + event.clientY;
     };
 
     const panMove = (event) => {
         if (!panning) return;
+
+        isDragging = true;
+
         modalImageContainer.scrollTo(
             startPoint.x - event.clientX,
             startPoint.y - event.clientY
@@ -481,6 +508,7 @@ function resetModal() {
     modalImage.classList.remove("fit-width");
     modalImage.classList.remove("fit-height");
     modalImage.classList.remove("fit-content");
+    modalImage.classList.remove("grabbing");
 };
 
 function zoomModalOut() {
@@ -488,17 +516,15 @@ function zoomModalOut() {
 
     const modalProportion = originalWidth / originalHeight;
     const windowProportion = window.innerWidth / window.innerHeight;
-    const portrait = windowProportion < 1 ? "true" : "false";
+    const isPortrait = checkPortrait();
 
-    if (portrait === "true") {
+    if (isPortrait) {
         if (modalProportion > windowProportion) {
             modalImage.classList.add("fit-width");
         } else {
             modalImage.classList.add("fit-height");
         }
-    }
-
-    if (portrait === "false") {
+    } else {
         if (modalProportion < windowProportion) {
             modalImage.classList.add("fit-height");
         } else {
@@ -509,7 +535,10 @@ function zoomModalOut() {
     modalImage.classList.remove("fit-content");
 
     disableZoom();
-    modalClose.focus();
+
+    if (isPortrait) {
+        zoomIn.focus();
+    }
 };
 
 function zoomModalIn() {
@@ -522,16 +551,33 @@ function zoomModalIn() {
     modalImage.focus();
 };
 
+function toggleZoom() {
+    modalImage.classList.contains("fit-content") ? zoomModalOut() : zoomModalIn();
+}
+
 function disableZoom() {
     if (modalImage.classList.contains("fit-size")) {
         zoomOut.classList.add("disable-zoom");
         zoomIn.classList.add("disable-zoom");
+
+        zoomOut.disabled = true;
+        zoomIn.disabled = true;
+
     } else if (modalImage.classList.contains("fit-content")) {
         zoomOut.classList.remove("disable-zoom");
         zoomIn.classList.add("disable-zoom");
+
+        zoomOut.disabled = false;
+        zoomIn.disabled = true;
+
+        modalImageContainer.focus();
+
     } else {
         zoomOut.classList.add("disable-zoom");
         zoomIn.classList.remove("disable-zoom");
+
+        zoomOut.disabled = true;
+        zoomIn.disabled = false;
     }
 };
 
@@ -545,7 +591,7 @@ function getScrollPosition() {
         modalScrollLeft = maxScrollLeft > 0 ? (modalImageContainer.scrollLeft / maxScrollLeft) : 0;
         modalScrollTop = maxScrollTop > 0 ? (modalImageContainer.scrollTop / maxScrollTop) : 0;
     }
-}
+};
 
 function resetScrollPosition() {
     const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
@@ -561,15 +607,7 @@ function resetScrollPosition() {
         left: targetLeft,
         top: targetTop
     });
-}
-
-modalImage.addEventListener("click", () => {
-    getScrollPosition();
-});
-
-modalImage.addEventListener("touchend", () => {
-    getScrollPosition();
-});
+};
 
 const modalObserver = new ResizeObserver((_) => {
     if (!modal.classList.contains("show-modal")) return;
@@ -599,56 +637,62 @@ zoomIn.addEventListener("click", () => {
 });
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "-" && modal.classList.contains("show-modal")) {
-        zoomModalOut();
+    if (!modal.classList.contains("show-modal") || body.classList.contains("unclicable")) return;
+    if (modalImage.classList.contains("fit-size")) return;
+
+    if (event.key === " " && document.activeElement === modalImageContainer) {
+        event.preventDefault();
+    }
+
+    if (!checkPortrait()) {
+        if (document.activeElement === modalImageContainer) {
+            if (event.key === "Enter" || event.key === " ") {
+                toggleZoom();
+                return;
+            }
+        }
+    } else {
+        if (event.key === "-") {
+            zoomModalOut();
+        }
+        if (event.key === "=") {
+            zoomModalIn();
+        }
     }
 });
 
-document.addEventListener("keydown", (event) => {
-    if (event.key === "=" && modal.classList.contains("show-modal")) {
-        zoomModalIn();
-    }
-});
-
+let lastMouseClickTime = 0;
 let tapCounter = 0;
+let tapTimeoutId = null;
 
-function doubleTap() {
-    let tapDistanceX,
-        tapDistanceY,
-        tapStartX,
-        tapStartY,
-        tapEndX,
-        tapEndY;
+modalImage.addEventListener("pointerup", (event) => {
+    if (modalImage.classList.contains("fit-size")) return;
 
-    modalImage.addEventListener("pointerdown", (event) => {
+    getScrollPosition();
+
+    if (event.pointerType === "mouse") {
+        if (!isDragging) {
+            if (event.timeStamp - lastMouseClickTime < 300) {
+                lastMouseClickTime = event.timeStamp;
+                return;
+            }
+
+            lastMouseClickTime = event.timeStamp;
+            toggleZoom();
+        }
+    } else {
         tapCounter++;
 
         if (tapCounter === 1) {
-            tapStartX = event.clientX;
-            tapStartY = event.clientY;
-        }
-
-        if (tapCounter === 2) {
-            tapEndX = event.clientX;
-            tapEndY = event.clientY;
-            tapDistanceX = Math.abs(tapStartX - tapEndX);
-            tapDistanceY = Math.abs(tapStartY - tapEndY);
-        }
-
-        setTimeout(() => {
-            if (tapCounter === 2 && tapDistanceX < 20 && tapDistanceY < 20) {
-                if (modalImage.classList.contains("fit-content")) {
-                    zoomModalOut();
-                } else {
-                    zoomModalIn();
-                }
-            }
+            clearTimeout(tapTimeoutId);
+            tapTimeoutId = setTimeout(() => tapCounter = 0, 300);
+        } else if (tapCounter === 2) {
+            clearTimeout(tapTimeoutId);
             tapCounter = 0;
-        }, 333);
-    });
-};
-
-doubleTap();
+            toggleZoom();
+        }
+    }
+});
 
 // Srcset reload on orientation change
 
@@ -701,19 +745,11 @@ for (let i = 0; i < iframes.length; i++) {
 // Top scroll button visibility control
 
 function checkScroll() {
-    const pageHeight = Math.max(
-        document.body.scrollHeight,
-        document.documentElement.scrollHeight
-    );
+    const hasScroll = document.documentElement.scrollHeight > window.innerHeight;
+    document.body.classList.toggle("has-scroll", hasScroll);
+}
 
-    if (pageHeight > window.innerHeight) {
-        document.body.classList.add("has-scroll");
-    } else {
-        document.body.classList.remove("has-scroll");
-    }
-};
-
-window.addEventListener("DOMContentLoaded", checkScroll);
+checkScroll();
 window.addEventListener("resize", checkScroll);
 
 // Accessibility
@@ -723,59 +759,58 @@ const skipNavigation = body.querySelector(".skip-navigation");
 const topScrollButton = body.querySelector(".top-scroll-button");
 
 skipNavigation.addEventListener("click", () => {
-    const skip = document.getElementById("skip");
-    skipNavigation.blur();
-    skip.focus();
+    document.getElementById("skip")?.focus();
 });
 
-if (topScrollButton) {
-    topScrollButton.addEventListener("click", () => {
-        html.scrollTop = 0;
-        logo.focus({
-            preventScroll: true
-        });
-        logo.blur();
+topScrollButton?.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0
     });
-}
-
-logo.addEventListener("pointerdown", (event) => {
-    event.preventDefault();
-    logo.blur();
+    logo.focus({
+        preventScroll: true
+    });
 });
 
-function setFocus(element) {
-    event.preventDefault();
-    element.focus();
-};
+// Focus trap
 
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Tab" && modal.classList.contains("show-modal")) {
-        if (zoomIn.classList.contains("disable-zoom")) {
-            if (modalImage === document.activeElement) {
-                if (event.shiftKey) {
-                    setFocus(modalClose);
-                } else {
-                    setFocus(zoomOut);
-                }
-            } else if (zoomOut === document.activeElement) {
-                if (event.shiftKey) {
-                    setFocus(modalImage);
-                } else {
-                    setFocus(modalClose);
-                }
-            } else if (modalClose === document.activeElement) {
-                if (event.shiftKey) {
-                    setFocus(zoomOut);
-                } else {
-                    setFocus(modalImage);
-                }
-            }
-        } else if (zoomOut.classList.contains("disable-zoom")) {
-            if (zoomIn === document.activeElement) {
-                setFocus(modalClose);
-            } else if (modalClose === document.activeElement && event.shiftKey) {
-                setFocus(zoomIn);
-            }
+    if (event.key !== "Tab" || !modal.classList.contains("show-modal")) return;
+
+    const isPortrait = checkPortrait();
+    const hasZoom = modalImage.classList.contains("fit-content");
+    const isSmall = modalImage.classList.contains("fit-size");
+
+    const firstElement = modalClose;
+    let lastElement = modalImageContainer;
+
+    if (isSmall) {
+        lastElement = modalClose;
+    } else if (isPortrait && !hasZoom) {
+        lastElement = zoomIn;
+    }
+
+    const active = document.activeElement;
+    const validElements = [modalClose, zoomOut, zoomIn, modalImageContainer];
+
+    if (
+        !validElements.includes(active) ||
+        (isSmall && active === modalImageContainer) ||
+        (isPortrait && !hasZoom && active === modalImageContainer)
+    ) {
+        event.preventDefault();
+        firstElement.focus();
+        return;
+    }
+
+    if (event.shiftKey) {
+        if (active === firstElement) {
+            event.preventDefault();
+            lastElement.focus();
+        }
+    } else {
+        if (active === lastElement) {
+            event.preventDefault();
+            firstElement.focus();
         }
     }
 });

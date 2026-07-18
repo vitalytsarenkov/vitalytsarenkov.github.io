@@ -42,10 +42,6 @@
     outline: none;
 }
 
-*:focus-visible {
-    outline: auto;
-}
-
 sup,
 .logo,
 .menu-close,
@@ -596,6 +592,11 @@ li {
     overflow: auto;
 }
 
+.modal-image-container:focus {
+    outline: 3px solid auto !important;
+    outline-offset: -3px !important;
+}
+
 .modal-image-container.show-loading {
     pointer-events: none;
 }
@@ -624,6 +625,8 @@ body.unclicable .modal-image-container {
 .modal-image {
     margin: auto;
 
+    object-fit: contain;
+
     opacity: 0;
 
     transition: opacity var(--modal-transition);
@@ -640,6 +643,10 @@ body.unclicable .modal-image-container {
     cursor: grab;
 }
 
+.grabbing {
+    cursor: grabbing;
+}
+
 .fit-width {
     width: 100%;
     height: auto;
@@ -652,11 +659,11 @@ body.unclicable .modal-image-container {
 
 .fit-width,
 .fit-height {
-    cursor: default;
+    cursor: zoom-in;
 }
 
-.grabbing {
-    cursor: grabbing;
+.fit-size {
+    cursor: default;
 }
 
 /* Page transition */
@@ -921,16 +928,11 @@ body.unclicable .modal-image-container {
     .modal-buttons {
         border-bottom: none;
 
-        padding: 0;
+        padding: 0.25rem;
 
         position: fixed;
         top: 0;
         z-index: 100;
-    }
-
-    .modal-close {
-        width: 2.5rem;
-        height: 2.5rem;
     }
 
     .modal-zoom-buttons {
