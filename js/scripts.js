@@ -715,29 +715,25 @@ document.querySelectorAll("img[srcset]").forEach(img => {
 
 // Iframes lazy-loading
 
-const iframes = body.getElementsByTagName("iframe");
+const iframes = body.querySelectorAll("iframe[data-src]");
 
 const handleIntersect = (entries, observer) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
             const iframe = entry.target;
             iframe.src = iframe.dataset.src;
-            iframeObserver.unobserve(iframe);
+            observer.unobserve(iframe);
         }
     });
 };
 
-const options = {
+const iframeObserver = new IntersectionObserver(handleIntersect, {
     root: null,
     rootMargin: "0px",
     threshold: 0
-};
+});
 
-const iframeObserver = new IntersectionObserver(handleIntersect, options);
-
-for (let i = 0; i < iframes.length; i++) {
-    iframeObserver.observe(iframes[i]);
-};
+iframes.forEach(iframe => iframeObserver.observe(iframe));
 
 // Top scroll button visibility control
 
