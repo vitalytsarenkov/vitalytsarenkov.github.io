@@ -509,6 +509,8 @@ function resetModal() {
 };
 
 function zoomModalOut() {
+    modalImageContainer.scrollTo(modalImageContainer.scrollLeft, modalImageContainer.scrollTop);
+
     getScrollPosition();
 
     const modalProportion = originalWidth / originalHeight;
