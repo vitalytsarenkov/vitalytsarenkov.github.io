@@ -509,8 +509,6 @@ function resetModal() {
 };
 
 function zoomModalOut() {
-    modalImageContainer.scrollTo(modalImageContainer.scrollLeft, modalImageContainer.scrollTop);
-
     getScrollPosition();
 
     const modalProportion = originalWidth / originalHeight;
@@ -534,6 +532,8 @@ function zoomModalOut() {
     modalImage.classList.remove("fit-content");
 
     disableZoom();
+
+    modalImageContainer.scrollTo(0, 0);
 
     if (isPortrait) {
         zoomIn.focus();
