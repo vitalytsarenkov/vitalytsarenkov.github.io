@@ -789,26 +789,21 @@ document.addEventListener("keydown", (event) => {
         lastElement = zoomIn;
     }
 
-    const active = document.activeElement;
-    const validElements = [modalClose, zoomOut, zoomIn, modalImageContainer];
+    const activeElement = document.activeElement;
 
-    if (
-        !validElements.includes(active) ||
-        (isSmall && active === modalImageContainer) ||
-        (isPortrait && !hasZoom && active === modalImageContainer)
-    ) {
+    if (isSmall || (activeElement !== modalClose && activeElement !== zoomOut && activeElement !== zoomIn && activeElement !== lastElement)) {
         event.preventDefault();
         firstElement.focus();
         return;
     }
 
     if (event.shiftKey) {
-        if (active === firstElement) {
+        if (activeElement === firstElement) {
             event.preventDefault();
             lastElement.focus();
         }
     } else {
-        if (active === lastElement) {
+        if (activeElement === lastElement) {
             event.preventDefault();
             firstElement.focus();
         }
