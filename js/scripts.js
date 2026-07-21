@@ -35,7 +35,7 @@ function initModeToggle() {
         } else {
             modeToggle.setAttribute("aria-label", "Change to dark mode");
         }
-    };
+    }
 
     setAriaLabel();
 
@@ -57,7 +57,6 @@ function initModeToggle() {
             body.classList.remove("unclicable");
         }, modeTransitionMs);
     });
-
 }
 
 initModeToggle();
@@ -123,7 +122,6 @@ function initSidebar() {
             body.classList.remove("unclicable");
         }, menuTransitionMs);
     });
-
 }
 
 initSidebar();
@@ -169,12 +167,10 @@ function initCarousels() {
 
             counter = counter + direction;
 
-            if (direction === -1 &&
-                counter < 0) {
+            if (direction === -1 && counter < 0) {
                 counter = amount - 1;
             }
-            if (direction === 1 &&
-                !contents[counter]) {
+            if (direction === 1 && !contents[counter]) {
                 counter = 0;
             }
 
@@ -207,7 +203,7 @@ function initCarousels() {
             if (carousel.classList.contains("skip")) {
                 skips[counter].setAttribute("id", "skip");
             }
-        };
+        }
 
         left.addEventListener("click", () => {
             navigate(-1);
@@ -238,7 +234,7 @@ function initCarousels() {
                 }
             }
         });
-    };
+    }
 
     carousels.forEach(setupCarousel);
 }
@@ -281,21 +277,23 @@ function initModal() {
             dots = "";
             dotCounter = 0;
         }
-    };
+    }
 
     // Open and close modal images
 
     let openedImage;
 
     function checkPortrait() {
-        return (window.innerWidth / window.innerHeight) <= 1;
+        return window.innerWidth / window.innerHeight <= 1;
     }
 
     function openModal(image, eventType) {
         image.addEventListener(eventType, (event) => {
             if (!modal.classList.contains("show-modal")) {
-                if (eventType === "click" || (eventType === "keydown" && (event.key === "Enter" || event.key === " "))) {
-
+                if (
+                    eventType === "click" ||
+                    (eventType === "keydown" && (event.key === "Enter" || event.key === " "))
+                ) {
                     event.preventDefault();
                     openedImage = image;
 
@@ -327,7 +325,7 @@ function initModal() {
 
                             modalImageContainer.classList.add("show-loading");
                         }
-                    };
+                    }
 
                     setModal();
 
@@ -339,7 +337,7 @@ function initModal() {
                 }
             }
         });
-    };
+    }
 
     function imageLoaded() {
         clearInterval(loadingIntervalId);
@@ -366,7 +364,7 @@ function initModal() {
         if (!checkPortrait() && !modalImage.classList.contains("fit-size")) {
             zoomModalOut();
         }
-    };
+    }
 
     function closeModal() {
         if (body.classList.contains("unclicable")) return;
@@ -391,7 +389,7 @@ function initModal() {
             resetModal();
             body.classList.remove("unclicable");
         }, modalTransitionMs);
-    };
+    }
 
     function clearModal() {
         zoomOut.classList.add("disable-zoom");
@@ -406,24 +404,30 @@ function initModal() {
         modalImage.src = "";
         modalImage.removeAttribute("alt");
         modalImage.removeAttribute("width");
-    };
+    }
 
     function centerModal() {
-        modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
-        modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
+        modalImageContainer.scrollLeft =
+            (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
+        modalImageContainer.scrollTop =
+            (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
     }
 
     for (let i = 0; i < images.length; i++) {
         openModal(images[i], "click");
         openModal(images[i], "keydown");
-    };
+    }
 
     modalClose.addEventListener("click", () => {
         closeModal();
     });
 
     document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && modal.classList.contains("show-modal") && !body.classList.contains("unclicable")) {
+        if (
+            event.key === "Escape" &&
+            modal.classList.contains("show-modal") &&
+            !body.classList.contains("unclicable")
+        ) {
             closeModal();
         }
     });
@@ -457,10 +461,7 @@ function initModal() {
 
             isDragging = true;
 
-            modalImageContainer.scrollTo(
-                startPoint.x - event.clientX,
-                startPoint.y - event.clientY
-            );
+            modalImageContainer.scrollTo(startPoint.x - event.clientX, startPoint.y - event.clientY);
             if (modalImage.classList.contains("fit-content")) {
                 modalImage.classList.add("grabbing");
             }
@@ -475,11 +476,11 @@ function initModal() {
         modalImage.addEventListener("pointerdown", panStart);
         addEventListener("pointermove", panMove);
         addEventListener("pointerup", panEnd);
-    };
+    }
 
     if (window.matchMedia("(pointer: fine)").matches) {
         panModal();
-    };
+    }
 
     // Zoom modal images
 
@@ -494,12 +495,15 @@ function initModal() {
     function getModal() {
         originalWidth = modalImage.width;
         originalHeight = modalImage.height;
-    };
+    }
 
     function updateModal() {
         if (originalWidth < window.innerWidth && originalHeight < window.innerHeight) {
             modalImage.classList.add("fit-size");
-        } else if (originalWidth === window.innerWidth && originalHeight < window.innerHeight || originalWidth < window.innerWidth && originalHeight === window.innerHeight) {
+        } else if (
+            (originalWidth === window.innerWidth && originalHeight < window.innerHeight) ||
+            (originalWidth < window.innerWidth && originalHeight === window.innerHeight)
+        ) {
             modalImage.classList.add("fit-size");
         } else {
             modalImage.classList.remove("fit-size");
@@ -513,7 +517,7 @@ function initModal() {
             zoomModalOut();
         }
         disableZoom();
-    };
+    }
 
     function resetModal() {
         modalImage.classList.remove("fit-size");
@@ -521,7 +525,7 @@ function initModal() {
         modalImage.classList.remove("fit-height");
         modalImage.classList.remove("fit-content");
         modalImage.classList.remove("grabbing");
-    };
+    }
 
     function zoomModalOut() {
         getScrollPosition();
@@ -553,7 +557,7 @@ function initModal() {
         if (isPortrait) {
             zoomIn.focus();
         }
-    };
+    }
 
     function zoomModalIn() {
         getScrollPosition();
@@ -563,7 +567,7 @@ function initModal() {
         resetScrollPosition();
         disableZoom();
         modalImage.focus();
-    };
+    }
 
     function toggleZoom() {
         modalImage.classList.contains("fit-content") ? zoomModalOut() : zoomModalIn();
@@ -576,7 +580,6 @@ function initModal() {
 
             zoomOut.disabled = true;
             zoomIn.disabled = true;
-
         } else if (modalImage.classList.contains("fit-content")) {
             zoomOut.classList.remove("disable-zoom");
             zoomIn.classList.add("disable-zoom");
@@ -585,7 +588,6 @@ function initModal() {
             zoomIn.disabled = true;
 
             modalImageContainer.focus();
-
         } else {
             zoomOut.classList.add("disable-zoom");
             zoomIn.classList.remove("disable-zoom");
@@ -593,7 +595,7 @@ function initModal() {
             zoomOut.disabled = true;
             zoomIn.disabled = false;
         }
-    };
+    }
 
     function getScrollPosition() {
         if (isRotating) return;
@@ -602,10 +604,10 @@ function initModal() {
             const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
             const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-            modalScrollLeft = maxScrollLeft > 0 ? (modalImageContainer.scrollLeft / maxScrollLeft) : 0;
-            modalScrollTop = maxScrollTop > 0 ? (modalImageContainer.scrollTop / maxScrollTop) : 0;
+            modalScrollLeft = maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
+            modalScrollTop = maxScrollTop > 0 ? modalImageContainer.scrollTop / maxScrollTop : 0;
         }
-    };
+    }
 
     function resetScrollPosition() {
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
@@ -621,7 +623,7 @@ function initModal() {
             left: targetLeft,
             top: targetTop
         });
-    };
+    }
 
     const modalObserver = new ResizeObserver((_) => {
         if (!modal.classList.contains("show-modal")) return;
@@ -699,7 +701,7 @@ function initModal() {
 
             if (tapCounter === 1) {
                 clearTimeout(tapTimeoutId);
-                tapTimeoutId = setTimeout(() => tapCounter = 0, 300);
+                tapTimeoutId = setTimeout(() => (tapCounter = 0), 300);
             } else if (tapCounter === 2) {
                 clearTimeout(tapTimeoutId);
                 tapCounter = 0;
@@ -728,7 +730,13 @@ function initModal() {
 
         const activeElement = document.activeElement;
 
-        if (isSmall || (activeElement !== modalClose && activeElement !== zoomOut && activeElement !== zoomIn && activeElement !== lastElement)) {
+        if (
+            isSmall ||
+            (activeElement !== modalClose &&
+                activeElement !== zoomOut &&
+                activeElement !== zoomIn &&
+                activeElement !== lastElement)
+        ) {
             event.preventDefault();
             firstElement.focus();
             return;
@@ -746,7 +754,7 @@ function initModal() {
             }
         }
     });
-};
+}
 
 initModal();
 
@@ -773,7 +781,7 @@ function initAdaptiveImages() {
         }
     });
 
-    adaptiveImages.forEach(img => adaptiveImagesObserver.observe(img));
+    adaptiveImages.forEach((img) => adaptiveImagesObserver.observe(img));
 }
 
 initAdaptiveImages();
@@ -801,7 +809,7 @@ function initLazyIframes() {
         threshold: 0
     });
 
-    iframes.forEach(iframe => iframeObserver.observe(iframe));
+    iframes.forEach((iframe) => iframeObserver.observe(iframe));
 }
 
 initLazyIframes();
@@ -816,7 +824,7 @@ function initSkipNavigation() {
     skipNavigation.addEventListener("click", () => {
         document.getElementById("skip")?.focus();
     });
-};
+}
 
 initSkipNavigation();
 
@@ -850,6 +858,6 @@ function initScrollTopButton() {
             logo?.blur();
         }
     });
-};
+}
 
 initScrollTopButton();
