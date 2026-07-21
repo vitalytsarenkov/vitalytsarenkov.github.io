@@ -140,34 +140,6 @@
         </script>
     </div>
 
-    <div class="modal" aria-label="View image" aria-modal="true" role="dialog">
-        <div class="modal-buttons">
-            <button class="modal-close" aria-label="Close image">
-                <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                    <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                </svg>
-            </button>
-            <div class="modal-zoom-buttons">
-                <button class="zoom-out" aria-label="Zoom out">
-                    <svg class="icon" aria-label="Minus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h10v1h-10z" />
-                    </svg>
-                </button>
-                <button class="zoom-in" aria-label="Zoom in">
-                    <svg class="icon" aria-label="Plus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="modal-image-container" tabindex="0">
-            <div class="modal-loading">
-                <span class="loading-text" aria-live="polite">loading</span><span class="loading-dots" aria-hidden="true"></span>
-            </div>
-            <img class="modal-image" aria-label="High resolution image">
-        </div>
-    </div>
-
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             const logo = body.querySelector(".logo");
