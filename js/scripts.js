@@ -10,7 +10,7 @@ function preventDefaultScroll(event) {
 function disableScroll(element) {
     element.classList.add('hide-scroll');
     body.addEventListener('touchmove', preventDefaultScroll, {
-        passive: false
+        passive: false,
     });
 }
 
@@ -307,7 +307,7 @@ function initModal() {
                         modalImage.classList.add('fit-content');
 
                         modalImage.addEventListener('load', imageLoaded, {
-                            once: true
+                            once: true,
                         });
 
                         modalImage.src = image.src;
@@ -374,7 +374,7 @@ function initModal() {
 
         body.classList.add('unclicable');
         openedImage.focus({
-            preventScroll: true
+            preventScroll: true,
         });
 
         html.classList.remove('hide-scroll');
@@ -439,7 +439,7 @@ function initModal() {
     function panModal() {
         const startPoint = {
             x: 0,
-            y: 0
+            y: 0,
         };
         let panning = false;
 
@@ -461,7 +461,10 @@ function initModal() {
 
             isDragging = true;
 
-            modalImageContainer.scrollTo(startPoint.x - event.clientX, startPoint.y - event.clientY);
+            modalImageContainer.scrollTo(
+                startPoint.x - event.clientX,
+                startPoint.y - event.clientY,
+            );
             if (modalImage.classList.contains('fit-content')) {
                 modalImage.classList.add('grabbing');
             }
@@ -602,9 +605,11 @@ function initModal() {
 
         if (modalImage.classList.contains('fit-content')) {
             const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
-            const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+            const maxScrollTop =
+                modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-            modalScrollLeft = maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
+            modalScrollLeft =
+                maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
             modalScrollTop = maxScrollTop > 0 ? modalImageContainer.scrollTop / maxScrollTop : 0;
         }
     }
@@ -621,7 +626,7 @@ function initModal() {
 
         modalImageContainer.scrollTo({
             left: targetLeft,
-            top: targetTop
+            top: targetTop,
         });
     }
 
@@ -653,7 +658,8 @@ function initModal() {
     });
 
     document.addEventListener('keydown', (event) => {
-        if (!modal.classList.contains('show-modal') || body.classList.contains('unclicable')) return;
+        if (!modal.classList.contains('show-modal') || body.classList.contains('unclicable'))
+            return;
         if (modalImage.classList.contains('fit-size')) return;
 
         if (event.key === ' ' && document.activeElement === modalImageContainer) {
@@ -806,7 +812,7 @@ function initLazyIframes() {
     const iframeObserver = new IntersectionObserver(handleIntersect, {
         root: null,
         rootMargin: '0px',
-        threshold: 0
+        threshold: 0,
     });
 
     iframes.forEach((iframe) => iframeObserver.observe(iframe));
@@ -847,11 +853,11 @@ function initScrollTopButton() {
 
     topScrollButton.addEventListener('click', (event) => {
         window.scrollTo({
-            top: 0
+            top: 0,
         });
 
         logo?.focus({
-            preventScroll: true
+            preventScroll: true,
         });
 
         if (event.pointerType === 'mouse') {
