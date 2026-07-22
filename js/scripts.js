@@ -407,10 +407,8 @@ function initModal() {
     }
 
     function centerModal() {
-        modalImageContainer.scrollLeft =
-            (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
-        modalImageContainer.scrollTop =
-            (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
+        modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
+        modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
     }
 
     for (let i = 0; i < images.length; i++) {
@@ -441,6 +439,7 @@ function initModal() {
             x: 0,
             y: 0,
         };
+
         let panning = false;
 
         const panStart = (event) => {
@@ -452,6 +451,7 @@ function initModal() {
 
             panning = true;
             isDragging = false;
+
             startPoint.x = modalImageContainer.scrollLeft + event.clientX;
             startPoint.y = modalImageContainer.scrollTop + event.clientY;
         };
@@ -461,10 +461,8 @@ function initModal() {
 
             isDragging = true;
 
-            modalImageContainer.scrollTo(
-                startPoint.x - event.clientX,
-                startPoint.y - event.clientY,
-            );
+            modalImageContainer.scrollTo(startPoint.x - event.clientX, startPoint.y - event.clientY);
+
             if (modalImage.classList.contains('fit-content')) {
                 modalImage.classList.add('grabbing');
             }
@@ -605,11 +603,9 @@ function initModal() {
 
         if (modalImage.classList.contains('fit-content')) {
             const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
-            const maxScrollTop =
-                modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+            const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-            modalScrollLeft =
-                maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
+            modalScrollLeft = maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
             modalScrollTop = maxScrollTop > 0 ? modalImageContainer.scrollTop / maxScrollTop : 0;
         }
     }
@@ -658,8 +654,7 @@ function initModal() {
     });
 
     document.addEventListener('keydown', (event) => {
-        if (!modal.classList.contains('show-modal') || body.classList.contains('unclicable'))
-            return;
+        if (!modal.classList.contains('show-modal') || body.classList.contains('unclicable')) return;
         if (modalImage.classList.contains('fit-size')) return;
 
         if (event.key === ' ' && document.activeElement === modalImageContainer) {
