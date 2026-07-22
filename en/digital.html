@@ -1,617 +1,1051 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" data-theme="light">
-
-<head>
-    <script>
-        function calculateMode({
-            localStorageMode,
-            systemDarkMode
-        }) {
-            if (localStorageMode !== null) {
-                return localStorageMode;
-            }
-
-            if (systemDarkMode.matches) {
-                return "dark";
-            }
-
-            return "light";
-        }
-
-        const localStorageMode = localStorage.getItem("mode");
-        const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-
-        let currentMode = calculateMode({
-            localStorageMode,
-            systemDarkMode
-        });
-
-        document.querySelector("html").setAttribute("data-theme", currentMode);
-
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-
-    <meta name="author" content="Vitaly Tsarenkov">
-    <meta name="description" content="Vitaly Tsarenkov’s digital works.">
-
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-    <title>Vitaly Tsarenkov — Digital</title>
-</head>
-
-<body>
-    <noscript>
-        <style>
-            .lazy-iframe {
-                display: none;
-            }
-
-        </style>
-    </noscript>
-
-    <div class="page">
-        <header class="header">
-            <a class="logo" aria-label="Go to the homepage" href="/">
-                <svg class="icon" aria-label="Logo icon" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5">
-                    <path fill="currentColor" d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
-                </svg>
-            </a>
-            <button class="skip-navigation">skip to main content</button>
-            <div class="menu-toggle">
-                <button class="menu-open" aria-label="Open menu">MENU</button>
-                <button class="menu-close" aria-label="Close menu">
-                    <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                    </svg>
-                </button>
-            </div>
-            <button class="mode-toggle" aria-label="">
-                <svg class="icon" aria-label="Switch icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                    <path d="m0 0h10v10h-10zm9 1h-8v8z" />
-                </svg>
-            </button>
-        </header>
-        <div class="container zero-opacity">
-            <aside class="sidebar">
-                <nav class="nav">
-                    <ul class="menu" aria-label="Main menu">
-                        <li class="section-end"><a href="/">home</a></li>
-                        <li><a href="/en/paintings.html">paintings</a></li>
-                        <li><a href="/en/murals.html">murals</a></li>
-                        <li><a href="/en/objects.html">objects</a></li>
-                        <li class="section-end current-page"><a aria-current="page">digital</a></li>
-                        <li><a href="/en/bio.html">bio</a></li>
-                        <li><a href="/en/statement.html">statement</a></li>
-                        <li><a href="/en/cv.html">cv</a></li>
-                        <li class="section-end"><a href="/en/press.html">press</a></li>
-                        <li><a href="/en/contact.html">contact</a></li>
-                    </ul>
-                </nav>
-                <footer class="social-media-icons" aria-label="Social media">
-                    <ul>
-                        <li>
-                            <a class="social-media" aria-label="Instagram (opens in a new tab)" href="https://www.instagram.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">
-                                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                    <path fill="currentColor" d="M 5,0 C 5.83,0 6.67,0.02 7.06,0.03 7.87,0.08 8.58,0.26 9.16,0.84 9.75,1.43 9.93,2.14 9.97,2.94 9.98 3.36 10,4.18 10,5 10,5.83 9.98,6.67 9.97,7.06 9.93,7.87 9.75,8.58 9.16,9.16 8.58,9.75 7.87,9.93 7.06,9.97 6.67,9.98 5.83,10 5,10 4.18,10 3.36,9.98 2.94,9.97 2.14,9.93 1.43,9.75 0.84,9.16 0.26,8.58 0.08,7.87 0.03,7.06 0.02,6.67 0,5.83 0,5 0,4.18 0.02,3.36 0.03,2.94 0.08,2.14 0.26,1.43 0.84,0.84 1.43,0.26 2.14,0.08 2.94,0.03 3.36,0.02 4.18,0 5,0 Z M 5,0.9 C 4.28,0.9 2.72,0.85 2.05,1.1 1.62,1.29 1.29,1.62 1.1,2.05 0.85,2.72 0.9,4.28 0.9,5 0.9,5.73 0.85,7.3 1.1,7.95 1.29,8.39 1.62,8.73 2.05,8.9 2.72,9.17 4.28,9.1 5,9.1 5.73,9.1 7.3,9.17 7.95,8.9 8.39,8.73 8.73,8.39 8.9,7.95 9.17,7.3 9.1,5.73 9.1,5 9.1,4.28 9.17,2.72 8.9,2.05 8.73,1.62 8.39,1.29 7.95,1.1 7.3,0.85 5.73,0.9 5,0.9 Z M 5,2.44 C 6.43,2.44 7.56,3.59 7.56,5 7.56,6.43 6.43,7.56 5,7.56 3.59,7.56 2.44,6.43 2.44,5 2.44,3.59 3.59,2.44 5,2.44 Z M 5,3.33 C 4.09,3.33 3.33,4.09 3.33,5 3.33,5.93 4.09,6.67 5,6.67 5.93,6.67 6.67,5.93 6.67,5 6.67,4.09 5.93,3.33 5,3.33 Z M 7.67,1.73 C 8,1.73 8.27,2 8.27,2.33 8.27,2.67 8,2.93 7.67,2.93 7.34,2.93 7.07,2.67 7.07,2.33 7.07,2 7.34,1.73 7.67 1.73 Z" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social-media x" aria-label="X (opens in a new tab)" href="https://x.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">
-                                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 9">
-                                    <path fill="currentColor" d="M0 0 L 3.2,0 L 5.3,2.9 L 7.9,0 L 9.4,0 L 6,3.8 L 10,9 L 6.9,9 L 4.5,5.9 L 1.7,9 L 0.2,9 L 3.8,4.9 M 1.8,0.9 L 7.3,8.1 L 8.2,8.1 L 2.7,0.9 Z" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </footer>
-            </aside>
-            <main class="main">
-                <h1>Digital</h1>
-
-                <section class="one-item has-link">
-                    <h2><cite>The Great Revelation</cite></h2>
-                    <figure class="one-item-container">
-                        <div class="one-item-box">
-                            <img id="skip" src="/img/vitaly-tsarenkov_nft_the-great-revelation.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0" fetchpriority="high">
-                        </div>
-                        <figcaption>
-                            <ul class="one-item-figcaption">
-                                <li><cite>The Great Revelation</cite></li>
-                                <li>2022</li>
-                                <li>Digital animation (GIF)</li>
-                                <li>1000 &#215; 1000 px</li>
-                            </ul>
-                            <div class="one-item-link">
-                                <a aria-label="View on OpenSea marketplace (opens in a new tab)" href="https://opensea.io/assets/ethereum/0xd693220863b8cc1b74846d67e3d32ab38a807721/98540127211770920495480833" target="_blank" rel="noopener noreferrer">View on OpenSea marketplace</a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                    <div class="one-item-description">
-                        <p>Created for <i>The NFT.NYC Diversity of Art Showcase</i> held at Times Square in New York, USA.</p>
-                    </div>
-                </section>
-
-                <svg class="plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 20,0 V 40 M 0,20 H 40" />
-                </svg>
-
-                <section class="carousel has-link no-description">
-                    <ul class="carousel-title">
-                        <li>
-                            <h2><cite>SMOLSY</cite> series</h2>
-                        </li>
-                    </ul>
-                    <figure class="carousel-container">
-                        <div class="carousel-box">
-                            <ul class="carousel-content">
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_smolsy_1.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0" loading="lazy">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_smolsy_3.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_smolsy_9.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_smolsy_11.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_smolsy_15.png" width="2400" height="2400" alt="A pixel character." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                            </ul>
-                            <div class="carousel-navigation">
-                                <button class="left" aria-label="Show previous image">
-                                    <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
-                                    </svg>
-                                </button>
-                                <ul class="carousel-position">
-                                    <li>1/5</li>
-                                    <li>2/5</li>
-                                    <li>3/5</li>
-                                    <li>4/5</li>
-                                    <li>5/5</li>
-                                </ul>
-                                <button class="right" aria-label="Show next image">
-                                    <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <figcaption>
-                            <div>
-                                <ul class="carousel-figcaption">
-                                    <li>
-                                        <ul>
-                                            <li><cite>SMOLSY #1</cite></li>
-                                            <li>2022</li>
-                                            <li>Pixel art (On-chain)</li>
-                                            <li>8 &#215; 8 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>SMOLSY #3</cite></li>
-                                            <li>2022</li>
-                                            <li>Pixel art (On-chain)</li>
-                                            <li>8 &#215; 8 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>SMOLSY #9</cite></li>
-                                            <li>2022</li>
-                                            <li>Pixel art (On-chain)</li>
-                                            <li>8 &#215; 8 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>SMOLSY #11</cite></li>
-                                            <li>2022</li>
-                                            <li>Pixel art (On-chain)</li>
-                                            <li>8 &#215; 8 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>SMOLSY #15</cite></li>
-                                            <li>2022</li>
-                                            <li>Pixel art (On-chain)</li>
-                                            <li>8 &#215; 8 px</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="carousel-link">
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17726" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17765" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17970" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/8bidou-8x8-fullcolor/18011" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/8bidou-8x8-fullcolor/18126" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <svg class="plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 20,0 V 40 M 0,20 H 40" />
-                </svg>
-
-                <section class="carousel has-link no-description">
-                    <ul class="carousel-title">
-                        <li>
-                            <h2><cite>CRAZY DREAM</cite> series</h2>
-                        </li>
-                    </ul>
-                    <figure class="carousel-container">
-                        <div class="carousel-box">
-                            <ul class="carousel-content">
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_crazy-dream-13.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0" loading="lazy">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_crazy-dream-10.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_crazy-dream-8.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_crazy-dream-7.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                                <li>
-                                    <img src="/img/vitaly-tsarenkov_nft_crazy-dream-2.gif" width="1000" height="1000" alt="A colorful animated GIF." aria-label="Show a high resolution image" role="button" tabindex="0">
-                                </li>
-                            </ul>
-                            <div class="carousel-navigation">
-                                <button class="left" aria-label="Show previous image">
-                                    <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
-                                    </svg>
-                                </button>
-                                <ul class="carousel-position">
-                                    <li>1/5</li>
-                                    <li>2/5</li>
-                                    <li>3/5</li>
-                                    <li>4/5</li>
-                                    <li>5/5</li>
-                                </ul>
-                                <button class="right" aria-label="Show next image">
-                                    <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <figcaption>
-                            <div>
-                                <ul class="carousel-figcaption">
-                                    <li>
-                                        <ul>
-                                            <li><cite>CRAZY DREAM #13</cite></li>
-                                            <li>2022</li>
-                                            <li>Digital animation (GIF)</li>
-                                            <li>1000 &#215; 1000 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>CRAZY DREAM #10</cite></li>
-                                            <li>2022</li>
-                                            <li>Digital animation (GIF)</li>
-                                            <li>1000 &#215; 1000 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>CRAZY DREAM #8</cite></li>
-                                            <li>2022</li>
-                                            <li>Digital animation (GIF)</li>
-                                            <li>1000 &#215; 1000 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>CRAZY DREAM #7</cite></li>
-                                            <li>2022</li>
-                                            <li>Digital animation (GIF)</li>
-                                            <li>1000 &#215; 1000 px</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>CRAZY DREAM #2</cite></li>
-                                            <li>2022</li>
-                                            <li>Digital animation (GIF)</li>
-                                            <li>1000 &#215; 1000 px</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="carousel-link">
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/793630" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/767116" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/739070" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/735991" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/715984" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <svg class="plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 20,0 V 40 M 0,20 H 40" />
-                </svg>
-
-                <section class="one-item has-link">
-                    <h2><cite>The Arrow of Life</cite></h2>
-                    <figure class="one-item-container">
-                        <div class="one-item-box">
-                            <video controls playsinline loop preload="none" width="1920" height="1080" poster="/mp4/vitaly-tsarenkov_nft_the-arrow-of-life.png">
-                                <source src="/mp4/vitaly-tsarenkov_nft_the-arrow-of-life.mp4" type="video/mp4" />
-                            </video>
-                        </div>
-                        <figcaption>
-                            <ul class="one-item-figcaption">
-                                <li><cite>The Arrow of Life</cite></li>
-                                <li>2022</li>
-                                <li>Digital animation (MP4)</li>
-                                <li>1920 &#215; 1080 px, 12-second loop</li>
-                            </ul>
-                            <div class="one-item-link">
-                                <a aria-label="View on OpenSea marketplace (opens in a new tab)" href="https://opensea.io/assets/ethereum/0xf4398a4d8bf5e267abda3d62c47f8ef5f43e8c34/45" target="_blank" rel="noopener noreferrer">View on OpenSea marketplace</a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <svg class="plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 20,0 V 40 M 0,20 H 40" />
-                </svg>
-
-                <section class="carousel has-link no-description">
-                    <ul class="carousel-title">
-                        <li>
-                            <h2><cite>Interactive OBJKTs</cite> series</h2>
-                        </li>
-                    </ul>
-                    <figure class="carousel-container">
-                        <div class="carousel-box">
-                            <ul class="carousel-content">
-                                <li>
-                                    <iframe class="lazy-iframe" data-src="/iframe/99397/index.html" title="Psychedelic Flower interactive NFT." tabindex="-1"></iframe>
-                                    <noscript>
-                                        <iframe src="/iframe/99397/index.html" title="Psychedelic Flower interactive NFT." tabindex="-1" loading="lazy"></iframe>
-                                    </noscript>
-                                </li>
-                                <li>
-                                    <iframe class="lazy-iframe" data-src="/iframe/112246/index.html" title="Toy Cars interactive NFT." tabindex="-1"></iframe>
-                                    <noscript>
-                                        <iframe src="/iframe/112246/index.html" title="Toy Cars interactive NFT." tabindex="-1" loading="lazy"></iframe>
-                                    </noscript>
-                                </li>
-                                <li>
-                                    <iframe class="lazy-iframe" data-src="/iframe/192504/index.html" title="Undercover Agent interactive NFT." tabindex="-1"></iframe>
-                                    <noscript>
-                                        <iframe src="/iframe/192504/index.html" title="Undercover Agent interactive NFT." tabindex="-1" loading="lazy"></iframe>
-                                    </noscript>
-                                </li>
-                                <li>
-                                    <iframe class="lazy-iframe" data-src="/iframe/224396/index.html" title="Magic Mushrooms interactive NFT." tabindex="-1"></iframe>
-                                    <noscript>
-                                        <iframe src="/iframe/224396/index.html" title="Magic Mushrooms interactive NFT." tabindex="-1" loading="lazy"></iframe>
-                                    </noscript>
-                                </li>
-                                <li>
-                                    <iframe class="lazy-iframe" data-src="/iframe/391366/index.html" title="Rabbit Hole interactive NFT." tabindex="-1"></iframe>
-                                    <noscript>
-                                        <iframe src="/iframe/391366/index.html" title="Rabbit Hole interactive NFT." tabindex="-1" loading="lazy"></iframe>
-                                    </noscript>
-                                </li>
-                            </ul>
-                            <div class="carousel-navigation">
-                                <button class="left" aria-label="Show previous image">
-                                    <svg class="icon" aria-label="Left arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
-                                    </svg>
-                                </button>
-                                <ul class="carousel-position">
-                                    <li>1/5</li>
-                                    <li>2/5</li>
-                                    <li>3/5</li>
-                                    <li>4/5</li>
-                                    <li>5/5</li>
-                                </ul>
-                                <button class="right" aria-label="Show next image">
-                                    <svg class="icon" aria-label="Right arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                        <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                        <figcaption>
-                            <div>
-                                <ul class="carousel-figcaption">
-                                    <li>
-                                        <ul>
-                                            <li><cite>Psychedelic Flower</cite></li>
-                                            <li>2021</li>
-                                            <li>Interactive work (HTML/JS)</li>
-                                            <li>Responsive</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>Toy Cars</cite></li>
-                                            <li>2021</li>
-                                            <li>Interactive work (HTML/JS)</li>
-                                            <li>Responsive</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>Undercover Agent</cite></li>
-                                            <li>2021</li>
-                                            <li>Interactive work (HTML/JS)</li>
-                                            <li>Responsive</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>Magic Mushrooms</cite></li>
-                                            <li>2021</li>
-                                            <li>Interactive work (HTML/JS)</li>
-                                            <li>Responsive</li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <ul>
-                                            <li><cite>Rabbit Hole</cite></li>
-                                            <li>2021</li>
-                                            <li>Interactive work (HTML/JS)</li>
-                                            <li>Responsive</li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                                <ul class="carousel-link">
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/99397" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/112246" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/192504" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/224396" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                    <li>
-                                        <a aria-label="View on OBJKT marketplace (opens in a new tab)" href="https://objkt.com/tokens/hicetnunc/391366" target="_blank" rel="noopener noreferrer">View on OBJKT marketplace</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <svg class="plus" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40">
-                    <path d="M 20,0 V 40 M 0,20 H 40" />
-                </svg>
-
-                <section class="one-item has-link">
-                    <h2><cite>The Infinite Metaverse</cite></h2>
-                    <figure class="one-item-container">
-                        <div class="one-item-box">
-                            <video controls playsinline loop preload="none" width="1080" height="1080" poster="/mp4/vitaly-tsarenkov_nft_the-infinite-metaverse.png">
-                                <source src="/mp4/vitaly-tsarenkov_nft_the-infinite-metaverse.mp4" type="video/mp4" />
-                            </video>
-                        </div>
-                        <figcaption>
-                            <ul class="one-item-figcaption">
-                                <li><cite>The Infinite Metaverse</cite></li>
-                                <li>2021</li>
-                                <li>Digital animation (MP4)</li>
-                                <li>1080 &#215; 1080 px, 12-second loop</li>
-                            </ul>
-                            <div class="one-item-link">
-                                <a aria-label="View on Foundation marketplace (opens in a new tab)" href="https://foundation.app/@vitalytsarenkov/foundation/28639" target="_blank" rel="noopener noreferrer">View on Foundation marketplace</a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <button class="top-scroll-button" aria-label="Scroll to the top">
-                    <svg class="icon" aria-label="Top arrow icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <polygon points="5,0 10,10 0,10" />
-                    </svg>
-                </button>
-            </main>
-        </div>
-        <footer class="footer">
-            <p>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</p>
-        </footer>
+    <head>
         <script>
-            (() => {
-                const footer = document.currentScript.previousElementSibling;
-                const time = footer.querySelector("time");
-                const year = new Date().getFullYear();
-                time.textContent = year;
-                time.setAttribute("datetime", year);
-            })();
+            function calculateMode({ localStorageMode, systemDarkMode }) {
+                if (localStorageMode !== null) {
+                    return localStorageMode;
+                }
 
-        </script>
-    </div>
+                if (systemDarkMode.matches) {
+                    return 'dark';
+                }
 
-    <div class="modal" aria-label="View image" aria-modal="true" role="dialog">
-        <div class="modal-buttons">
-            <button class="modal-close" aria-label="Close image">
-                <svg class="icon" aria-label="Cross icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                    <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                </svg>
-            </button>
-            <div class="modal-zoom-buttons">
-                <button class="zoom-out" aria-label="Zoom out">
-                    <svg class="icon" aria-label="Minus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h10v1h-10z" />
-                    </svg>
-                </button>
-                <button class="zoom-in" aria-label="Zoom in">
-                    <svg class="icon" aria-label="Plus icon" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="modal-image-container" tabindex="0">
-            <div class="modal-loading">
-                <span class="loading-text" aria-live="polite">loading</span><span class="loading-dots" aria-hidden="true"></span>
-            </div>
-            <img class="modal-image" aria-label="High resolution image">
-        </div>
-    </div>
+                return 'light';
+            }
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const logo = body.querySelector(".logo");
-            logo.focus({
-                preventScroll: true
+            const localStorageMode = localStorage.getItem('mode');
+            const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+
+            let currentMode = calculateMode({
+                localStorageMode,
+                systemDarkMode,
             });
-            logo.blur();
-            const container = document.body.querySelector(".container");
-            container.classList.remove("zero-opacity");
-        });
 
-    </script>
+            document.querySelector('html').setAttribute('data-theme', currentMode);
+        </script>
 
-    <script src="/js/scripts.js"></script>
-</body>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
 
+        <meta name="author" content="Vitaly Tsarenkov" />
+        <meta name="description" content="Vitaly Tsarenkov’s digital works." />
+
+        <link rel="stylesheet" href="/css/styles.css" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <title>Vitaly Tsarenkov — Digital</title>
+    </head>
+
+    <body>
+        <noscript>
+            <style>
+                .lazy-iframe {
+                    display: none;
+                }
+            </style>
+        </noscript>
+
+        <div class="page">
+            <header class="header">
+                <a class="logo" aria-label="Go to the homepage" href="/">
+                    <svg
+                        class="icon"
+                        aria-label="Logo icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="7"
+                        height="5"
+                        viewBox="0 0 7 5"
+                    >
+                        <path
+                            fill="currentColor"
+                            d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z"
+                        />
+                    </svg>
+                </a>
+                <button class="skip-navigation">skip to main content</button>
+                <div class="menu-toggle">
+                    <button class="menu-open" aria-label="Open menu">MENU</button>
+                    <button class="menu-close" aria-label="Close menu">
+                        <svg
+                            class="icon"
+                            aria-label="Cross icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <polygon
+                                points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <button class="mode-toggle" aria-label="">
+                    <svg
+                        class="icon"
+                        aria-label="Switch icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                    >
+                        <path d="m0 0h10v10h-10zm9 1h-8v8z" />
+                    </svg>
+                </button>
+            </header>
+            <div class="container zero-opacity">
+                <aside class="sidebar">
+                    <nav class="nav">
+                        <ul class="menu" aria-label="Main menu">
+                            <li class="section-end"><a href="/">home</a></li>
+                            <li><a href="/en/paintings.html">paintings</a></li>
+                            <li><a href="/en/murals.html">murals</a></li>
+                            <li><a href="/en/objects.html">objects</a></li>
+                            <li class="section-end current-page">
+                                <a aria-current="page">digital</a>
+                            </li>
+                            <li><a href="/en/bio.html">bio</a></li>
+                            <li><a href="/en/statement.html">statement</a></li>
+                            <li><a href="/en/cv.html">cv</a></li>
+                            <li class="section-end"><a href="/en/press.html">press</a></li>
+                            <li><a href="/en/contact.html">contact</a></li>
+                        </ul>
+                    </nav>
+                    <footer class="social-media-icons" aria-label="Social media">
+                        <ul>
+                            <li>
+                                <a
+                                    class="social-media"
+                                    aria-label="Instagram (opens in a new tab)"
+                                    href="https://www.instagram.com/vitalytsarenkov"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        class="icon"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        viewBox="0 0 10 10"
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M 5,0 C 5.83,0 6.67,0.02 7.06,0.03 7.87,0.08 8.58,0.26 9.16,0.84 9.75,1.43 9.93,2.14 9.97,2.94 9.98 3.36 10,4.18 10,5 10,5.83 9.98,6.67 9.97,7.06 9.93,7.87 9.75,8.58 9.16,9.16 8.58,9.75 7.87,9.93 7.06,9.97 6.67,9.98 5.83,10 5,10 4.18,10 3.36,9.98 2.94,9.97 2.14,9.93 1.43,9.75 0.84,9.16 0.26,8.58 0.08,7.87 0.03,7.06 0.02,6.67 0,5.83 0,5 0,4.18 0.02,3.36 0.03,2.94 0.08,2.14 0.26,1.43 0.84,0.84 1.43,0.26 2.14,0.08 2.94,0.03 3.36,0.02 4.18,0 5,0 Z M 5,0.9 C 4.28,0.9 2.72,0.85 2.05,1.1 1.62,1.29 1.29,1.62 1.1,2.05 0.85,2.72 0.9,4.28 0.9,5 0.9,5.73 0.85,7.3 1.1,7.95 1.29,8.39 1.62,8.73 2.05,8.9 2.72,9.17 4.28,9.1 5,9.1 5.73,9.1 7.3,9.17 7.95,8.9 8.39,8.73 8.73,8.39 8.9,7.95 9.17,7.3 9.1,5.73 9.1,5 9.1,4.28 9.17,2.72 8.9,2.05 8.73,1.62 8.39,1.29 7.95,1.1 7.3,0.85 5.73,0.9 5,0.9 Z M 5,2.44 C 6.43,2.44 7.56,3.59 7.56,5 7.56,6.43 6.43,7.56 5,7.56 3.59,7.56 2.44,6.43 2.44,5 2.44,3.59 3.59,2.44 5,2.44 Z M 5,3.33 C 4.09,3.33 3.33,4.09 3.33,5 3.33,5.93 4.09,6.67 5,6.67 5.93,6.67 6.67,5.93 6.67,5 6.67,4.09 5.93,3.33 5,3.33 Z M 7.67,1.73 C 8,1.73 8.27,2 8.27,2.33 8.27,2.67 8,2.93 7.67,2.93 7.34,2.93 7.07,2.67 7.07,2.33 7.07,2 7.34,1.73 7.67 1.73 Z"
+                                        />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="social-media x"
+                                    aria-label="X (opens in a new tab)"
+                                    href="https://x.com/vitalytsarenkov"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        class="icon"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        viewBox="0 0 10 9"
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M0 0 L 3.2,0 L 5.3,2.9 L 7.9,0 L 9.4,0 L 6,3.8 L 10,9 L 6.9,9 L 4.5,5.9 L 1.7,9 L 0.2,9 L 3.8,4.9 M 1.8,0.9 L 7.3,8.1 L 8.2,8.1 L 2.7,0.9 Z"
+                                        />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </footer>
+                </aside>
+                <main class="main">
+                    <h1>Digital</h1>
+
+                    <section class="one-item has-link">
+                        <h2><cite>The Great Revelation</cite></h2>
+                        <figure class="one-item-container">
+                            <div class="one-item-box">
+                                <img
+                                    id="skip"
+                                    src="/img/vitaly-tsarenkov_nft_the-great-revelation.gif"
+                                    width="1000"
+                                    height="1000"
+                                    alt="A colorful animated GIF."
+                                    aria-label="Show a high resolution image"
+                                    role="button"
+                                    tabindex="0"
+                                    fetchpriority="high"
+                                />
+                            </div>
+                            <figcaption>
+                                <ul class="one-item-figcaption">
+                                    <li><cite>The Great Revelation</cite></li>
+                                    <li>2022</li>
+                                    <li>Digital animation (GIF)</li>
+                                    <li>1000 &#215; 1000 px</li>
+                                </ul>
+                                <div class="one-item-link">
+                                    <a
+                                        aria-label="View on OpenSea marketplace (opens in a new tab)"
+                                        href="https://opensea.io/assets/ethereum/0xd693220863b8cc1b74846d67e3d32ab38a807721/98540127211770920495480833"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >View on OpenSea marketplace</a
+                                    >
+                                </div>
+                            </figcaption>
+                        </figure>
+                        <div class="one-item-description">
+                            <p>
+                                Created for <i>The NFT.NYC Diversity of Art Showcase</i> held at
+                                Times Square in New York, USA.
+                            </p>
+                        </div>
+                    </section>
+
+                    <svg
+                        class="plus"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                    >
+                        <path d="M 20,0 V 40 M 0,20 H 40" />
+                    </svg>
+
+                    <section class="carousel has-link no-description">
+                        <ul class="carousel-title">
+                            <li>
+                                <h2><cite>SMOLSY</cite> series</h2>
+                            </li>
+                        </ul>
+                        <figure class="carousel-container">
+                            <div class="carousel-box">
+                                <ul class="carousel-content">
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_smolsy_1.png"
+                                            width="2400"
+                                            height="2400"
+                                            alt="A pixel character."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                            loading="lazy"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_smolsy_3.png"
+                                            width="2400"
+                                            height="2400"
+                                            alt="A pixel character."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_smolsy_9.png"
+                                            width="2400"
+                                            height="2400"
+                                            alt="A pixel character."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_smolsy_11.png"
+                                            width="2400"
+                                            height="2400"
+                                            alt="A pixel character."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_smolsy_15.png"
+                                            width="2400"
+                                            height="2400"
+                                            alt="A pixel character."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                </ul>
+                                <div class="carousel-navigation">
+                                    <button class="left" aria-label="Show previous image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Left arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                        </svg>
+                                    </button>
+                                    <ul class="carousel-position">
+                                        <li>1/5</li>
+                                        <li>2/5</li>
+                                        <li>3/5</li>
+                                        <li>4/5</li>
+                                        <li>5/5</li>
+                                    </ul>
+                                    <button class="right" aria-label="Show next image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Right arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <figcaption>
+                                <div>
+                                    <ul class="carousel-figcaption">
+                                        <li>
+                                            <ul>
+                                                <li><cite>SMOLSY #1</cite></li>
+                                                <li>2022</li>
+                                                <li>Pixel art (On-chain)</li>
+                                                <li>8 &#215; 8 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>SMOLSY #3</cite></li>
+                                                <li>2022</li>
+                                                <li>Pixel art (On-chain)</li>
+                                                <li>8 &#215; 8 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>SMOLSY #9</cite></li>
+                                                <li>2022</li>
+                                                <li>Pixel art (On-chain)</li>
+                                                <li>8 &#215; 8 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>SMOLSY #11</cite></li>
+                                                <li>2022</li>
+                                                <li>Pixel art (On-chain)</li>
+                                                <li>8 &#215; 8 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>SMOLSY #15</cite></li>
+                                                <li>2022</li>
+                                                <li>Pixel art (On-chain)</li>
+                                                <li>8 &#215; 8 px</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul class="carousel-link">
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17726"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17765"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/8bidou-8x8-fullcolor/17970"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/8bidou-8x8-fullcolor/18011"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/8bidou-8x8-fullcolor/18126"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <svg
+                        class="plus"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                    >
+                        <path d="M 20,0 V 40 M 0,20 H 40" />
+                    </svg>
+
+                    <section class="carousel has-link no-description">
+                        <ul class="carousel-title">
+                            <li>
+                                <h2><cite>CRAZY DREAM</cite> series</h2>
+                            </li>
+                        </ul>
+                        <figure class="carousel-container">
+                            <div class="carousel-box">
+                                <ul class="carousel-content">
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_crazy-dream-13.gif"
+                                            width="1000"
+                                            height="1000"
+                                            alt="A colorful animated GIF."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                            loading="lazy"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_crazy-dream-10.gif"
+                                            width="1000"
+                                            height="1000"
+                                            alt="A colorful animated GIF."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_crazy-dream-8.gif"
+                                            width="1000"
+                                            height="1000"
+                                            alt="A colorful animated GIF."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_crazy-dream-7.gif"
+                                            width="1000"
+                                            height="1000"
+                                            alt="A colorful animated GIF."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                    <li>
+                                        <img
+                                            src="/img/vitaly-tsarenkov_nft_crazy-dream-2.gif"
+                                            width="1000"
+                                            height="1000"
+                                            alt="A colorful animated GIF."
+                                            aria-label="Show a high resolution image"
+                                            role="button"
+                                            tabindex="0"
+                                        />
+                                    </li>
+                                </ul>
+                                <div class="carousel-navigation">
+                                    <button class="left" aria-label="Show previous image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Left arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                        </svg>
+                                    </button>
+                                    <ul class="carousel-position">
+                                        <li>1/5</li>
+                                        <li>2/5</li>
+                                        <li>3/5</li>
+                                        <li>4/5</li>
+                                        <li>5/5</li>
+                                    </ul>
+                                    <button class="right" aria-label="Show next image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Right arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <figcaption>
+                                <div>
+                                    <ul class="carousel-figcaption">
+                                        <li>
+                                            <ul>
+                                                <li><cite>CRAZY DREAM #13</cite></li>
+                                                <li>2022</li>
+                                                <li>Digital animation (GIF)</li>
+                                                <li>1000 &#215; 1000 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>CRAZY DREAM #10</cite></li>
+                                                <li>2022</li>
+                                                <li>Digital animation (GIF)</li>
+                                                <li>1000 &#215; 1000 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>CRAZY DREAM #8</cite></li>
+                                                <li>2022</li>
+                                                <li>Digital animation (GIF)</li>
+                                                <li>1000 &#215; 1000 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>CRAZY DREAM #7</cite></li>
+                                                <li>2022</li>
+                                                <li>Digital animation (GIF)</li>
+                                                <li>1000 &#215; 1000 px</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>CRAZY DREAM #2</cite></li>
+                                                <li>2022</li>
+                                                <li>Digital animation (GIF)</li>
+                                                <li>1000 &#215; 1000 px</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul class="carousel-link">
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/793630"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/767116"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/739070"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/735991"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/715984"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <svg
+                        class="plus"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                    >
+                        <path d="M 20,0 V 40 M 0,20 H 40" />
+                    </svg>
+
+                    <section class="one-item has-link">
+                        <h2><cite>The Arrow of Life</cite></h2>
+                        <figure class="one-item-container">
+                            <div class="one-item-box">
+                                <video
+                                    controls
+                                    playsinline
+                                    loop
+                                    preload="none"
+                                    width="1920"
+                                    height="1080"
+                                    poster="/mp4/vitaly-tsarenkov_nft_the-arrow-of-life.png"
+                                >
+                                    <source
+                                        src="/mp4/vitaly-tsarenkov_nft_the-arrow-of-life.mp4"
+                                        type="video/mp4"
+                                    />
+                                </video>
+                            </div>
+                            <figcaption>
+                                <ul class="one-item-figcaption">
+                                    <li><cite>The Arrow of Life</cite></li>
+                                    <li>2022</li>
+                                    <li>Digital animation (MP4)</li>
+                                    <li>1920 &#215; 1080 px, 12-second loop</li>
+                                </ul>
+                                <div class="one-item-link">
+                                    <a
+                                        aria-label="View on OpenSea marketplace (opens in a new tab)"
+                                        href="https://opensea.io/assets/ethereum/0xf4398a4d8bf5e267abda3d62c47f8ef5f43e8c34/45"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >View on OpenSea marketplace</a
+                                    >
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <svg
+                        class="plus"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                    >
+                        <path d="M 20,0 V 40 M 0,20 H 40" />
+                    </svg>
+
+                    <section class="carousel has-link no-description">
+                        <ul class="carousel-title">
+                            <li>
+                                <h2><cite>Interactive OBJKTs</cite> series</h2>
+                            </li>
+                        </ul>
+                        <figure class="carousel-container">
+                            <div class="carousel-box">
+                                <ul class="carousel-content">
+                                    <li>
+                                        <iframe
+                                            class="lazy-iframe"
+                                            data-src="/iframe/99397/index.html"
+                                            title="Psychedelic Flower interactive NFT."
+                                            tabindex="-1"
+                                        ></iframe>
+                                        <noscript>
+                                            <iframe
+                                                src="/iframe/99397/index.html"
+                                                title="Psychedelic Flower interactive NFT."
+                                                tabindex="-1"
+                                                loading="lazy"
+                                            ></iframe>
+                                        </noscript>
+                                    </li>
+                                    <li>
+                                        <iframe
+                                            class="lazy-iframe"
+                                            data-src="/iframe/112246/index.html"
+                                            title="Toy Cars interactive NFT."
+                                            tabindex="-1"
+                                        ></iframe>
+                                        <noscript>
+                                            <iframe
+                                                src="/iframe/112246/index.html"
+                                                title="Toy Cars interactive NFT."
+                                                tabindex="-1"
+                                                loading="lazy"
+                                            ></iframe>
+                                        </noscript>
+                                    </li>
+                                    <li>
+                                        <iframe
+                                            class="lazy-iframe"
+                                            data-src="/iframe/192504/index.html"
+                                            title="Undercover Agent interactive NFT."
+                                            tabindex="-1"
+                                        ></iframe>
+                                        <noscript>
+                                            <iframe
+                                                src="/iframe/192504/index.html"
+                                                title="Undercover Agent interactive NFT."
+                                                tabindex="-1"
+                                                loading="lazy"
+                                            ></iframe>
+                                        </noscript>
+                                    </li>
+                                    <li>
+                                        <iframe
+                                            class="lazy-iframe"
+                                            data-src="/iframe/224396/index.html"
+                                            title="Magic Mushrooms interactive NFT."
+                                            tabindex="-1"
+                                        ></iframe>
+                                        <noscript>
+                                            <iframe
+                                                src="/iframe/224396/index.html"
+                                                title="Magic Mushrooms interactive NFT."
+                                                tabindex="-1"
+                                                loading="lazy"
+                                            ></iframe>
+                                        </noscript>
+                                    </li>
+                                    <li>
+                                        <iframe
+                                            class="lazy-iframe"
+                                            data-src="/iframe/391366/index.html"
+                                            title="Rabbit Hole interactive NFT."
+                                            tabindex="-1"
+                                        ></iframe>
+                                        <noscript>
+                                            <iframe
+                                                src="/iframe/391366/index.html"
+                                                title="Rabbit Hole interactive NFT."
+                                                tabindex="-1"
+                                                loading="lazy"
+                                            ></iframe>
+                                        </noscript>
+                                    </li>
+                                </ul>
+                                <div class="carousel-navigation">
+                                    <button class="left" aria-label="Show previous image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Left arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,5 10,0 10,10 Z M 2.24,5 9,8.38 9,1.62 Z" />
+                                        </svg>
+                                    </button>
+                                    <ul class="carousel-position">
+                                        <li>1/5</li>
+                                        <li>2/5</li>
+                                        <li>3/5</li>
+                                        <li>4/5</li>
+                                        <li>5/5</li>
+                                    </ul>
+                                    <button class="right" aria-label="Show next image">
+                                        <svg
+                                            class="icon"
+                                            aria-label="Right arrow icon"
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            width="10"
+                                            height="10"
+                                            viewBox="0 0 10 10"
+                                        >
+                                            <path d="M 0,0 10,5 0,10 Z M 1,1.62 1,8.38 7.76,5 Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <figcaption>
+                                <div>
+                                    <ul class="carousel-figcaption">
+                                        <li>
+                                            <ul>
+                                                <li><cite>Psychedelic Flower</cite></li>
+                                                <li>2021</li>
+                                                <li>Interactive work (HTML/JS)</li>
+                                                <li>Responsive</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>Toy Cars</cite></li>
+                                                <li>2021</li>
+                                                <li>Interactive work (HTML/JS)</li>
+                                                <li>Responsive</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>Undercover Agent</cite></li>
+                                                <li>2021</li>
+                                                <li>Interactive work (HTML/JS)</li>
+                                                <li>Responsive</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>Magic Mushrooms</cite></li>
+                                                <li>2021</li>
+                                                <li>Interactive work (HTML/JS)</li>
+                                                <li>Responsive</li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <ul>
+                                                <li><cite>Rabbit Hole</cite></li>
+                                                <li>2021</li>
+                                                <li>Interactive work (HTML/JS)</li>
+                                                <li>Responsive</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                    <ul class="carousel-link">
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/99397"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/112246"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/192504"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/224396"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                        <li>
+                                            <a
+                                                aria-label="View on OBJKT marketplace (opens in a new tab)"
+                                                href="https://objkt.com/tokens/hicetnunc/391366"
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                >View on OBJKT marketplace</a
+                                            >
+                                        </li>
+                                    </ul>
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <svg
+                        class="plus"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="40"
+                        height="40"
+                        viewBox="0 0 40 40"
+                    >
+                        <path d="M 20,0 V 40 M 0,20 H 40" />
+                    </svg>
+
+                    <section class="one-item has-link">
+                        <h2><cite>The Infinite Metaverse</cite></h2>
+                        <figure class="one-item-container">
+                            <div class="one-item-box">
+                                <video
+                                    controls
+                                    playsinline
+                                    loop
+                                    preload="none"
+                                    width="1080"
+                                    height="1080"
+                                    poster="/mp4/vitaly-tsarenkov_nft_the-infinite-metaverse.png"
+                                >
+                                    <source
+                                        src="/mp4/vitaly-tsarenkov_nft_the-infinite-metaverse.mp4"
+                                        type="video/mp4"
+                                    />
+                                </video>
+                            </div>
+                            <figcaption>
+                                <ul class="one-item-figcaption">
+                                    <li><cite>The Infinite Metaverse</cite></li>
+                                    <li>2021</li>
+                                    <li>Digital animation (MP4)</li>
+                                    <li>1080 &#215; 1080 px, 12-second loop</li>
+                                </ul>
+                                <div class="one-item-link">
+                                    <a
+                                        aria-label="View on Foundation marketplace (opens in a new tab)"
+                                        href="https://foundation.app/@vitalytsarenkov/foundation/28639"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >View on Foundation marketplace</a
+                                    >
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <button class="top-scroll-button" aria-label="Scroll to the top">
+                        <svg
+                            class="icon"
+                            aria-label="Top arrow icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <polygon points="5,0 10,10 0,10" />
+                        </svg>
+                    </button>
+                </main>
+            </div>
+            <footer class="footer">
+                <p>&copy; <time datetime="2024">2024</time> Vitaly Tsarenkov</p>
+            </footer>
+            <script>
+                (() => {
+                    const footer = document.currentScript.previousElementSibling;
+                    const time = footer.querySelector('time');
+                    const year = new Date().getFullYear();
+                    time.textContent = year;
+                    time.setAttribute('datetime', year);
+                })();
+            </script>
+        </div>
+
+        <div class="modal" aria-label="View image" aria-modal="true" role="dialog">
+            <div class="modal-buttons">
+                <button class="modal-close" aria-label="Close image">
+                    <svg
+                        class="icon"
+                        aria-label="Cross icon"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                    >
+                        <polygon
+                            points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707"
+                        />
+                    </svg>
+                </button>
+                <div class="modal-zoom-buttons">
+                    <button class="zoom-out" aria-label="Zoom out">
+                        <svg
+                            class="icon"
+                            aria-label="Minus icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <path d="m0 4.5h10v1h-10z" />
+                        </svg>
+                    </button>
+                    <button class="zoom-in" aria-label="Zoom in">
+                        <svg
+                            class="icon"
+                            aria-label="Plus icon"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-image-container" tabindex="0">
+                <div class="modal-loading">
+                    <span class="loading-text" aria-live="polite">loading</span
+                    ><span class="loading-dots" aria-hidden="true"></span>
+                </div>
+                <img class="modal-image" aria-label="High resolution image" />
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const logo = body.querySelector('.logo');
+                logo.focus({
+                    preventScroll: true,
+                });
+                logo.blur();
+                const container = document.body.querySelector('.container');
+                container.classList.remove('zero-opacity');
+            });
+        </script>
+
+        <script src="/js/scripts.js"></script>
+    </body>
 </html>

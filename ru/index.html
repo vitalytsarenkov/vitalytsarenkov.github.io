@@ -1,212 +1,346 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru" data-theme="light">
-
-<head>
-    <script>
-        function calculateMode({
-            localStorageMode,
-            systemDarkMode
-        }) {
-            if (localStorageMode !== null) {
-                return localStorageMode;
-            }
-
-            if (systemDarkMode.matches) {
-                return "dark";
-            }
-
-            return "light";
-        }
-
-        const localStorageMode = localStorage.getItem("mode");
-        const systemDarkMode = window.matchMedia("(prefers-color-scheme: dark)");
-
-        let currentMode = calculateMode({
-            localStorageMode,
-            systemDarkMode
-        });
-
-        document.querySelector("html").setAttribute("data-theme", currentMode);
-
-    </script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="color-scheme" content="light dark">
-
-    <meta name="author" content="Виталий Царенков">
-    <meta name="description" content="Виталий Царенков — визуальный художник, создающий матрицы смыслов для проявления неуловимой реальности посредством фигуративных полигональных работ.">
-
-    <link rel="alternate" hreflang="en" href="/" />
-    <link rel="alternate" hreflang="ru" href="/ru/" />
-    <link rel="alternate" hreflang="x-default" href="/" />
-
-    <link rel="stylesheet" href="/css/styles.css">
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-
-    <title>Виталий Царенков — Главная</title>
-</head>
-
-<body>
-    <div class="page">
-        <header class="header">
-            <a class="logo" aria-label="На главную" href="/ru/">
-                <svg class="icon" aria-label="Иконка логотипа" xmlns="http://www.w3.org/2000/svg" width="7" height="5" viewBox="0 0 7 5">
-                    <path fill="currentColor" d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z" />
-                </svg>
-            </a>
-            <button class="skip-navigation">перейти к основному контенту</button>
-            <div class="menu-toggle">
-                <button class="menu-open" aria-label="Открыть меню">МЕНЮ</button>
-                <button class="menu-close" aria-label="Закрыть меню">
-                    <svg class="icon" aria-label="Иконка крестика" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                    </svg>
-                </button>
-            </div>
-            <button class="mode-toggle" aria-label="">
-                <svg class="icon" aria-label="Иконка переключателя" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                    <path d="m0 0h10v10h-10zm9 1h-8v8z" />
-                </svg>
-            </button>
-        </header>
-        <div class="container zero-opacity">
-            <aside class="sidebar">
-                <nav class="nav">
-                    <ul class="lang-switcher" aria-label="Выбор языка">
-                        <li><a href="/" hreflang="en" lang="en" aria-label="Английская версия">EN</a></li>
-                        <li><a class="lang-active" aria-label="Текущий язык: Русский">RU</a></li>
-                    </ul>
-                    <ul class="menu" aria-label="Основное меню">
-                        <li class="section-end current-page"><a aria-current="page">главная</a></li>
-                        <li><a href="/ru/paintings.html">картины</a></li>
-                        <li><a href="/ru/murals.html">муралы</a></li>
-                        <li><a href="/ru/objects.html">объекты</a></li>
-                        <li class="section-end"><a href="/ru/digital.html">цифровое</a></li>
-                        <li><a href="/ru/bio.html">биография</a></li>
-                        <li><a href="/ru/statement.html">стейтмент</a></li>
-                        <li><a href="/ru/cv.html">cv</a></li>
-                        <li class="section-end"><a href="/ru/press.html">пресса</a></li>
-                        <li><a href="/ru/contact.html">контакт</a></li>
-                    </ul>
-                </nav>
-                <footer class="social-media-icons" aria-label="Социальные сети">
-                    <ul>
-                        <li>
-                            <a class="social-media" aria-label="Инстаграм (откроется в новой вкладке)" href="https://www.instagram.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">
-                                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                                    <path fill="currentColor" d="M 5,0 C 5.83,0 6.67,0.02 7.06,0.03 7.87,0.08 8.58,0.26 9.16,0.84 9.75,1.43 9.93,2.14 9.97,2.94 9.98 3.36 10,4.18 10,5 10,5.83 9.98,6.67 9.97,7.06 9.93,7.87 9.75,8.58 9.16,9.16 8.58,9.75 7.87,9.93 7.06,9.97 6.67,9.98 5.83,10 5,10 4.18,10 3.36,9.98 2.94,9.97 2.14,9.93 1.43,9.75 0.84,9.16 0.26,8.58 0.08,7.87 0.03,7.06 0.02,6.67 0,5.83 0,5 0,4.18 0.02,3.36 0.03,2.94 0.08,2.14 0.26,1.43 0.84,0.84 1.43,0.26 2.14,0.08 2.94,0.03 3.36,0.02 4.18,0 5,0 Z M 5,0.9 C 4.28,0.9 2.72,0.85 2.05,1.1 1.62,1.29 1.29,1.62 1.1,2.05 0.85,2.72 0.9,4.28 0.9,5 0.9,5.73 0.85,7.3 1.1,7.95 1.29,8.39 1.62,8.73 2.05,8.9 2.72,9.17 4.28,9.1 5,9.1 5.73,9.1 7.3,9.17 7.95,8.9 8.39,8.73 8.73,8.39 8.9,7.95 9.17,7.3 9.1,5.73 9.1,5 9.1,4.28 9.17,2.72 8.9,2.05 8.73,1.62 8.39,1.29 7.95,1.1 7.3,0.85 5.73,0.9 5,0.9 Z M 5,2.44 C 6.43,2.44 7.56,3.59 7.56,5 7.56,6.43 6.43,7.56 5,7.56 3.59,7.56 2.44,6.43 2.44,5 2.44,3.59 3.59,2.44 5,2.44 Z M 5,3.33 C 4.09,3.33 3.33,4.09 3.33,5 3.33,5.93 4.09,6.67 5,6.67 5.93,6.67 6.67,5.93 6.67,5 6.67,4.09 5.93,3.33 5,3.33 Z M 7.67,1.73 C 8,1.73 8.27,2 8.27,2.33 8.27,2.67 8,2.93 7.67,2.93 7.34,2.93 7.07,2.67 7.07,2.33 7.07,2 7.34,1.73 7.67 1.73 Z" />
-                                </svg>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="social-media x" aria-label="X (откроется в новой вкладке)" href="https://x.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">
-                                <svg class="icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 9">
-                                    <path fill="currentColor" d="M0 0 L 3.2,0 L 5.3,2.9 L 7.9,0 L 9.4,0 L 6,3.8 L 10,9 L 6.9,9 L 4.5,5.9 L 1.7,9 L 0.2,9 L 3.8,4.9 M 1.8,0.9 L 7.3,8.1 L 8.2,8.1 L 2.7,0.9 Z" />
-                                </svg>
-                            </a>
-                        </li>
-                    </ul>
-                </footer>
-            </aside>
-            <main class="main">
-                <h1>Главная</h1>
-
-                <section class="one-item">
-                    <h2>Виталий Царенков</h2>
-                    <figure class="one-item-container">
-                        <div class="one-item-box">
-                            <img id="skip" sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 200px) / 2)" srcset="/img/500.png 500w, /img/750.png 750w, /img/1000.png 1000w, /img/1500.png 1500w, /img/2000.png 2000w, /img/2500.png 2500w, /img/3000.png 3000w" src="/img/3000.png" width="3000" height="4500" alt="Портрет художника." aria-label="Показать в высоком разрешении" role="button" tabindex="0" fetchpriority="high">
-                        </div>
-                        <figcaption>
-                            <ul class="one-item-figcaption">
-                                <li>ВИТАЛИЙ ЦАРЕНКОВ</li>
-                                <li>визуальный художник</li>
-                                <li>р. 1987</li>
-                                <li>Живёт в Санкт-Петербурге</li>
-                            </ul>
-                            <div class="one-item-link">
-                                <a aria-label="Инстаграм (откроется в новой вкладке)" href="https://www.instagram.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">Instagram</a>
-                                <span aria-hidden="true">&middot;</span>
-                                <a aria-label="X (откроется в новой вкладке)" href="https://x.com/vitalytsarenkov" target="_blank" rel="noopener noreferrer">X</a>
-                            </div>
-                        </figcaption>
-                    </figure>
-                </section>
-
-                <div class="text-main">
-                    <p>Визуальный художник Виталий Царенков создаёт матрицы смыслов для проявления неуловимой реальности посредством фигуративных полигональных работ.</p>
-                    <p>Здесь вы найдёте его избранные работы и информационные материалы. Для связи используйте страницу контактов. Новости и процесс — в социальных сетях.</p>
-                </div>
-
-                <div class="download-link">
-                    <a href="/pdf/vitaly-tsarenkov_portfolio_rus.pdf" download>Скачать портфолио (PDF)</a>
-                </div>
-
-                <button class="top-scroll-button" aria-label="Прокрутить наверх">
-                    <svg class="icon" aria-label="Иконка стрелки вверх" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <polygon points="5,0 10,10 0,10" />
-                    </svg>
-                </button>
-            </main>
-        </div>
-        <footer class="footer">
-            <p>&copy; <time datetime="2024">2024</time> Виталий Царенков</p>
-        </footer>
+    <head>
         <script>
-            (() => {
-                const footer = document.currentScript.previousElementSibling;
-                const time = footer.querySelector("time");
-                const year = new Date().getFullYear();
-                time.textContent = year;
-                time.setAttribute("datetime", year);
-            })();
+            function calculateMode({ localStorageMode, systemDarkMode }) {
+                if (localStorageMode !== null) {
+                    return localStorageMode;
+                }
 
-        </script>
-    </div>
+                if (systemDarkMode.matches) {
+                    return 'dark';
+                }
 
-    <div class="modal" aria-label="Просмотр изображения" aria-modal="true" role="dialog">
-        <div class="modal-buttons">
-            <button class="modal-close" aria-label="Закрыть изображение">
-                <svg class="icon" aria-label="Иконка крестика" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                    <polygon points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707" />
-                </svg>
-            </button>
-            <div class="modal-zoom-buttons">
-                <button class="zoom-out" aria-label="Уменьшить">
-                    <svg class="icon" aria-label="Иконка минуса" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h10v1h-10z" />
-                    </svg>
-                </button>
-                <button class="zoom-in" aria-label="Увеличить">
-                    <svg class="icon" aria-label="Иконка плюса" xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10">
-                        <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        <div class="modal-image-container" tabindex="0">
-            <div class="modal-loading">
-                <span class="loading-text" aria-live="polite">загрузка</span><span class="loading-dots" aria-hidden="true"></span>
-            </div>
-            <img class="modal-image" aria-label="Изображение в высоком разрешении">
-        </div>
-    </div>
+                return 'light';
+            }
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const logo = body.querySelector(".logo");
-            logo.focus({
-                preventScroll: true
+            const localStorageMode = localStorage.getItem('mode');
+            const systemDarkMode = window.matchMedia('(prefers-color-scheme: dark)');
+
+            let currentMode = calculateMode({
+                localStorageMode,
+                systemDarkMode,
             });
-            logo.blur();
-            const container = document.body.querySelector(".container");
-            container.classList.remove("zero-opacity");
-        });
 
-    </script>
+            document.querySelector('html').setAttribute('data-theme', currentMode);
+        </script>
 
-    <script src="/js/scripts.js"></script>
-</body>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light dark" />
 
+        <meta name="author" content="Виталий Царенков" />
+        <meta
+            name="description"
+            content="Виталий Царенков — визуальный художник, создающий матрицы смыслов для проявления неуловимой реальности посредством фигуративных полигональных работ."
+        />
+
+        <link rel="alternate" hreflang="en" href="/" />
+        <link rel="alternate" hreflang="ru" href="/ru/" />
+        <link rel="alternate" hreflang="x-default" href="/" />
+
+        <link rel="stylesheet" href="/css/styles.css" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        <title>Виталий Царенков — Главная</title>
+    </head>
+
+    <body>
+        <div class="page">
+            <header class="header">
+                <a class="logo" aria-label="На главную" href="/ru/">
+                    <svg
+                        class="icon"
+                        aria-label="Иконка логотипа"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="7"
+                        height="5"
+                        viewBox="0 0 7 5"
+                    >
+                        <path
+                            fill="currentColor"
+                            d="m0 0h3v1h-2v1h2v3h-3v-1h2v-1h-2zm4 0h1v2h1v-2h1v5h-3v-1h2v-1h-2z"
+                        />
+                    </svg>
+                </a>
+                <button class="skip-navigation">перейти к основному контенту</button>
+                <div class="menu-toggle">
+                    <button class="menu-open" aria-label="Открыть меню">МЕНЮ</button>
+                    <button class="menu-close" aria-label="Закрыть меню">
+                        <svg
+                            class="icon"
+                            aria-label="Иконка крестика"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <polygon
+                                points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707"
+                            />
+                        </svg>
+                    </button>
+                </div>
+                <button class="mode-toggle" aria-label="">
+                    <svg
+                        class="icon"
+                        aria-label="Иконка переключателя"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                    >
+                        <path d="m0 0h10v10h-10zm9 1h-8v8z" />
+                    </svg>
+                </button>
+            </header>
+            <div class="container zero-opacity">
+                <aside class="sidebar">
+                    <nav class="nav">
+                        <ul class="lang-switcher" aria-label="Выбор языка">
+                            <li>
+                                <a href="/" hreflang="en" lang="en" aria-label="Английская версия"
+                                    >EN</a
+                                >
+                            </li>
+                            <li>
+                                <a class="lang-active" aria-label="Текущий язык: Русский">RU</a>
+                            </li>
+                        </ul>
+                        <ul class="menu" aria-label="Основное меню">
+                            <li class="section-end current-page">
+                                <a aria-current="page">главная</a>
+                            </li>
+                            <li><a href="/ru/paintings.html">картины</a></li>
+                            <li><a href="/ru/murals.html">муралы</a></li>
+                            <li><a href="/ru/objects.html">объекты</a></li>
+                            <li class="section-end"><a href="/ru/digital.html">цифровое</a></li>
+                            <li><a href="/ru/bio.html">биография</a></li>
+                            <li><a href="/ru/statement.html">стейтмент</a></li>
+                            <li><a href="/ru/cv.html">cv</a></li>
+                            <li class="section-end"><a href="/ru/press.html">пресса</a></li>
+                            <li><a href="/ru/contact.html">контакт</a></li>
+                        </ul>
+                    </nav>
+                    <footer class="social-media-icons" aria-label="Социальные сети">
+                        <ul>
+                            <li>
+                                <a
+                                    class="social-media"
+                                    aria-label="Инстаграм (откроется в новой вкладке)"
+                                    href="https://www.instagram.com/vitalytsarenkov"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        class="icon"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        viewBox="0 0 10 10"
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M 5,0 C 5.83,0 6.67,0.02 7.06,0.03 7.87,0.08 8.58,0.26 9.16,0.84 9.75,1.43 9.93,2.14 9.97,2.94 9.98 3.36 10,4.18 10,5 10,5.83 9.98,6.67 9.97,7.06 9.93,7.87 9.75,8.58 9.16,9.16 8.58,9.75 7.87,9.93 7.06,9.97 6.67,9.98 5.83,10 5,10 4.18,10 3.36,9.98 2.94,9.97 2.14,9.93 1.43,9.75 0.84,9.16 0.26,8.58 0.08,7.87 0.03,7.06 0.02,6.67 0,5.83 0,5 0,4.18 0.02,3.36 0.03,2.94 0.08,2.14 0.26,1.43 0.84,0.84 1.43,0.26 2.14,0.08 2.94,0.03 3.36,0.02 4.18,0 5,0 Z M 5,0.9 C 4.28,0.9 2.72,0.85 2.05,1.1 1.62,1.29 1.29,1.62 1.1,2.05 0.85,2.72 0.9,4.28 0.9,5 0.9,5.73 0.85,7.3 1.1,7.95 1.29,8.39 1.62,8.73 2.05,8.9 2.72,9.17 4.28,9.1 5,9.1 5.73,9.1 7.3,9.17 7.95,8.9 8.39,8.73 8.73,8.39 8.9,7.95 9.17,7.3 9.1,5.73 9.1,5 9.1,4.28 9.17,2.72 8.9,2.05 8.73,1.62 8.39,1.29 7.95,1.1 7.3,0.85 5.73,0.9 5,0.9 Z M 5,2.44 C 6.43,2.44 7.56,3.59 7.56,5 7.56,6.43 6.43,7.56 5,7.56 3.59,7.56 2.44,6.43 2.44,5 2.44,3.59 3.59,2.44 5,2.44 Z M 5,3.33 C 4.09,3.33 3.33,4.09 3.33,5 3.33,5.93 4.09,6.67 5,6.67 5.93,6.67 6.67,5.93 6.67,5 6.67,4.09 5.93,3.33 5,3.33 Z M 7.67,1.73 C 8,1.73 8.27,2 8.27,2.33 8.27,2.67 8,2.93 7.67,2.93 7.34,2.93 7.07,2.67 7.07,2.33 7.07,2 7.34,1.73 7.67 1.73 Z"
+                                        />
+                                    </svg>
+                                </a>
+                            </li>
+                            <li>
+                                <a
+                                    class="social-media x"
+                                    aria-label="X (откроется в новой вкладке)"
+                                    href="https://x.com/vitalytsarenkov"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    <svg
+                                        class="icon"
+                                        aria-hidden="true"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="10"
+                                        height="10"
+                                        viewBox="0 0 10 9"
+                                    >
+                                        <path
+                                            fill="currentColor"
+                                            d="M0 0 L 3.2,0 L 5.3,2.9 L 7.9,0 L 9.4,0 L 6,3.8 L 10,9 L 6.9,9 L 4.5,5.9 L 1.7,9 L 0.2,9 L 3.8,4.9 M 1.8,0.9 L 7.3,8.1 L 8.2,8.1 L 2.7,0.9 Z"
+                                        />
+                                    </svg>
+                                </a>
+                            </li>
+                        </ul>
+                    </footer>
+                </aside>
+                <main class="main">
+                    <h1>Главная</h1>
+
+                    <section class="one-item">
+                        <h2>Виталий Царенков</h2>
+                        <figure class="one-item-container">
+                            <div class="one-item-box">
+                                <img
+                                    id="skip"
+                                    sizes="(orientation: portrait) calc(100vw - 40px), (min-width: 1000px) 400px, calc((100vw - 200px) / 2)"
+                                    srcset="
+                                        /img/500.png   500w,
+                                        /img/750.png   750w,
+                                        /img/1000.png 1000w,
+                                        /img/1500.png 1500w,
+                                        /img/2000.png 2000w,
+                                        /img/2500.png 2500w,
+                                        /img/3000.png 3000w
+                                    "
+                                    src="/img/3000.png"
+                                    width="3000"
+                                    height="4500"
+                                    alt="Портрет художника."
+                                    aria-label="Показать в высоком разрешении"
+                                    role="button"
+                                    tabindex="0"
+                                    fetchpriority="high"
+                                />
+                            </div>
+                            <figcaption>
+                                <ul class="one-item-figcaption">
+                                    <li>ВИТАЛИЙ ЦАРЕНКОВ</li>
+                                    <li>визуальный художник</li>
+                                    <li>р. 1987</li>
+                                    <li>Живёт в Санкт-Петербурге</li>
+                                </ul>
+                                <div class="one-item-link">
+                                    <a
+                                        aria-label="Инстаграм (откроется в новой вкладке)"
+                                        href="https://www.instagram.com/vitalytsarenkov"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >Instagram</a
+                                    >
+                                    <span aria-hidden="true">&middot;</span>
+                                    <a
+                                        aria-label="X (откроется в новой вкладке)"
+                                        href="https://x.com/vitalytsarenkov"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        >X</a
+                                    >
+                                </div>
+                            </figcaption>
+                        </figure>
+                    </section>
+
+                    <div class="text-main">
+                        <p>
+                            Визуальный художник Виталий Царенков создаёт матрицы смыслов для
+                            проявления неуловимой реальности посредством фигуративных полигональных
+                            работ.
+                        </p>
+                        <p>
+                            Здесь вы найдёте его избранные работы и информационные материалы. Для
+                            связи используйте страницу контактов. Новости и процесс — в социальных
+                            сетях.
+                        </p>
+                    </div>
+
+                    <div class="download-link">
+                        <a href="/pdf/vitaly-tsarenkov_portfolio_rus.pdf" download
+                            >Скачать портфолио (PDF)</a
+                        >
+                    </div>
+
+                    <button class="top-scroll-button" aria-label="Прокрутить наверх">
+                        <svg
+                            class="icon"
+                            aria-label="Иконка стрелки вверх"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <polygon points="5,0 10,10 0,10" />
+                        </svg>
+                    </button>
+                </main>
+            </div>
+            <footer class="footer">
+                <p>&copy; <time datetime="2024">2024</time> Виталий Царенков</p>
+            </footer>
+            <script>
+                (() => {
+                    const footer = document.currentScript.previousElementSibling;
+                    const time = footer.querySelector('time');
+                    const year = new Date().getFullYear();
+                    time.textContent = year;
+                    time.setAttribute('datetime', year);
+                })();
+            </script>
+        </div>
+
+        <div class="modal" aria-label="Просмотр изображения" aria-modal="true" role="dialog">
+            <div class="modal-buttons">
+                <button class="modal-close" aria-label="Закрыть изображение">
+                    <svg
+                        class="icon"
+                        aria-label="Иконка крестика"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="10"
+                        height="10"
+                        viewBox="0 0 10 10"
+                    >
+                        <polygon
+                            points="0.707,0 5,4.293 9.293,0 10,0.707 5.707,5 10,9.293 9.293,10 5,5.707 0.707,10 0,9.293 4.293,5 0,0.707"
+                        />
+                    </svg>
+                </button>
+                <div class="modal-zoom-buttons">
+                    <button class="zoom-out" aria-label="Уменьшить">
+                        <svg
+                            class="icon"
+                            aria-label="Иконка минуса"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <path d="m0 4.5h10v1h-10z" />
+                        </svg>
+                    </button>
+                    <button class="zoom-in" aria-label="Увеличить">
+                        <svg
+                            class="icon"
+                            aria-label="Иконка плюса"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="10"
+                            height="10"
+                            viewBox="0 0 10 10"
+                        >
+                            <path d="m0 4.5h4.5v-4.5h1v4.5h4.5v1h-4.5v4.5h-1v-4.5h-4.5z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-image-container" tabindex="0">
+                <div class="modal-loading">
+                    <span class="loading-text" aria-live="polite">загрузка</span
+                    ><span class="loading-dots" aria-hidden="true"></span>
+                </div>
+                <img class="modal-image" aria-label="Изображение в высоком разрешении" />
+            </div>
+        </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                const logo = body.querySelector('.logo');
+                logo.focus({
+                    preventScroll: true,
+                });
+                logo.blur();
+                const container = document.body.querySelector('.container');
+                container.classList.remove('zero-opacity');
+            });
+        </script>
+
+        <script src="/js/scripts.js"></script>
+    </body>
 </html>
