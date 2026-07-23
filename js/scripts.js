@@ -350,6 +350,7 @@ function initModal() {
         enableScroll(body);
         disableZoom();
 
+        modalObserver.observe(modalImageContainer);
         modalImageContainer.classList.remove('show-loading');
 
         modalImage.classList.add('full-opacity');
@@ -369,6 +370,7 @@ function initModal() {
         if (body.classList.contains('unclicable')) return;
 
         clearInterval(loadingIntervalId);
+        modalObserver.disconnect();
 
         body.classList.add('unclicable');
         openedImage.focus({
@@ -624,7 +626,7 @@ function initModal() {
         });
     }
 
-    window.visualViewport?.addEventListener('resize', () => {
+    const modalObserver = new ResizeObserver((_) => {
         if (!modal.classList.contains('show-modal')) return;
 
         isRotating = true;
