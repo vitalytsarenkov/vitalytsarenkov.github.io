@@ -350,7 +350,6 @@ function initModal() {
         enableScroll(body);
         disableZoom();
 
-        modalObserver.observe(modalImageContainer);
         modalImageContainer.classList.remove('show-loading');
 
         modalImage.classList.add('full-opacity');
@@ -370,7 +369,6 @@ function initModal() {
         if (body.classList.contains('unclicable')) return;
 
         clearInterval(loadingIntervalId);
-        modalObserver.disconnect();
 
         body.classList.add('unclicable');
         openedImage.focus({
@@ -626,7 +624,7 @@ function initModal() {
         });
     }
 
-    const modalObserver = new ResizeObserver((_) => {
+    window.visualViewport?.addEventListener('resize', () => {
         if (!modal.classList.contains('show-modal')) return;
 
         isRotating = true;
@@ -641,7 +639,6 @@ function initModal() {
 
             requestAnimationFrame(() => {
                 isRotating = false;
-                if (modalImage.classList.contains('fit-content')) resetScrollPosition();
             });
         });
     });
