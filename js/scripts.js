@@ -600,7 +600,6 @@ function initModal() {
 
     function getScrollPosition() {
         if (isRotating) return;
-        if (modalImageContainer.scrollWidth === 0) return;
 
         if (modalImage.classList.contains('fit-content')) {
             const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
@@ -732,8 +731,6 @@ function initModal() {
             }
         }
     });
-
-    modalImageContainer.addEventListener('scroll', getScrollPosition);
 
     // Focus trap
 
