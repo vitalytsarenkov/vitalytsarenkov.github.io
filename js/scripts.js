@@ -600,13 +600,14 @@ function initModal() {
 
     function getScrollPosition() {
         if (isRotating) return;
+        if (modalImageContainer.scrollWidth === 0) return;
 
         if (modalImage.classList.contains('fit-content')) {
-            const centerX = modalImageContainer.scrollLeft + modalImageContainer.clientWidth / 2;
-            const centerY = modalImageContainer.scrollTop + modalImageContainer.clientHeight / 2;
+            const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
+            const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-            modalScrollLeft = modalImageContainer.scrollWidth > 0 ? centerX / modalImageContainer.scrollWidth : 0;
-            modalScrollTop = modalImageContainer.scrollHeight > 0 ? centerY / modalImageContainer.scrollHeight : 0;
+            modalScrollLeft = maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
+            modalScrollTop = maxScrollTop > 0 ? modalImageContainer.scrollTop / maxScrollTop : 0;
         }
     }
 
@@ -614,8 +615,8 @@ function initModal() {
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
         const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-        let targetLeft = modalScrollLeft * modalImageContainer.scrollWidth - modalImageContainer.clientWidth / 2;
-        let targetTop = modalScrollTop * modalImageContainer.scrollHeight - modalImageContainer.clientHeight / 2;
+        let targetLeft = modalScrollLeft * maxScrollLeft;
+        let targetTop = modalScrollTop * maxScrollTop;
 
         targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
         targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
@@ -693,8 +694,17 @@ function initModal() {
             if (!modalImage.classList.contains('fit-content')) {
                 const rect = modalImage.getBoundingClientRect();
 
-                modalScrollLeft = (event.clientX - rect.left) / rect.width;
-                modalScrollTop = (event.clientY - rect.top) / rect.height;
+                const clickX = ((event.clientX - rect.left) / rect.width) * originalWidth;
+                const clickY = ((event.clientY - rect.top) / rect.height) * originalHeight;
+
+                const maxScrollLeft = originalWidth - modalImageContainer.clientWidth;
+                const maxScrollTop = originalHeight - modalImageContainer.clientHeight;
+
+                const targetLeft = clickX - modalImageContainer.clientWidth / 2;
+                const targetTop = clickY - modalImageContainer.clientHeight / 2;
+
+                modalScrollLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft)) / maxScrollLeft;
+                modalScrollTop = Math.max(0, Math.min(targetTop, maxScrollTop)) / maxScrollTop;
             }
             toggleZoom();
         };
@@ -722,6 +732,8 @@ function initModal() {
             }
         }
     });
+
+    modalImageContainer.addEventListener('scroll', getScrollPosition);
 
     // Focus trap
 
