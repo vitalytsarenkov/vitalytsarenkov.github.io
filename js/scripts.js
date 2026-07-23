@@ -641,6 +641,7 @@ function initModal() {
 
             requestAnimationFrame(() => {
                 isRotating = false;
+                if (modalImage.classList.contains('fit-content')) resetScrollPosition();
             });
         });
     });
