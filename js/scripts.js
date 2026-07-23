@@ -602,11 +602,11 @@ function initModal() {
         if (isRotating) return;
 
         if (modalImage.classList.contains('fit-content')) {
-            const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
-            const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+            const centerX = modalImageContainer.scrollLeft + modalImageContainer.clientWidth / 2;
+            const centerY = modalImageContainer.scrollTop + modalImageContainer.clientHeight / 2;
 
-            modalScrollLeft = maxScrollLeft > 0 ? modalImageContainer.scrollLeft / maxScrollLeft : 0;
-            modalScrollTop = maxScrollTop > 0 ? modalImageContainer.scrollTop / maxScrollTop : 0;
+            modalScrollLeft = modalImageContainer.scrollWidth > 0 ? centerX / modalImageContainer.scrollWidth : 0;
+            modalScrollTop = modalImageContainer.scrollHeight > 0 ? centerY / modalImageContainer.scrollHeight : 0;
         }
     }
 
@@ -614,8 +614,8 @@ function initModal() {
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
         const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
-        let targetLeft = modalScrollLeft * maxScrollLeft;
-        let targetTop = modalScrollTop * maxScrollTop;
+        let targetLeft = modalScrollLeft * modalImageContainer.scrollWidth - modalImageContainer.clientWidth / 2;
+        let targetTop = modalScrollTop * modalImageContainer.scrollHeight - modalImageContainer.clientHeight / 2;
 
         targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
         targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
@@ -685,7 +685,19 @@ function initModal() {
     modalImage.addEventListener('pointerup', (event) => {
         if (modalImage.classList.contains('fit-size')) return;
 
-        getScrollPosition();
+        if (modalImage.classList.contains('fit-content')) {
+            getScrollPosition();
+        }
+
+        const zoomToClick = () => {
+            if (!modalImage.classList.contains('fit-content')) {
+                const rect = modalImage.getBoundingClientRect();
+
+                modalScrollLeft = (event.clientX - rect.left) / rect.width;
+                modalScrollTop = (event.clientY - rect.top) / rect.height;
+            }
+            toggleZoom();
+        };
 
         if (event.pointerType === 'mouse') {
             if (!isDragging) {
@@ -695,7 +707,7 @@ function initModal() {
                 }
 
                 lastMouseClickTime = event.timeStamp;
-                toggleZoom();
+                zoomToClick();
             }
         } else {
             tapCounter++;
@@ -706,7 +718,7 @@ function initModal() {
             } else if (tapCounter === 2) {
                 clearTimeout(tapTimeoutId);
                 tapCounter = 0;
-                toggleZoom();
+                zoomToClick();
             }
         }
     });
