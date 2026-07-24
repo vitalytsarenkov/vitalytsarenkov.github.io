@@ -474,7 +474,7 @@ function initModal() {
         const panEnd = () => {
             panning = false;
             modalImage.classList.remove('grabbing');
-            getScrollPosition();
+            /*getScrollPosition();*/
         };
 
         modalImage.addEventListener('pointerdown', panStart);
@@ -536,7 +536,7 @@ function initModal() {
     }
 
     function zoomModalOut() {
-        getScrollPosition();
+        /*getScrollPosition();*/
 
         const modalProportion = originalWidth / originalHeight;
         const windowProportion = window.innerWidth / window.innerHeight;
@@ -568,7 +568,7 @@ function initModal() {
     }
 
     function zoomModalIn() {
-        getScrollPosition();
+        /*getScrollPosition();*/
         modalImage.classList.add('fit-content');
         modalImage.classList.remove('fit-width');
         modalImage.classList.remove('fit-height');
@@ -634,6 +634,8 @@ function initModal() {
             modalScrollTop = centerY / modalImageContainer.scrollHeight;
         }
     }
+
+    modalImageContainer.addEventListener('scroll', getScrollPosition);
 
     function resetScrollPosition() {
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
@@ -725,9 +727,9 @@ function initModal() {
     modalImage.addEventListener('pointerup', (event) => {
         if (modalImage.classList.contains('fit-size')) return;
 
-        if (modalImage.classList.contains('fit-content')) {
+        /*if (modalImage.classList.contains('fit-content')) {
             getScrollPosition();
-        }
+        }*/
 
         const zoomToClick = () => {
             if (!modalImage.classList.contains('fit-content')) {
