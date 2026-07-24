@@ -612,23 +612,25 @@ function initModal() {
         scrollStateX = 'center';
         scrollStateY = 'center';
 
+        const epsilon = 2;
+
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
         const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
         const centerX = modalImageContainer.scrollLeft + modalImageContainer.clientWidth / 2;
         const centerY = modalImageContainer.scrollTop + modalImageContainer.clientHeight / 2;
 
-        if (modalImageContainer.scrollLeft === 0) {
+        if (modalImageContainer.scrollLeft <= epsilon) {
             scrollStateX = 'left';
-        } else if (modalImageContainer.scrollLeft >= maxScrollLeft) {
+        } else if (maxScrollLeft - modalImageContainer.scrollLeft <= epsilon) {
             scrollStateX = 'right';
         } else {
             modalScrollLeft = centerX / modalImageContainer.scrollWidth;
         }
 
-        if (modalImageContainer.scrollTop === 0) {
+        if (modalImageContainer.scrollTop <= epsilon) {
             scrollStateY = 'top';
-        } else if (modalImageContainer.scrollTop >= maxScrollTop) {
+        } else if (maxScrollTop - modalImageContainer.scrollTop <= epsilon) {
             scrollStateY = 'bottom';
         } else {
             modalScrollTop = centerY / modalImageContainer.scrollHeight;
