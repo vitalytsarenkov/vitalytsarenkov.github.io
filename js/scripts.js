@@ -609,31 +609,25 @@ function initModal() {
         if (isRotating) return;
         if (!modalImage.classList.contains('fit-content')) return;
 
-        scrollStateX = 'center';
-        scrollStateY = 'center';
-
-        const epsilon = 2;
-
         const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
         const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
 
         const centerX = modalImageContainer.scrollLeft + modalImageContainer.clientWidth / 2;
         const centerY = modalImageContainer.scrollTop + modalImageContainer.clientHeight / 2;
 
-        if (modalImageContainer.scrollLeft <= epsilon) {
+        modalScrollLeft = centerX / modalImageContainer.scrollWidth;
+        modalScrollTop = centerY / modalImageContainer.scrollHeight;
+
+        if (modalImageContainer.scrollLeft === 0) {
             scrollStateX = 'left';
-        } else if (maxScrollLeft - modalImageContainer.scrollLeft <= epsilon) {
+        } else if (modalImageContainer.scrollLeft >= maxScrollLeft) {
             scrollStateX = 'right';
-        } else {
-            modalScrollLeft = centerX / modalImageContainer.scrollWidth;
         }
 
-        if (modalImageContainer.scrollTop <= epsilon) {
+        if (modalImageContainer.scrollTop === 0) {
             scrollStateY = 'top';
-        } else if (maxScrollTop - modalImageContainer.scrollTop <= epsilon) {
+        } else if (modalImageContainer.scrollTop >= maxScrollTop) {
             scrollStateY = 'bottom';
-        } else {
-            modalScrollTop = centerY / modalImageContainer.scrollHeight;
         }
     }
 
@@ -684,7 +678,9 @@ function initModal() {
             }
 
             requestAnimationFrame(() => {
-                isRotating = false;
+                setTimeout(() => {
+                    isRotating = false;
+                }, 0);
             });
         });
     });
