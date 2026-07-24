@@ -511,7 +511,9 @@ function initModal() {
         }
 
         if (modalImage.classList.contains('fit-content')) {
-            resetScrollPosition();
+            if (!isRotating) {
+                resetScrollPosition();
+            }
         } else {
             modalImage.classList.remove('fit-width');
             modalImage.classList.remove('fit-height');
@@ -671,6 +673,9 @@ function initModal() {
 
             requestAnimationFrame(() => {
                 isRotating = false;
+                if (modalImage.classList.contains('fit-content')) {
+                    resetScrollPosition();
+                }
             });
         });
     });
