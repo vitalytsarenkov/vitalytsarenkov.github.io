@@ -248,6 +248,7 @@ function initModal() {
 
     if (!modal) return;
 
+    let isFirstOpen = true;
     let isRotating = false;
 
     const images = document.images;
@@ -392,6 +393,8 @@ function initModal() {
     }
 
     function clearModal() {
+        isFirstOpen = true;
+
         zoomOut.classList.add('disable-zoom');
         zoomIn.classList.add('disable-zoom');
 
@@ -400,9 +403,6 @@ function initModal() {
         modalScrollLeft = 0;
         modalScrollTop = 0;
 
-        scrollStateX = 'center';
-        scrollStateY = 'center';
-
         modalImage.removeEventListener('load', imageLoaded);
         modalImage.src = '';
         modalImage.removeAttribute('alt');
@@ -410,8 +410,8 @@ function initModal() {
     }
 
     function centerModal() {
-        modalImageContainer.scrollLeft = (modalImageContainer.scrollWidth - modalImageContainer.clientWidth) / 2;
-        modalImageContainer.scrollTop = (modalImageContainer.scrollHeight - modalImageContainer.clientHeight) / 2;
+        modalImageContainer.scrollLeft = (originalWidth - modalImageContainer.clientWidth) / 2;
+        modalImageContainer.scrollTop = (originalHeight - modalImageContainer.clientHeight) / 2;
     }
 
     for (let i = 0; i < images.length; i++) {
@@ -474,7 +474,6 @@ function initModal() {
         const panEnd = () => {
             panning = false;
             modalImage.classList.remove('grabbing');
-            /*getScrollPosition();*/
         };
 
         modalImage.addEventListener('pointerdown', panStart);
@@ -496,9 +495,6 @@ function initModal() {
 
     let modalScrollLeft;
     let modalScrollTop;
-
-    let scrollStateX;
-    let scrollStateY;
 
     function getModal() {
         originalWidth = modalImage.width;
@@ -536,7 +532,7 @@ function initModal() {
     }
 
     function zoomModalOut() {
-        /*getScrollPosition();*/
+        getScrollPosition();
 
         const modalProportion = originalWidth / originalHeight;
         const windowProportion = window.innerWidth / window.innerHeight;
@@ -568,7 +564,6 @@ function initModal() {
     }
 
     function zoomModalIn() {
-        /*getScrollPosition();*/
         modalImage.classList.add('fit-content');
         modalImage.classList.remove('fit-width');
         modalImage.classList.remove('fit-height');
@@ -605,58 +600,54 @@ function initModal() {
         }
     }
 
+    let maxScrollLeftBefore;
+    let maxScrollTopBefore;
+
     function getScrollPosition() {
         if (isRotating) return;
         if (!modalImage.classList.contains('fit-content')) return;
 
-        const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
-        const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+        maxScrollLeftBefore = originalWidth - modalImageContainer.clientWidth;
+        maxScrollTopBefore = originalHeight - modalImageContainer.clientHeight;
 
         const centerX = modalImageContainer.scrollLeft + modalImageContainer.clientWidth / 2;
         const centerY = modalImageContainer.scrollTop + modalImageContainer.clientHeight / 2;
 
-        modalScrollLeft = centerX / modalImageContainer.scrollWidth;
-        modalScrollTop = centerY / modalImageContainer.scrollHeight;
-
-        if (modalImageContainer.scrollLeft === 0) {
-            scrollStateX = 'left';
-        } else if (modalImageContainer.scrollLeft >= maxScrollLeft) {
-            scrollStateX = 'right';
-        }
-
-        if (modalImageContainer.scrollTop === 0) {
-            scrollStateY = 'top';
-        } else if (modalImageContainer.scrollTop >= maxScrollTop) {
-            scrollStateY = 'bottom';
-        }
+        modalScrollLeft = centerX / originalWidth;
+        modalScrollTop = centerY / originalHeight;
     }
 
-    modalImageContainer.addEventListener('scroll', getScrollPosition);
+    modalImageContainer.addEventListener('scroll', () => {
+        if (isRotating) return;
+
+        getScrollPosition();
+    });
 
     function resetScrollPosition() {
-        const maxScrollLeft = modalImageContainer.scrollWidth - modalImageContainer.clientWidth;
-        const maxScrollTop = modalImageContainer.scrollHeight - modalImageContainer.clientHeight;
+        const maxScrollLeftAfter = originalWidth - modalImageContainer.clientWidth;
+        const maxScrollTopAfter = originalHeight - modalImageContainer.clientHeight;
 
-        let targetLeft, targetTop;
+        let targetLeft;
+        let targetTop;
 
-        if (scrollStateX === 'left') {
+        if (isRotating && modalImageContainer.scrollLeft === 0) {
             targetLeft = 0;
-        } else if (scrollStateX === 'right') {
-            targetLeft = maxScrollLeft;
+        } else if (isRotating && modalImageContainer.scrollLeft === maxScrollLeftBefore) {
+            targetLeft = maxScrollLeftAfter;
         } else {
-            targetLeft = modalScrollLeft * modalImageContainer.scrollWidth - modalImageContainer.clientWidth / 2;
+            targetLeft = modalScrollLeft * originalWidth - modalImageContainer.clientWidth / 2;
         }
 
-        if (scrollStateY === 'top') {
+        if (isRotating && modalImageContainer.scrollTop === 0) {
             targetTop = 0;
-        } else if (scrollStateY === 'bottom') {
-            targetTop = maxScrollTop;
+        } else if (isRotating && modalImageContainer.scrollTop === maxScrollTopBefore) {
+            targetTop = maxScrollTopAfter;
         } else {
-            targetTop = modalScrollTop * modalImageContainer.scrollHeight - modalImageContainer.clientHeight / 2;
+            targetTop = modalScrollTop * originalHeight - modalImageContainer.clientHeight / 2;
         }
 
-        targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeft));
-        targetTop = Math.max(0, Math.min(targetTop, maxScrollTop));
+        targetLeft = Math.max(0, Math.min(targetLeft, maxScrollLeftAfter));
+        targetTop = Math.max(0, Math.min(targetTop, maxScrollTopAfter));
 
         modalImageContainer.scrollTo({
             left: targetLeft,
@@ -664,14 +655,35 @@ function initModal() {
         });
     }
 
+    if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => {
+            if (!modal.classList.contains('show-modal')) return;
+
+            isRotating = true;
+        });
+    } else {
+        window.addEventListener('resize', () => {
+            if (!modal.classList.contains('show-modal')) return;
+
+            isRotating = true;
+        });
+    }
+
     const modalObserver = new ResizeObserver((_) => {
         if (!modal.classList.contains('show-modal')) return;
 
-        isRotating = true;
+        if (isFirstOpen) {
+            isFirstOpen = false;
+            return;
+        }
+
+        // getScrollPosition();
+
+        // isRotating = true;
 
         requestAnimationFrame(() => {
             if (modalImage.classList.contains('fit-content')) {
-                updateModal();
+                resetScrollPosition();
             } else {
                 resetModal();
                 updateModal();
@@ -725,15 +737,8 @@ function initModal() {
     modalImage.addEventListener('pointerup', (event) => {
         if (modalImage.classList.contains('fit-size')) return;
 
-        /*if (modalImage.classList.contains('fit-content')) {
-            getScrollPosition();
-        }*/
-
         const zoomToClick = () => {
             if (!modalImage.classList.contains('fit-content')) {
-                scrollStateX = 'center';
-                scrollStateY = 'center';
-
                 const rect = modalImage.getBoundingClientRect();
 
                 modalScrollLeft = (event.clientX - rect.left) / rect.width;
