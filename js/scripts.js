@@ -617,11 +617,7 @@ function initModal() {
         modalScrollTop = centerY / originalHeight;
     }
 
-    modalImageContainer.addEventListener('scroll', () => {
-        if (isRotating) return;
-
-        getScrollPosition();
-    });
+    modalImageContainer.addEventListener('scroll', getScrollPosition);
 
     function resetScrollPosition() {
         const maxScrollLeftAfter = originalWidth - modalImageContainer.clientWidth;
@@ -655,18 +651,18 @@ function initModal() {
         });
     }
 
-    if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', () => {
-            if (!modal.classList.contains('show-modal')) return;
+    window._myOrientationQuery = window.matchMedia('(orientation: portrait)');
 
-            isRotating = true;
-        });
+    function handleOrientationChange() {
+        isRotating = true;
+    }
+
+    if (typeof window._myOrientationQuery.addEventListener === 'function') {
+        window._myOrientationQuery.addEventListener('change', handleOrientationChange);
+    } else if (typeof window._myOrientationQuery.addListener === 'function') {
+        window._myOrientationQuery.addListener(handleOrientationChange);
     } else {
-        window.addEventListener('resize', () => {
-            if (!modal.classList.contains('show-modal')) return;
-
-            isRotating = true;
-        });
+        window.addEventListener('orientationchange', handleOrientationChange);
     }
 
     const modalObserver = new ResizeObserver((_) => {
@@ -676,10 +672,6 @@ function initModal() {
             isFirstOpen = false;
             return;
         }
-
-        // getScrollPosition();
-
-        // isRotating = true;
 
         requestAnimationFrame(() => {
             if (modalImage.classList.contains('fit-content')) {
