@@ -509,8 +509,6 @@ function initModal() {
     function zoomModalOut() {
         getModalScroll();
 
-        modalImageContainer.scrollTo(0, 0);
-
         const imageProportion = imageWidth / imageHeight;
         const windowProportion = window.innerWidth / window.innerHeight;
 
@@ -537,6 +535,8 @@ function initModal() {
         } else {
             modalImageContainer.focus();
         }
+
+        modalImageContainer.scrollTo(0, 0);
     }
 
     function zoomModalIn() {
@@ -770,7 +770,7 @@ function initModal() {
         }, 50);
     }
 
-    modalImageContainer.addEventListener(
+    modalImage.addEventListener(
         'touchend',
         () => {
             getModalScroll();
