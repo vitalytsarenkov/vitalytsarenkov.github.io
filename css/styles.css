@@ -5,6 +5,8 @@
     --menu-transition: 0.2s;
     --mode-transition: 0.2s;
     --page-transition: 0.4s;
+
+    /* Must match MODAL_TRANSITION */
     --modal-transition: 0.2s;
 }
 
@@ -106,6 +108,15 @@ html {
     font-size: 20px;
 
     scroll-behavior: smooth;
+
+    overflow-y: scroll;
+}
+
+@supports (scrollbar-gutter: stable) {
+    html:not(.hide-scroll) {
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
 }
 
 body {
@@ -593,8 +604,6 @@ li {
     display: flex;
     flex: 1;
 
-    position: relative;
-
     overflow: auto;
 }
 
@@ -609,8 +618,6 @@ li {
 
 .modal-image-container.show-loading .modal-loading {
     display: block;
-
-    opacity: 1;
 }
 
 body.unclicable .modal-image-container {
@@ -622,10 +629,15 @@ body.unclicable .modal-image-container {
 
     display: none;
 
-    position: absolute;
-    top: 50%;
+    position: fixed;
+    top: calc(50% + var(--header-height) / 2);
     left: 50%;
-    transform: translate(-3ch, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.loading-dots {
+    position: absolute;
+    left: 100%;
 }
 
 .modal-image {
@@ -634,8 +646,6 @@ body.unclicable .modal-image-container {
     object-fit: contain;
 
     opacity: 0;
-
-    transition: opacity var(--modal-transition);
 }
 
 .modal-image:not(.full-opacity) {
@@ -837,10 +847,6 @@ body.unclicable .modal-image-container {
 }
 
 @media only screen and (orientation: landscape) {
-    html {
-        overflow-y: scroll;
-    }
-
     .page {
         max-width: 1000px;
 
@@ -941,6 +947,10 @@ body.unclicable .modal-image-container {
 
     .modal-zoom-buttons {
         display: none;
+    }
+
+    .modal-loading {
+        top: 50%;
     }
 
     /* Margins */
