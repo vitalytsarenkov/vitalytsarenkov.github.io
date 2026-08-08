@@ -727,12 +727,12 @@ function initModal() {
 
         if (currentWindowWidth === lastWindowWidth && currentWindowHeight === lastWindowHeight) return;
 
-        lastWindowWidth = currentWindowWidth;
-        lastWindowHeight = currentWindowHeight;
-
         cancelAnimationFrame(rafId);
 
         rafId = requestAnimationFrame(() => {
+            lastWindowWidth = currentWindowWidth;
+            lastWindowHeight = currentWindowHeight;
+
             modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
 
             if (imageWidth <= currentWindowWidth && imageHeight <= currentWindowHeight) {
@@ -743,7 +743,7 @@ function initModal() {
                 updateFitContain();
             }
 
-            queueMicrotask(() => {
+            requestAnimationFrame(() => {
                 updateModalScroll();
             });
         });
