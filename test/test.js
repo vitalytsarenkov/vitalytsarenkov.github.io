@@ -375,7 +375,8 @@ function initModal() {
 
         body.removeEventListener('touchmove', blockTouchMove);
 
-        modalObserver.observe(modalImageContainer);
+        // modalObserver.observe(modalImageContainer);
+        window.addEventListener('resize', handleResize);
     }
 
     Array.from(images).forEach((image) => {
@@ -392,7 +393,8 @@ function initModal() {
         body.removeEventListener('touchmove', blockTouchMove);
 
         clearInterval(loadingIntervalId);
-        modalObserver.disconnect();
+        // modalObserver.disconnect();
+        window.removeEventListener('resize', handleResize);
 
         lastWindowWidth = window.innerWidth;
         lastWindowHeight = window.innerHeight;
@@ -717,8 +719,8 @@ function initModal() {
             behavior: 'auto',
         });
 
-        modalWidthBefore = modalWidthAfter;
-        modalHeightBefore = modalHeightAfter;
+        /*modalWidthBefore = modalWidthAfter;
+        modalHeightBefore = modalHeightAfter;*/
     }
 
     let lastWindowWidth = window.innerWidth;
@@ -726,7 +728,7 @@ function initModal() {
 
     let rafId = null;
 
-    const modalObserver = new ResizeObserver((_) => {
+    function handleResize() {
         if (!modal.classList.contains('show-modal')) return;
 
         const currentWindowWidth = window.innerWidth;
@@ -751,8 +753,11 @@ function initModal() {
             }
 
             updateModalScroll();
+
+            modalWidthBefore = modalImageContainer.clientWidth;
+            modalHeightBefore = modalImageContainer.clientHeight;
         });
-    });
+    }
 
     let scrollTimeout = null;
 
@@ -837,6 +842,9 @@ function initModal() {
 
         modalScrollLeft = modalImageContainer.scrollLeft;
         modalScrollTop = modalImageContainer.scrollTop;
+
+        modalWidthBefore = modalImageContainer.clientWidth;
+        modalHeightBefore = modalImageContainer.clientHeight;
     }
 }
 
