@@ -692,8 +692,8 @@ function initModal() {
         const maxScrollLeft = imageWidth - modalWidthAfter;
         const maxScrollTop = imageHeight - modalHeightAfter;
 
-        const centerX = modalScrollLeft + modalWidthBefore / 2;
-        const centerY = modalScrollTop + modalHeightBefore / 2;
+        const centerX = modalScrollLeft > 0 ? modalScrollLeft + modalWidthBefore / 2 : imageWidth / 2;
+        const centerY = modalScrollTop > 0 ? modalScrollTop + modalHeightBefore / 2 : imageHeight / 2;
 
         const percentX = centerX / imageWidth;
         const percentY = centerY / imageHeight;
@@ -736,16 +736,14 @@ function initModal() {
         cancelAnimationFrame(rafId);
 
         rafId = requestAnimationFrame(() => {
-            if (!modalImage.classList.contains('fit-content')) {
-                modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
+            modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
 
-                if (imageWidth <= window.innerWidth && imageHeight <= window.innerHeight) {
-                    modalImage.classList.add('fit-size');
-                } else {
-                    zoomModalOut();
-                }
-
+            if (imageWidth <= window.innerWidth && imageHeight <= window.innerHeight) {
+                modalImage.classList.remove('fit-content');
+                modalImage.classList.add('fit-size');
                 updateZoomButtons();
+            } else if (!modalImage.classList.contains('fit-content')) {
+                zoomModalOut();
             }
 
             updateModalScroll();
