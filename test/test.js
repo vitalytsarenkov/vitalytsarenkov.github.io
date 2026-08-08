@@ -321,10 +321,6 @@ function initModal() {
             } else {
                 modalImageContainer.classList.add('show-loading');
 
-                clearInterval(loadingIntervalId);
-                dots = '';
-                dotCounter = 0;
-                loadingDots.textContent = dots;
                 loadingIntervalId = setInterval(loadingModal, 250);
 
                 modalImage.addEventListener('load', imageLoaded, { once: true });
@@ -375,8 +371,7 @@ function initModal() {
 
         body.removeEventListener('touchmove', blockTouchMove);
 
-        // modalObserver.observe(modalImageContainer);
-        orientationMedia.addEventListener('change', handleOrientationChange);
+        modalObserver.observe(modalImageContainer);
     }
 
     Array.from(images).forEach((image) => {
@@ -390,15 +385,6 @@ function initModal() {
         if (body.classList.contains('unclicable')) return;
 
         body.classList.add('unclicable');
-        body.removeEventListener('touchmove', blockTouchMove);
-
-        clearInterval(loadingIntervalId);
-        // modalObserver.disconnect();
-        orientationMedia.removeEventListener('change', handleOrientationChange);
-
-        lastWindowWidth = window.innerWidth;
-        lastWindowHeight = window.innerHeight;
-
         modal.classList.remove('show-modal');
 
         openedImage.focus({
@@ -407,31 +393,39 @@ function initModal() {
 
         setTimeout(() => {
             clearModal();
-
-            html.classList.remove('hide-scroll');
-            html.style.paddingRight = '';
-
             body.classList.remove('unclicable');
         }, MODAL_TRANSITION);
     }
 
     function clearModal() {
-        cancelAnimationFrame(rafId);
-        clearTimeout(scrollTimeout);
+        lastWindowWidth = window.innerWidth;
+        lastWindowHeight = window.innerHeight;
 
-        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
+        html.classList.remove('hide-scroll');
+        html.style.paddingRight = '';
+
+        body.removeEventListener('touchmove', blockTouchMove);
+
+        clearInterval(loadingIntervalId);
+        dots = '';
+        dotCounter = 0;
+        loadingIntervalId = null;
+        loadingDots.textContent = '';
+
         modalImageContainer.classList.remove('show-loading');
+
+        modalObserver.disconnect();
+
+        cancelAnimationFrame(rafId);
+
+        clearTimeout(scrollTimeout);
+        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
 
         modalWidthBefore = 0;
         modalHeightBefore = 0;
 
         modalScrollLeft = 0;
         modalScrollTop = 0;
-
-        openedImage = null;
-
-        imageWidth = 0;
-        imageHeight = 0;
 
         modalImage.removeEventListener('load', imageLoaded);
         modalImage.classList.remove('fit-size');
@@ -443,6 +437,20 @@ function initModal() {
         modalImage.src = '';
         modalImage.removeAttribute('alt');
         modalImage.removeAttribute('width');
+
+        openedImage = null;
+
+        imageWidth = 0;
+        imageHeight = 0;
+
+        mouseStartX = 0;
+        mouseStartY = 0;
+
+        lastMouseClickTime = 0;
+
+        clearTimeout(tapTimeoutId);
+        tapCounter = 0;
+        tapTimeoutId = null;
     }
 
     modalClose.addEventListener('click', closeModal);
@@ -516,24 +524,9 @@ function initModal() {
     function zoomModalOut() {
         getModalScroll();
 
-        const imageProportion = imageWidth / imageHeight;
-        const windowProportion = window.innerWidth / window.innerHeight;
-
         modalImage.classList.remove('fit-content');
 
-        if (isPortrait()) {
-            if (imageProportion > windowProportion) {
-                modalImage.classList.add('fit-width');
-            } else {
-                modalImage.classList.add('fit-height');
-            }
-        } else {
-            if (imageProportion < windowProportion) {
-                modalImage.classList.add('fit-height');
-            } else {
-                modalImage.classList.add('fit-width');
-            }
-        }
+        updateFitContain();
 
         updateZoomButtons();
 
@@ -696,8 +689,6 @@ function initModal() {
         const modalWidthAfter = modalImageContainer.clientWidth;
         const modalHeightAfter = modalImageContainer.clientHeight;
 
-        if (modalWidthAfter === modalWidthBefore && modalHeightAfter === modalHeightBefore) return;
-
         const maxScrollLeft = imageWidth - modalWidthAfter;
         const maxScrollTop = imageHeight - modalHeightAfter;
 
@@ -726,40 +717,43 @@ function initModal() {
     let lastWindowWidth = window.innerWidth;
     let lastWindowHeight = window.innerHeight;
 
-    let orientationMedia = window.matchMedia('(orientation: portrait)');
     let rafId = null;
 
-    function handleOrientationChange() {
+    const modalObserver = new ResizeObserver((_) => {
         if (!modal.classList.contains('show-modal')) return;
 
-        /*const currentWindowWidth = window.innerWidth;
+        const currentWindowWidth = window.innerWidth;
         const currentWindowHeight = window.innerHeight;
 
         if (currentWindowWidth === lastWindowWidth && currentWindowHeight === lastWindowHeight) return;
 
         lastWindowWidth = currentWindowWidth;
-        lastWindowHeight = currentWindowHeight;*/
+        lastWindowHeight = currentWindowHeight;
 
         cancelAnimationFrame(rafId);
 
         rafId = requestAnimationFrame(() => {
             modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
 
-            if (imageWidth <= window.innerWidth && imageHeight <= window.innerHeight) {
+            if (imageWidth <= currentWindowWidth && imageHeight <= currentWindowHeight) {
                 modalImage.classList.remove('fit-content');
                 modalImage.classList.add('fit-size');
                 updateZoomButtons();
             } else if (!modalImage.classList.contains('fit-content')) {
-                zoomModalOut();
+                updateFitContain();
             }
 
-            updateModalScroll();
+            queueMicrotask(() => {
+                updateModalScroll();
+            });
         });
-    }
+    });
 
     let scrollTimeout = null;
 
     function trackNativeScroll() {
+        if (!modalImage.classList.contains('fit-content')) return;
+
         getModalScroll();
 
         clearTimeout(scrollTimeout);
@@ -772,6 +766,8 @@ function initModal() {
     modalImage.addEventListener(
         'touchend',
         () => {
+            if (!modalImage.classList.contains('fit-content')) return;
+
             getModalScroll();
 
             clearTimeout(scrollTimeout);
@@ -836,10 +832,19 @@ function initModal() {
     }
 
     function getModalScroll() {
-        if (!modalImage.classList.contains('fit-content')) return;
-
         modalScrollLeft = modalImageContainer.scrollLeft;
         modalScrollTop = modalImageContainer.scrollTop;
+    }
+
+    function updateFitContain() {
+        const imageProportion = imageWidth / imageHeight;
+        const windowProportion = window.innerWidth / window.innerHeight;
+
+        if (imageProportion > windowProportion) {
+            modalImage.classList.add('fit-width');
+        } else {
+            modalImage.classList.add('fit-height');
+        }
     }
 }
 

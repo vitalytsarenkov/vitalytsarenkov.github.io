@@ -694,8 +694,6 @@ function initModal() {
         const modalWidthAfter = modalImageContainer.clientWidth;
         const modalHeightAfter = modalImageContainer.clientHeight;
 
-        if (modalWidthAfter === modalWidthBefore && modalHeightAfter === modalHeightBefore) return;
-
         const maxScrollLeft = imageWidth - modalWidthAfter;
         const maxScrollTop = imageHeight - modalHeightAfter;
 
