@@ -414,7 +414,7 @@ function initModal() {
     }
 
     function clearModal() {
-        clearTimeout(resizeTimeout);
+        cancelAnimationFrame(rafId);
         clearTimeout(scrollTimeout);
 
         modalImageContainer.removeEventListener('scroll', trackNativeScroll);
@@ -717,13 +717,11 @@ function initModal() {
     let lastWindowWidth = window.innerWidth;
     let lastWindowHeight = window.innerHeight;
 
-    let resizeTimeout = null;
     let isRotating = false;
+    let rafId = null;
 
     const modalObserver = new ResizeObserver((_) => {
         if (!modal.classList.contains('show-modal')) return;
-
-        clearTimeout(resizeTimeout);
 
         const currentWindowWidth = window.innerWidth;
         const currentWindowHeight = window.innerHeight;
@@ -735,32 +733,40 @@ function initModal() {
 
         isRotating = true;
 
-        resizeTimeout = setTimeout(() => {
-            requestAnimationFrame(() => {
-                if (!modalImage.classList.contains('fit-content')) {
-                    modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
+        cancelAnimationFrame(rafId);
 
-                    if (imageWidth <= window.innerWidth && imageHeight <= window.innerHeight) {
-                        modalImage.classList.add('fit-size');
-                    } else {
-                        zoomModalOut();
-                    }
+        rafId = requestAnimationFrame(() => {
+            if (!modalImage.classList.contains('fit-content')) {
+                modalImage.classList.remove('fit-size', 'fit-width', 'fit-height');
 
-                    updateZoomButtons();
+                if (imageWidth <= window.innerWidth && imageHeight <= window.innerHeight) {
+                    modalImage.classList.add('fit-size');
+                } else {
+                    zoomModalOut();
                 }
 
-                updateModalScroll();
+                updateZoomButtons();
+            }
 
-                setTimeout(() => {
-                    isRotating = false;
-                }, 0);
-            });
-        }, 50);
+            updateModalScroll();
+
+            setTimeout(() => {
+                isRotating = false;
+            }, 0);
+        });
     });
 
     let scrollTimeout = null;
 
+    let lastScrollLeft = 0;
+    let lastScrollTop = 0;
+
     function trackNativeScroll() {
+        const deltaX = Math.abs(modalImageContainer.scrollLeft - lastScrollLeft);
+        const deltaY = Math.abs(modalImageContainer.scrollTop - lastScrollTop);
+
+        if (deltaX < 15 && deltaY < 15) return;
+
         getModalScroll();
 
         clearTimeout(scrollTimeout);
@@ -774,6 +780,9 @@ function initModal() {
         'touchend',
         () => {
             getModalScroll();
+
+            lastScrollLeft = modalImageContainer.scrollLeft;
+            lastScrollTop = modalImageContainer.scrollTop;
 
             clearTimeout(scrollTimeout);
 
