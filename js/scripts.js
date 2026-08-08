@@ -415,19 +415,16 @@ function initModal() {
 
     function clearModal() {
         cancelAnimationFrame(rafId);
-        /*clearTimeout(scrollTimeout);*/
+        clearTimeout(scrollTimeout);
 
-        /*modalImageContainer.removeEventListener('scroll', trackNativeScroll);
-        modalImageContainer.classList.remove('show-loading');*/
+        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
+        modalImageContainer.classList.remove('show-loading');
 
         modalWidthBefore = 0;
         modalHeightBefore = 0;
 
         modalScrollLeft = 0;
         modalScrollTop = 0;
-
-        /*lastScrollLeft = 0;
-        lastScrollTop = 0;*/
 
         openedImage = null;
 
@@ -548,8 +545,8 @@ function initModal() {
     }
 
     function zoomModalIn() {
-        /*clearTimeout(scrollTimeout);
-        modalImageContainer.removeEventListener('scroll', trackNativeScroll);*/
+        clearTimeout(scrollTimeout);
+        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
 
         modalImage.classList.remove('fit-width', 'fit-height');
         modalImage.classList.add('fit-content');
@@ -697,11 +694,13 @@ function initModal() {
         const modalWidthAfter = modalImageContainer.clientWidth;
         const modalHeightAfter = modalImageContainer.clientHeight;
 
+        if (modalWidthAfter === modalWidthBefore && modalHeightAfter === modalHeightBefore) return;
+
         const maxScrollLeft = imageWidth - modalWidthAfter;
         const maxScrollTop = imageHeight - modalHeightAfter;
 
-        const centerX = modalScrollLeft > 0 ? modalScrollLeft + modalWidthBefore / 2 : imageWidth / 2;
-        const centerY = modalScrollTop > 0 ? modalScrollTop + modalHeightBefore / 2 : imageHeight / 2;
+        const centerX = imageWidth > modalWidthBefore ? modalScrollLeft + modalWidthBefore / 2 : imageWidth / 2;
+        const centerY = imageHeight > modalHeightBefore ? modalScrollTop + modalHeightBefore / 2 : imageHeight / 2;
 
         const percentX = centerX / imageWidth;
         const percentY = centerY / imageHeight;
@@ -755,32 +754,16 @@ function initModal() {
         });
     });
 
-    modalImage.addEventListener(
-        'touchend',
-        () => {
-            getModalScroll();
-        },
-        { passive: true },
-    );
-
-    /*let scrollTimeout = null;
-
-    let lastScrollLeft = 0;
-    let lastScrollTop = 0;
+    let scrollTimeout = null;
 
     function trackNativeScroll() {
-        const deltaX = Math.abs(modalImageContainer.scrollLeft - lastScrollLeft);
-        const deltaY = Math.abs(modalImageContainer.scrollTop - lastScrollTop);
-
-        if (deltaX < 15 && deltaY < 15) return;
-
         getModalScroll();
 
         clearTimeout(scrollTimeout);
 
         scrollTimeout = setTimeout(() => {
             modalImageContainer.removeEventListener('scroll', trackNativeScroll);
-        }, 50);
+        }, 100);
     }
 
     modalImage.addEventListener(
@@ -788,19 +771,16 @@ function initModal() {
         () => {
             getModalScroll();
 
-            lastScrollLeft = modalImageContainer.scrollLeft;
-            lastScrollTop = modalImageContainer.scrollTop;
-
             clearTimeout(scrollTimeout);
 
             modalImageContainer.addEventListener('scroll', trackNativeScroll, { passive: true });
 
             scrollTimeout = setTimeout(() => {
                 modalImageContainer.removeEventListener('scroll', trackNativeScroll);
-            }, 50);
+            }, 100);
         },
         { passive: true },
-    );*/
+    );
 
     // Focus modal
 
