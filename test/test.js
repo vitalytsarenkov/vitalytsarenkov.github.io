@@ -376,7 +376,7 @@ function initModal() {
         body.removeEventListener('touchmove', blockTouchMove);
 
         // modalObserver.observe(modalImageContainer);
-        window.addEventListener('resize', handleResize);
+        orientationMedia.addEventListener('change', handleOrientationChange);
     }
 
     Array.from(images).forEach((image) => {
@@ -394,7 +394,7 @@ function initModal() {
 
         clearInterval(loadingIntervalId);
         // modalObserver.disconnect();
-        window.removeEventListener('resize', handleResize);
+        orientationMedia.removeEventListener('change', handleOrientationChange);
 
         lastWindowWidth = window.innerWidth;
         lastWindowHeight = window.innerHeight;
@@ -719,25 +719,26 @@ function initModal() {
             behavior: 'auto',
         });
 
-        /*modalWidthBefore = modalWidthAfter;
-        modalHeightBefore = modalHeightAfter;*/
+        modalWidthBefore = modalWidthAfter;
+        modalHeightBefore = modalHeightAfter;
     }
 
     let lastWindowWidth = window.innerWidth;
     let lastWindowHeight = window.innerHeight;
 
+    let orientationMedia = window.matchMedia('(orientation: portrait)');
     let rafId = null;
 
-    function handleResize() {
+    function handleOrientationChange() {
         if (!modal.classList.contains('show-modal')) return;
 
-        const currentWindowWidth = window.innerWidth;
+        /*const currentWindowWidth = window.innerWidth;
         const currentWindowHeight = window.innerHeight;
 
         if (currentWindowWidth === lastWindowWidth && currentWindowHeight === lastWindowHeight) return;
 
         lastWindowWidth = currentWindowWidth;
-        lastWindowHeight = currentWindowHeight;
+        lastWindowHeight = currentWindowHeight;*/
 
         cancelAnimationFrame(rafId);
 
@@ -753,9 +754,6 @@ function initModal() {
             }
 
             updateModalScroll();
-
-            modalWidthBefore = modalImageContainer.clientWidth;
-            modalHeightBefore = modalImageContainer.clientHeight;
         });
     }
 
@@ -842,9 +840,6 @@ function initModal() {
 
         modalScrollLeft = modalImageContainer.scrollLeft;
         modalScrollTop = modalImageContainer.scrollTop;
-
-        modalWidthBefore = modalImageContainer.clientWidth;
-        modalHeightBefore = modalImageContainer.clientHeight;
     }
 }
 
