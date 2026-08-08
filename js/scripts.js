@@ -415,16 +415,24 @@ function initModal() {
 
     function clearModal() {
         cancelAnimationFrame(rafId);
-        clearTimeout(scrollTimeout);
+        /*clearTimeout(scrollTimeout);*/
 
-        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
-        modalImageContainer.classList.remove('show-loading');
+        /*modalImageContainer.removeEventListener('scroll', trackNativeScroll);
+        modalImageContainer.classList.remove('show-loading');*/
 
         modalWidthBefore = 0;
         modalHeightBefore = 0;
 
         modalScrollLeft = 0;
         modalScrollTop = 0;
+
+        /*lastScrollLeft = 0;
+        lastScrollTop = 0;*/
+
+        openedImage = null;
+
+        imageWidth = 0;
+        imageHeight = 0;
 
         modalImage.removeEventListener('load', imageLoaded);
         modalImage.classList.remove('fit-size');
@@ -540,8 +548,8 @@ function initModal() {
     }
 
     function zoomModalIn() {
-        clearTimeout(scrollTimeout);
-        modalImageContainer.removeEventListener('scroll', trackNativeScroll);
+        /*clearTimeout(scrollTimeout);
+        modalImageContainer.removeEventListener('scroll', trackNativeScroll);*/
 
         modalImage.classList.remove('fit-width', 'fit-height');
         modalImage.classList.add('fit-content');
@@ -639,8 +647,6 @@ function initModal() {
         toggleModalZoom();
     }
 
-    let lastMouseClickTime = 0;
-
     let mouseStartX = 0;
     let mouseStartY = 0;
 
@@ -650,6 +656,8 @@ function initModal() {
         mouseStartX = event.clientX;
         mouseStartY = event.clientY;
     });
+
+    let lastMouseClickTime = 0;
 
     modalImage.addEventListener('click', (event) => {
         if (event.pointerType === 'touch') return;
@@ -717,7 +725,6 @@ function initModal() {
     let lastWindowWidth = window.innerWidth;
     let lastWindowHeight = window.innerHeight;
 
-    let isRotating = false;
     let rafId = null;
 
     const modalObserver = new ResizeObserver((_) => {
@@ -730,8 +737,6 @@ function initModal() {
 
         lastWindowWidth = currentWindowWidth;
         lastWindowHeight = currentWindowHeight;
-
-        isRotating = true;
 
         cancelAnimationFrame(rafId);
 
@@ -747,14 +752,18 @@ function initModal() {
             }
 
             updateModalScroll();
-
-            setTimeout(() => {
-                isRotating = false;
-            }, 0);
         });
     });
 
-    let scrollTimeout = null;
+    modalImage.addEventListener(
+        'touchend',
+        () => {
+            getModalScroll();
+        },
+        { passive: true },
+    );
+
+    /*let scrollTimeout = null;
 
     let lastScrollLeft = 0;
     let lastScrollTop = 0;
@@ -791,7 +800,7 @@ function initModal() {
             }, 50);
         },
         { passive: true },
-    );
+    );*/
 
     // Focus modal
 
@@ -844,7 +853,6 @@ function initModal() {
     }
 
     function getModalScroll() {
-        if (isRotating) return;
         if (!modalImage.classList.contains('fit-content')) return;
 
         modalScrollLeft = modalImageContainer.scrollLeft;
